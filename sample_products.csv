@@ -1,0 +1,11 @@
+Name,Description,Manufacturer,Price,Stock Quantity,Category,Image URL,Prescription Required
+Paracetamol 500mg,Pain relief tablets for headaches and fever,PharmaCo,5.99,100,PAIN_RELIEF,https://via.placeholder.com/200?text=Paracetamol,false
+Vitamin C 1000mg,Immune system support supplement,VitaCorp,12.99,75,VITAMINS,https://via.placeholder.com/200?text=VitaminC,false
+Amoxicillin 500mg,Broad-spectrum antibiotic capsules,AntibioMed,25.50,40,ANTIBIOTICS,https://via.placeholder.com/200?text=Amoxicillin,true
+COVID-19 Vaccine,mRNA-based coronavirus vaccine,VaxCorp,49.99,250,VACCINES,https://via.placeholder.com/200?text=COVID19,true
+Flu Vaccine 2026,Seasonal influenza vaccine,VaxCorp,29.99,150,VACCINES,https://via.placeholder.com/200?text=FluVaccine,false
+Ibuprofen 400mg,Anti-inflammatory pain relief,PainAway Ltd,7.50,120,PAIN_RELIEF,https://via.placeholder.com/200?text=Ibuprofen,false
+Multivitamin Complex,Daily multivitamin and mineral supplement,VitaCorp,18.99,90,VITAMINS,https://via.placeholder.com/200?text=Multivitamin,false
+Cold & Flu Relief,Combination cold and flu medication,ColdCare,9.99,85,COLD_FLU,https://via.placeholder.com/200?text=ColdFlu,false
+Insulin Glargine 100u,Long-acting insulin for diabetes,DiabetesMed,75.00,30,DIABETES,https://via.placeholder.com/200?text=Insulin,true
+Aloe Vera Gel,Soothing skin care gel,SkinSoft,6.99,110,SKINCARE,https://via.placeholder.com/200?text=AloeVera,false

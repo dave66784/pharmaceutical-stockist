@@ -1,0 +1,1 @@
+{"success":true,"message":"Product created successfully","data":{"id":1,"name":"Delete Test Product","description":"To be deleted","manufacturer":"Test Mfg","price":10.00,"stockQuantity":100,"category":"OTHER","imageUrl":null,"expiryDate":null,"isPrescriptionRequired":false,"isDeleted":false,"createdAt":"2026-02-15T16:05:09.839787","updatedAt":"2026-02-15T16:05:09.839909"}}
