@@ -15,97 +15,100 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import AddedToCart from './pages/AddedToCart';
 import AddressManagement from './pages/AddressManagement';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import { ToastProvider } from './context/ToastContext';
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <ToastProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/products"
-          element={
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetail />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <ProtectedRoute>
-              <Orders />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <ProtectedRoute>
-              <Checkout />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/added-to-cart"
-          element={
-            <ProtectedRoute>
-              <AddedToCart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/account/addresses"
-          element={
-            <ProtectedRoute>
-              <AddressManagement />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/order-confirmation"
-          element={
-            <ProtectedRoute>
-              <OrderConfirmation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/*"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-      </Routes>
-    </Layout>
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <ProtectedRoute>
+                <ProductDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/added-to-cart"
+            element={
+              <ProtectedRoute>
+                <AddedToCart />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/addresses"
+            element={
+              <ProtectedRoute>
+                <AddressManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order-confirmation"
+            element={
+              <ProtectedRoute>
+                <OrderConfirmation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/*"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+        </Routes>
+      </Layout>
+    </ToastProvider>
   );
 }
 
