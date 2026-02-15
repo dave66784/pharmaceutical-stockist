@@ -1,0 +1,63 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        manufacturer:
+          type: string
+        price:
+          type: number
+          format: double
+        stockQuantity:
+          type: integer
+        category:
+          type: string
+          enum: [PAIN_RELIEF, ANTIBIOTICS, VITAMINS, COLD_FLU, DIGESTIVE, DIABETES, CARDIOVASCULAR, SKINCARE, FIRST_AID, VACCINES, OTHER]
+        imageUrl:
+          type: string
+        expiryDate:
+          type: string
+          format: date
+        isPrescriptionRequired:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    ProductRequest:
+      type: object
+      required:
+        - name
+        - price
+        - category
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        manufacturer:
+          type: string
+        price:
+          type: number
+          format: double
+        stockQuantity:
+          type: integer
+        category:
+          type: string
+        imageUrl:
+          type: string
+        expiryDate:
+          type: string
+          format: date
+        isPrescriptionRequired:
+          type: boolean
