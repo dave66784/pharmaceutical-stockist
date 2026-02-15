@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: Pharmaceutical Stockist API
+  description: API for managing pharmaceutical products, orders, and inventory.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /api/auth/register:
+    $ref: './paths/auth.yaml#/register'
+  /api/auth/login:
+    $ref: './paths/auth.yaml#/login'
+  /api/products:
+    $ref: './paths/products.yaml#/products'
+  /api/products/{id}:
+    $ref: './paths/products.yaml#/productById'
+  /api/products/search:
+    $ref: './paths/products.yaml#/searchProducts'
+  /api/products/category/{category}:
+    $ref: './paths/products.yaml#/productsByCategory'
+  /api/cart:
+    $ref: './paths/cart.yaml#/cart'
+  /api/cart/items:
+    $ref: './paths/cart.yaml#/cartItems'
+  /api/cart/items/{itemId}:
+    $ref: './paths/cart.yaml#/cartItemDetail'
+  /api/cart/clear:
+    $ref: './paths/cart.yaml#/clearCart'
+  /api/orders:
+    $ref: './paths/orders.yaml#/orders'
+  /api/orders/{id}:
+    $ref: './paths/orders.yaml#/orderDetail'
+
