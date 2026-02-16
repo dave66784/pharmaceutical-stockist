@@ -18,6 +18,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         category: 'OTHER' as ProductCategory,
         imageUrl: '',
         isPrescriptionRequired: false,
+        expiryDate: '',
     });
 
     const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 category: product.category,
                 imageUrl: product.imageUrl || '',
                 isPrescriptionRequired: product.isPrescriptionRequired,
+                expiryDate: product.expiryDate || '',
             });
         }
     }, [product]);
@@ -166,6 +168,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                             onChange={handleChange}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                         />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Expiry Date</label>
+                        <input
+                            type="date"
+                            name="expiryDate"
+                            value={formData.expiryDate}
+                            onChange={handleChange}
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        />
+                        <p className="mt-1 text-xs text-gray-500">Leave blank if not applicable</p>
                     </div>
                     <div className="flex items-center">
                         <input

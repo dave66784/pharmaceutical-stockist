@@ -98,6 +98,10 @@ public class OrderService {
         return orderRepository.findByStatus(status, pageable);
     }
 
+    public List<Order> getAllOrdersList() {
+        return orderRepository.findAll();
+    }
+
     @Transactional
     public Order updateOrderStatus(Long orderId, OrderStatus status) {
         Order order = getOrderById(orderId);

@@ -269,6 +269,7 @@ const ManageProducts: React.FC = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry Date</th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -277,7 +278,7 @@ const ManageProducts: React.FC = () => {
                             <tr
                                 key={product.id}
                                 className={`${selectedIds.has(product.id) ? 'bg-blue-50' : ''} ${product.stockQuantity === 0 ? 'bg-red-50' :
-                                        product.stockQuantity < 10 ? 'bg-yellow-50' : ''
+                                    product.stockQuantity < 10 ? 'bg-yellow-50' : ''
                                     }`}
                             >
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -294,13 +295,33 @@ const ManageProducts: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${product.price.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`text-sm font-semibold ${product.stockQuantity === 0 ? 'text-red-600' :
-                                            product.stockQuantity < 10 ? 'text-yellow-600' :
-                                                'text-gray-500'
+                                        product.stockQuantity < 10 ? 'text-yellow-600' :
+                                            'text-gray-500'
                                         }`}>
                                         {product.stockQuantity}
                                         {product.stockQuantity === 0 && ' (Out of Stock)'}
                                         {product.stockQuantity > 0 && product.stockQuantity < 10 && ' (Low Stock)'}
                                     </span>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                    {product.expiryDate ? (() => {
+                                        const today = new Date();
+                                        const expiry = new Date(product.expiryDate);
+                                        const daysUntilExpiry = Math.floor((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                                        const isExpired = daysUntilExpiry < 0;
+                                        const isExpiringSoon = daysUntilExpiry >= 0 && daysUntilExpiry <= 30;
+
+                                        return (
+                                            <span className={`font-medium ${isExpired ? 'text-red-600' :
+                                                    isExpiringSoon ? 'text-orange-600' :
+                                                        'text-gray-700'
+                                                }`}>
+                                                {new Date(product.expiryDate).toLocaleDateString()}
+                                                {isExpired && ' (Expired)'}
+                                                {isExpiringSoon && ` (${daysUntilExpiry}d)`}
+                                            </span>
+                                        );
+                                    })() : <span className="text-gray-400 italic">N/A</span>}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <button onClick={() => handleEdit(product)} className="text-blue-600 hover:text-blue-900 mr-4">Edit</button>

@@ -21,6 +21,7 @@ public class AdminController {
 
     private final OrderService orderService;
     private final com.pharma.service.AdminService adminService;
+    private final com.pharma.service.OrderExportService orderExportService;
 
     @GetMapping("/orders")
     public ResponseEntity<ApiResponse<Page<Order>>> getAllOrders(
@@ -48,6 +49,34 @@ public class AdminController {
             @RequestParam OrderStatus status) {
         Order order = orderService.updateOrderStatus(orderId, status);
         return ResponseEntity.ok(new ApiResponse<>(true, "Order status updated successfully", order));
+    }
+
+    @GetMapping("/orders/export")
+    public ResponseEntity<byte[]> exportOrders(
+            @RequestParam(required = false) String customerEmail,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) throws java.io.IOException {
+
+        java.time.LocalDateTime start = null;
+        java.time.LocalDateTime end = null;
+
+        if (startDate != null && !startDate.isEmpty()) {
+            start = java.time.LocalDate.parse(startDate).atStartOfDay();
+        }
+
+        if (endDate != null && !endDate.isEmpty()) {
+            end = java.time.LocalDate.parse(endDate).atTime(23, 59, 59);
+        }
+
+        byte[] excelContent = orderExportService.exportAllOrders(customerEmail, start, end);
+
+        return ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=admin_orders_" + java.time.LocalDateTime.now()
+                                .format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".xlsx")
+                .contentType(org.springframework.http.MediaType
+                        .parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .body(excelContent);
     }
 
 }
