@@ -1,6 +1,10 @@
 package com.pharma.service;
 
 import com.pharma.dto.response.DashboardStatsResponse;
+import com.pharma.dto.response.DailyRevenueDto;
+import com.pharma.dto.response.ExpiringProductDto;
+import com.pharma.dto.response.ProductSalesDto;
+import com.pharma.model.Product;
 import com.pharma.model.enums.OrderStatus;
 import com.pharma.model.enums.Role;
 import com.pharma.repository.OrderRepository;
@@ -13,8 +17,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -97,5 +102,72 @@ public class DashboardService {
     private Long countNewCustomersThisMonth() {
         LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         return userRepository.countByRoleAndCreatedAtAfter(Role.CUSTOMER, startOfMonth);
+    }
+
+    // New analytics methods
+    public List<DailyRevenueDto> getDailyRevenue(int days) {
+        List<DailyRevenueDto> dailyRevenues = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        for (int i = days - 1; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            LocalDateTime startOfDay = date.atStartOfDay();
+            LocalDateTime endOfDay = startOfDay.plusDays(1);
+
+            BigDecimal revenue = orderRepository.sumTotalAmountByDateRange(startOfDay, endOfDay);
+            dailyRevenues.add(new DailyRevenueDto(date, revenue != null ? revenue : BigDecimal.ZERO));
+        }
+
+        return dailyRevenues;
+    }
+
+    public List<ExpiringProductDto> getExpiringProducts(int days) {
+        LocalDate today = LocalDate.now();
+        LocalDate futureDate = today.plusDays(days);
+
+        List<Product> products = productRepository.findAll();
+
+        return products.stream()
+                .filter(p -> p.getExpiryDate() != null)
+                .filter(p -> !p.getExpiryDate().isBefore(today) && !p.getExpiryDate().isAfter(futureDate))
+                .map(p -> {
+                    long daysUntil = ChronoUnit.DAYS.between(today, p.getExpiryDate());
+                    return new ExpiringProductDto(
+                            p.getId(),
+                            p.getName(),
+                            p.getExpiryDate(),
+                            p.getStockQuantity(),
+                            (int) daysUntil);
+                })
+                .sorted(Comparator.comparing(ExpiringProductDto::getDaysUntilExpiry))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductSalesDto> getTopSellingProducts(int limit) {
+        // Get all orders and aggregate by product
+        Map<Long, ProductSalesDto> salesMap = new HashMap<>();
+
+        orderRepository.findAll().forEach(order -> {
+            order.getOrderItems().forEach(item -> {
+                Long productId = item.getProduct().getId();
+                String productName = item.getProduct().getName();
+                Long quantity = (long) item.getQuantity();
+                BigDecimal revenue = item.getPrice().multiply(BigDecimal.valueOf(quantity));
+
+                salesMap.merge(
+                        productId,
+                        new ProductSalesDto(productId, productName, quantity, revenue),
+                        (existing, newVal) -> new ProductSalesDto(
+                                existing.getProductId(),
+                                existing.getProductName(),
+                                existing.getTotalQuantitySold() + newVal.getTotalQuantitySold(),
+                                existing.getTotalRevenue().add(newVal.getTotalRevenue())));
+            });
+        });
+
+        return salesMap.values().stream()
+                .sorted((a, b) -> b.getTotalQuantitySold().compareTo(a.getTotalQuantitySold()))
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 }
