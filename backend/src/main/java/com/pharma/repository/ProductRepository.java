@@ -32,4 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Low stock products
     Page<Product> findByStockQuantityLessThanAndIsDeletedFalse(Integer threshold, Pageable pageable);
+
+    Long countByStockQuantityLessThanAndIsDeletedFalse(Integer threshold);
 }

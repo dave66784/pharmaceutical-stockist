@@ -5,8 +5,6 @@ const ManageUsers: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [updating, setUpdating] = useState(false);
-    const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
         fetchUsers();
@@ -25,21 +23,6 @@ const ManageUsers: React.FC = () => {
         }
     };
 
-    const handleRoleChange = async (userId: number, newRole: string) => {
-        try {
-            setUpdating(true);
-            setMessage(null);
-            await userService.updateUserRole(userId, newRole);
-            setMessage('User role updated successfully');
-            await fetchUsers(); // Refresh the list
-        } catch (err) {
-            setMessage('Failed to update user role');
-            console.error(err);
-        } finally {
-            setUpdating(false);
-        }
-    };
-
     if (loading && users.length === 0) return <div>Loading users...</div>;
     if (error) return <div className="text-red-500">{error}</div>;
 
@@ -52,11 +35,6 @@ const ManageUsers: React.FC = () => {
                 </p>
             </div>
 
-            {message && (
-                <div className={`mb-4 p-4 rounded-md ${message.includes('success') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
-                    {message}
-                </div>
-            )}
 
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -90,15 +68,10 @@ const ManageUsers: React.FC = () => {
                                     {new Date(user.createdAt).toLocaleDateString()}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <select
-                                        value={user.role}
-                                        onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                                        disabled={updating}
-                                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:opacity-50"
-                                    >
-                                        <option value="CUSTOMER">CUSTOMER</option>
-                                        <option value="ADMIN">ADMIN</option>
-                                    </select>
+                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.role === 'ADMIN' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                                        }`}>
+                                        {user.role}
+                                    </span>
                                 </td>
                             </tr>
                         ))}

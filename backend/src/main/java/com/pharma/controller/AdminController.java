@@ -18,37 +18,36 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 public class AdminController {
-    
+
     private final OrderService orderService;
-    
+    private final com.pharma.service.AdminService adminService;
+
     @GetMapping("/orders")
     public ResponseEntity<ApiResponse<Page<Order>>> getAllOrders(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "orderDate") String sortBy
-    ) {
+            @RequestParam(defaultValue = "orderDate") String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
         Page<Order> orders = orderService.getAllOrders(pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Orders retrieved successfully", orders));
     }
-    
+
     @GetMapping("/orders/status/{status}")
     public ResponseEntity<ApiResponse<Page<Order>>> getOrdersByStatus(
             @PathVariable OrderStatus status,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
-    ) {
+            @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "orderDate"));
         Page<Order> orders = orderService.getOrdersByStatus(status, pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Orders retrieved successfully", orders));
     }
-    
+
     @PutMapping("/orders/{orderId}/status")
     public ResponseEntity<ApiResponse<Order>> updateOrderStatus(
             @PathVariable Long orderId,
-            @RequestParam OrderStatus status
-    ) {
+            @RequestParam OrderStatus status) {
         Order order = orderService.updateOrderStatus(orderId, status);
         return ResponseEntity.ok(new ApiResponse<>(true, "Order status updated successfully", order));
     }
+
 }

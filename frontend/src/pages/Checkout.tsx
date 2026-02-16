@@ -11,31 +11,44 @@ const Checkout: React.FC = () => {
     const { error: errorToast } = useToast();
     const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
     const [selectedAddressId, setSelectedAddressId] = useState<number | 'new'>('new');
-    const [shippingAddress, setShippingAddress] = useState('');
     const [cart, setCart] = useState<Cart | null>(null);
     const [loading, setLoading] = useState(true);
+    const [newAddress, setNewAddress] = useState({
+        street: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: 'USA'
+    });
+    const [saveNewAddress, setSaveNewAddress] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [addressResponse, cartData] = await Promise.all([
+                setLoading(true);
+                const [addressResponse, cartResponse] = await Promise.all([
                     addressService.getAddresses(),
                     cartService.getCart()
                 ]);
 
-                setSavedAddresses(addressResponse.data);
-                setCart(cartData.data || null);
+                // Handle Address Response
+                // addressService.getAddresses returns AxiosResponse
+                // If backend returns ApiResponse, data is in addressResponse.data.data
+                const addrData = addressResponse.data as any;
+                if (addrData.success && addrData.data) {
+                    setSavedAddresses(addrData.data);
+                } else if (Array.isArray(addrData)) {
+                    setSavedAddresses(addrData);
+                }
 
-                // Pre-select default address if exists
-                const defaultAddr = addressResponse.data.find(a => a.default);
-                if (defaultAddr) {
-                    setSelectedAddressId(defaultAddr.id);
-                } else if (addressResponse.data.length > 0) {
-                    setSelectedAddressId(addressResponse.data[0].id);
+                // Handle Cart Response
+                // cartService.getCart returns ApiResponse<Cart> directly
+                if (cartResponse && cartResponse.data) {
+                    setCart(cartResponse.data);
                 }
             } catch (err) {
-                console.error('Failed to load data', err);
-                errorToast('Failed to load checkout information');
+                console.error('Checkout load error:', err);
+                errorToast('Failed to load checkout data');
             } finally {
                 setLoading(false);
             }
@@ -46,23 +59,53 @@ const Checkout: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        let finalAddress = shippingAddress;
+        let finalAddressString = '';
+        let addressId: number | undefined;
 
         if (selectedAddressId !== 'new') {
             const selected = savedAddresses.find(a => a.id === selectedAddressId);
             if (selected) {
-                finalAddress = formatAddress(selected);
-                navigate('/payment', { state: { shippingAddress: finalAddress, addressId: selected.id } });
+                finalAddressString = formatAddress(selected);
+                addressId = selected.id;
+            }
+        } else {
+            // Validate new address
+            const { street, city, state, zipCode, country } = newAddress;
+            if (!street || !city || !state || !zipCode || !country) {
+                errorToast('Please fill in all address fields');
                 return;
+            }
+
+            finalAddressString = `${street}, ${city}, ${state} ${zipCode}, ${country}`;
+
+            if (saveNewAddress) {
+                try {
+                    // Set default if it's the first address
+                    const isDefault = savedAddresses.length === 0;
+                    const response = await addressService.addAddress({
+                        ...newAddress,
+                        default: isDefault
+                    });
+                    if (response.data) {
+                        addressId = response.data.id;
+                    }
+                } catch (err) {
+                    console.error('Failed to save address', err);
+                    errorToast('Failed to save address. Please try again.');
+                    return;
+                }
             }
         }
 
-        if (!finalAddress.trim()) {
-            errorToast('Shipping address is required');
-            return;
-        }
+        navigate('/payment', { state: { shippingAddress: finalAddressString, addressId } });
+    };
 
-        navigate('/payment', { state: { shippingAddress: finalAddress } });
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setNewAddress(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const formatAddress = (addr: Address) => {
@@ -70,8 +113,10 @@ const Checkout: React.FC = () => {
     };
 
     const calculateTotal = () => {
-        if (!cart) return 0;
-        return cart.items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+        if (!cart || !cart.items) return 0;
+        return cart.items.reduce((total, item) => {
+            return total + (item.product.price * item.quantity);
+        }, 0);
     };
 
     if (loading) return (
@@ -209,27 +254,119 @@ const Checkout: React.FC = () => {
                                     {selectedAddressId === 'new' && (
                                         <div className="space-y-4">
                                             <div>
-                                                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                                    Full Shipping Address
+                                                <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+                                                    Street Address
                                                 </label>
                                                 <div className="mt-1">
-                                                    <textarea
-                                                        id="address"
-                                                        name="address"
-                                                        rows={3}
+                                                    <input
+                                                        type="text"
+                                                        name="street"
+                                                        id="street"
+                                                        value={newAddress.street}
+                                                        onChange={handleInputChange}
                                                         required={selectedAddressId === 'new'}
                                                         className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                                        value={shippingAddress}
-                                                        onChange={(e) => setShippingAddress(e.target.value)}
-                                                        placeholder="Street address, City, State, Zip Code, Country"
                                                     />
                                                 </div>
-                                                <p className="mt-2 text-xs text-gray-500">
-                                                    We currently ship to US, Canada, and select international locations.
-                                                </p>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-2">
+                                                <div>
+                                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                                                        City
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="city"
+                                                            id="city"
+                                                            value={newAddress.city}
+                                                            onChange={handleInputChange}
+                                                            required={selectedAddressId === 'new'}
+                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+                                                        State / Province
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="state"
+                                                            id="state"
+                                                            value={newAddress.state}
+                                                            onChange={handleInputChange}
+                                                            required={selectedAddressId === 'new'}
+                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-2">
+                                                <div>
+                                                    <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700">
+                                                        ZIP / Postal Code
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <input
+                                                            type="text"
+                                                            name="zipCode"
+                                                            id="zipCode"
+                                                            value={newAddress.zipCode}
+                                                            onChange={handleInputChange}
+                                                            required={selectedAddressId === 'new'}
+                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                                                        Country
+                                                    </label>
+                                                    <div className="mt-1">
+                                                        <select
+                                                            id="country"
+                                                            name="country"
+                                                            value={newAddress.country}
+                                                            onChange={handleInputChange}
+                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        >
+                                                            <option value="USA">United States</option>
+                                                            <option value="Canada">Canada</option>
+                                                            <option value="UK">United Kingdom</option>
+                                                            <option value="India">India</option>
+                                                            <option value="Australia">Australia</option>
+                                                            <option value="Slovakia">Slovakia</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="relative flex items-start mt-4">
+                                                <div className="flex items-center h-5">
+                                                    <input
+                                                        id="save-address"
+                                                        name="save-address"
+                                                        type="checkbox"
+                                                        checked={saveNewAddress}
+                                                        onChange={(e) => setSaveNewAddress(e.target.checked)}
+                                                        className="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded"
+                                                    />
+                                                </div>
+                                                <div className="ml-3 text-sm">
+                                                    <label htmlFor="save-address" className="font-medium text-gray-700">
+                                                        Save this address for future orders
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     )}
+
 
 
 

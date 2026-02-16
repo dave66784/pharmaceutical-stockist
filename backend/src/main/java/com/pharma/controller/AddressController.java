@@ -1,13 +1,13 @@
 package com.pharma.controller;
 
+import com.pharma.dto.request.AddressRequest;
+import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Address;
-import com.pharma.model.User;
-import com.pharma.service.AddressService;
 import com.pharma.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,37 +17,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddressController {
 
-    private final AddressService addressService;
     private final UserService userService;
 
-    @GetMapping
-    public ResponseEntity<List<Address>> getUserAddresses() {
-        User currentUser = getCurrentUser();
-        return ResponseEntity.ok(addressService.getUserAddresses(currentUser.getId()));
-    }
-
     @PostMapping
-    public ResponseEntity<Address> createAddress(@RequestBody Address address) {
-        User currentUser = getCurrentUser();
-        return ResponseEntity.ok(addressService.createAddress(currentUser.getId(), address));
+    public ResponseEntity<ApiResponse<Address>> addAddress(
+            @Valid @RequestBody AddressRequest request,
+            Authentication authentication) {
+        Address address = userService.addAddress(authentication.getName(), request);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Address added successfully", address));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
-        User currentUser = getCurrentUser();
-        return ResponseEntity.ok(addressService.updateAddress(currentUser.getId(), id, address));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
-        User currentUser = getCurrentUser();
-        addressService.deleteAddress(currentUser.getId(), id);
-        return ResponseEntity.ok().build();
-    }
-
-    private User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return userService.getUserByEmail(email);
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Address>>> getUserAddresses(Authentication authentication) {
+        List<Address> addresses = userService.getUserAddresses(authentication.getName());
+        return ResponseEntity.ok(new ApiResponse<>(true, "Addresses retrieved successfully", addresses));
     }
 }

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo, useCallback } from 'react';
 import { ToastContext } from '../context/ToastContext';
 
 export const useToast = () => {
@@ -9,13 +9,16 @@ export const useToast = () => {
 
     const { addToast, removeToast } = context;
 
-    const toast = {
-        success: (message: string, duration?: number) => addToast(message, 'success', duration),
-        error: (message: string, duration?: number) => addToast(message, 'error', duration),
-        info: (message: string, duration?: number) => addToast(message, 'info', duration),
-        warning: (message: string, duration?: number) => addToast(message, 'warning', duration),
-        remove: removeToast
-    };
+    const success = useCallback((message: string, duration?: number) => addToast(message, 'success', duration), [addToast]);
+    const error = useCallback((message: string, duration?: number) => addToast(message, 'error', duration), [addToast]);
+    const info = useCallback((message: string, duration?: number) => addToast(message, 'info', duration), [addToast]);
+    const warning = useCallback((message: string, duration?: number) => addToast(message, 'warning', duration), [addToast]);
 
-    return toast;
+    return useMemo(() => ({
+        success,
+        error,
+        info,
+        warning,
+        remove: removeToast
+    }), [success, error, info, warning, removeToast]);
 };

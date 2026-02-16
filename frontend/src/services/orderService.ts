@@ -40,4 +40,18 @@ export const orderService = {
     });
     return response.data;
   },
+
+  downloadReceipt: async (orderId: number) => {
+    const response = await api.get(`/orders/${orderId}/receipt`, {
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+
+  downloadOrdersExport: async () => {
+    const response = await api.get('/orders/export', {
+      responseType: 'blob',
+    });
+    return response.data;
+  },
 };
