@@ -17,7 +17,15 @@ const AddressManagement: React.FC = () => {
     const fetchAddresses = async () => {
         try {
             const response = await addressService.getAddresses();
-            setAddresses(response.data);
+            // Handle ApiResponse structure (response.data is the ApiResponse object, response.data.data is the list)
+            const apiResponse = response.data as any;
+            if (apiResponse.success && Array.isArray(apiResponse.data)) {
+                setAddresses(apiResponse.data);
+            } else if (Array.isArray(apiResponse)) {
+                setAddresses(apiResponse);
+            } else {
+                setAddresses([]);
+            }
         } catch (err) {
             setError('Failed to load addresses');
         } finally {

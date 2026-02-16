@@ -22,6 +22,7 @@ public class UserService {
         private final PasswordEncoder passwordEncoder;
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
+        private final com.pharma.repository.AddressRepository addressRepository;
 
         public AuthResponse register(RegisterRequest request) {
                 if (userRepository.existsByEmail(request.getEmail())) {
@@ -102,5 +103,37 @@ public class UserService {
                                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
                 user.setRole(role);
                 return userRepository.save(user);
+        }
+
+        // Address management
+        public com.pharma.model.Address addAddress(String email, com.pharma.dto.request.AddressRequest request) {
+                User user = getUserByEmail(email);
+                com.pharma.model.Address address = new com.pharma.model.Address();
+                address.setUser(user);
+                address.setStreet(request.getStreet());
+                address.setCity(request.getCity());
+                address.setState(request.getState());
+                address.setZipCode(request.getZipCode());
+                address.setCountry(request.getCountry());
+                address.setDefault(request.isDefault());
+
+                if (request.isDefault()) {
+                        // Update other addresses to not be default
+                        java.util.List<com.pharma.model.Address> userAddresses = addressRepository
+                                        .findByUserId(user.getId());
+                        for (com.pharma.model.Address addr : userAddresses) {
+                                if (addr.isDefault()) {
+                                        addr.setDefault(false);
+                                        addressRepository.save(addr);
+                                }
+                        }
+                }
+
+                return addressRepository.save(address);
+        }
+
+        public java.util.List<com.pharma.model.Address> getUserAddresses(String email) {
+                User user = getUserByEmail(email);
+                return addressRepository.findByUserId(user.getId());
         }
 }

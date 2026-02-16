@@ -72,9 +72,31 @@ const OrderDetails: React.FC = () => {
                             Placed on {new Date(order.orderDate).toLocaleDateString()} at {new Date(order.orderDate).toLocaleTimeString()}
                         </p>
                     </div>
-                    <Link to="/orders" className="text-sm font-medium text-primary-600 hover:text-primary-500">
-                        &larr; Back to Order History
-                    </Link>
+                    <div className="flex space-x-4">
+                        <button
+                            onClick={async () => {
+                                try {
+                                    const blob = await orderService.downloadReceipt(order.id);
+                                    const url = window.URL.createObjectURL(new Blob([blob]));
+                                    const link = document.createElement('a');
+                                    link.href = url;
+                                    link.setAttribute('download', `receipt_${order.id}.pdf`);
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    link.remove();
+                                } catch (err) {
+                                    console.error('Failed to download receipt', err);
+                                    // You might want to add error handling/toast here
+                                }
+                            }}
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                        >
+                            Download Receipt
+                        </button>
+                        <Link to="/orders" className="flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+                            &larr; Back to Order History
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -45,13 +45,22 @@ function Home() {
                     </Link>
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
-                    {authService.getCurrentUser()?.role === 'ADMIN' ? (
-                      <Link
-                        to="/admin"
-                        className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 md:py-4 md:text-lg transition-colors"
-                      >
-                        Admin Dashboard
-                      </Link>
+                    {authService.getCurrentUser() ? (
+                      authService.getCurrentUser()?.role === 'ADMIN' ? (
+                        <Link
+                          to="/admin"
+                          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 md:py-4 md:text-lg transition-colors"
+                        >
+                          Admin Dashboard
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/products"
+                          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 md:py-4 md:text-lg transition-colors"
+                        >
+                          Browse Products
+                        </Link>
+                      )
                     ) : (
                       <Link
                         to="/register"
