@@ -85,6 +85,9 @@ export interface Order {
   orderDate: string;
   deliveryDate?: string;
   orderItems: OrderItem[];
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
+  transactionId?: string;
 }
 
 export type OrderStatus =
@@ -93,6 +96,10 @@ export type OrderStatus =
   | 'SHIPPED'
   | 'DELIVERED'
   | 'CANCELLED';
+
+export type PaymentMethod = 'COD' | 'ONLINE';
+
+export type PaymentStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'REFUNDED';
 
 export interface ApiResponse<T> {
   success: boolean;

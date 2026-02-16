@@ -1,83 +1,97 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { Product } from '../../types';
 import { cartService } from '../../services/cartService';
+import { useToast } from '../../hooks/useToast';
 
 interface ProductCardProps {
     product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+    const { success, error: errorToast } = useToast();
     const [adding, setAdding] = useState(false);
 
     const handleAddToCart = async (e: React.MouseEvent) => {
-        e.preventDefault(); // Prevent navigation to product detail
+        e.preventDefault();
         e.stopPropagation();
 
         try {
             setAdding(true);
             await cartService.addToCart(product.id, 1);
-            // Dispatch event to update navbar cart count
             window.dispatchEvent(new Event('cartUpdated'));
-        } catch (error) {
-            console.error('Failed to add to cart:', error);
+            success(`Added ${product.name} to cart`);
+        } catch (err) {
+            console.error('Failed to add to cart:', err);
+            errorToast('Failed to add product to cart');
         } finally {
             setAdding(false);
         }
     };
 
     return (
-        <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-300 flex flex-col h-full group relative">
-            <div className="p-5 flex-grow">
-                <div className="flex justify-between items-start">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {product.category}
-                    </span>
+        <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden relative">
+            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-100 relative group-hover:opacity-95 transition-opacity">
+                {/* Placeholder for product image */}
+                <div className="flex items-center justify-center w-full h-48 bg-gradient-to-br from-gray-50 to-gray-100 text-4xl">
+                    💊
+                </div>
+                {product.stockQuantity === 0 && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center z-10">
+                        <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            Out of Stock
+                        </span>
+                    </div>
+                )}
+                <div className="absolute top-3 right-3 flex flex-col gap-2">
                     {product.isPrescriptionRequired && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                            Rx Required
+                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-bold bg-red-50 text-red-600 border border-red-100 shadow-sm">
+                            Rx Only
                         </span>
                     )}
                 </div>
-                <div className="mt-4">
-                    <div className="flex justify-between items-start">
-                        <h3 className="text-lg font-medium text-gray-900 truncate flex-1" title={product.name}>
-                            <Link to={`/products/${product.id}`} className="hover:underline">
-                                {product.name}
-                            </Link>
-                        </h3>
-                    </div>
-                    <p className="mt-1 text-sm text-gray-500">{product.manufacturer}</p>
-                    <p className="mt-2 text-sm text-gray-500 line-clamp-2" title={product.description}>
-                        {product.description}
-                    </p>
-                </div>
             </div>
-            <div className="bg-gray-50 px-5 py-4 flex items-center justify-between mt-auto">
-                <div className="text-lg font-bold text-gray-900">${product.price.toFixed(2)}</div>
-                <div className="flex space-x-2">
+
+            <div className="p-5 flex-grow flex flex-col">
+                <div className="mb-2">
+                    <span className="text-xs font-medium text-primary-600 uppercase tracking-wide">
+                        {product.category}
+                    </span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1 group-hover:text-primary-600 transition-colors">
+                    <Link to={`/products/${product.id}`}>
+                        {product.name}
+                    </Link>
+                </h3>
+                <p className="text-sm text-gray-500 mb-3 line-clamp-1">{product.manufacturer}</p>
+                <p className="text-sm text-gray-600 line-clamp-2 mb-4 flex-grow">
+                    {product.description}
+                </p>
+
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                    <div className="flex flex-col">
+                        <span className="text-xs text-gray-400">Price</span>
+                        <span className="text-xl font-bold text-gray-900">
+                            ${product.price.toFixed(2)}
+                        </span>
+                    </div>
+
                     <button
                         onClick={handleAddToCart}
                         disabled={adding || product.stockQuantity === 0}
-                        className={`inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white ${product.stockQuantity === 0
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+                        className={`p-2.5 rounded-xl transition-all duration-200 shadow-sm ${product.stockQuantity === 0
+                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                            : 'bg-primary-50 text-primary-600 hover:bg-primary-600 hover:text-white hover:shadow-primary-500/30'
                             }`}
                         title="Add to Cart"
                     >
                         {adding ? (
                             <Loader2 className="h-5 w-5 animate-spin" />
                         ) : (
-                            <ShoppingCart className="h-5 w-5" />
+                            <Plus className="h-5 w-5" />
                         )}
                     </button>
-                    <Link
-                        to={`/products/${product.id}`}
-                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                        View Details
-                    </Link>
                 </div>
             </div>
         </div>

@@ -2,12 +2,13 @@ import api from './api';
 import { Order, ApiResponse, PageResponse } from '../types';
 
 export const orderService = {
-  createOrder: async (shippingAddress: string, addressId?: number) => {
+  createOrder: async (shippingAddress: string, paymentMethod: string, addressId?: number) => {
     interface OrderPayload {
       shippingAddress: string;
+      paymentMethod: string;
       addressId?: number;
     }
-    const payload: OrderPayload = { shippingAddress };
+    const payload: OrderPayload = { shippingAddress, paymentMethod };
     if (addressId) {
       payload.addressId = addressId;
     }

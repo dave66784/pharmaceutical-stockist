@@ -5,6 +5,7 @@ import com.pharma.exception.InsufficientStockException;
 import com.pharma.exception.ResourceNotFoundException;
 import com.pharma.model.*;
 import com.pharma.model.enums.OrderStatus;
+import com.pharma.model.enums.PaymentStatus;
 import com.pharma.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,8 @@ public class OrderService {
         order.setShippingAddress(request.getShippingAddress());
         order.setAddressId(request.getAddressId());
         order.setStatus(OrderStatus.PENDING);
+        order.setPaymentMethod(request.getPaymentMethod());
+        order.setPaymentStatus(PaymentStatus.PENDING);
 
         BigDecimal totalAmount = BigDecimal.ZERO;
 

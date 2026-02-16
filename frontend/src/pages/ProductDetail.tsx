@@ -4,6 +4,7 @@ import { productService } from '../services/productService';
 import { cartService } from '../services/cartService';
 import { Product } from '../types';
 import { authService } from '../services/authService';
+import { useToast } from '../hooks/useToast';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -37,6 +38,8 @@ const ProductDetail: React.FC = () => {
     }
   };
 
+  const { success, error: errorToast } = useToast();
+
   const handleAddToCart = async () => {
     if (!authService.getToken()) {
       navigate('/login');
@@ -48,18 +51,13 @@ const ProductDetail: React.FC = () => {
     try {
       setAddingToCart(true);
       await cartService.addToCart(product.id, quantity);
-      // Navigate to confirmation page with product details
-      navigate('/added-to-cart', {
-        state: {
-          productName: product.name,
-          quantity
-        }
-      });
+      success(`Added ${quantity} ${product.name} to cart`);
+      setAddingToCart(false); // Enable button again
+
     } catch (err) {
       console.error('Failed to add to cart', err);
       // Ideally handle specific error messages from API
-      setError('Failed to add item to cart. Please try again.');
-      setTimeout(() => setError(null), 3000);
+      errorToast('Failed to add item to cart. Please try again.');
     } finally {
       setAddingToCart(false);
     }
@@ -88,91 +86,105 @@ const ProductDetail: React.FC = () => {
   }
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div className="px-4 py-5 sm:px-6 flex justify-between items-start">
-        <div>
-          <h3 className="text-2xl leading-6 font-medium text-gray-900">{product.name}</h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">{product.manufacturer}</p>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8">
+          {/* Image Section */}
+          <div className="bg-gray-50 p-8 flex items-center justify-center min-h-[400px] lg:h-full relative">
+            <div className="text-9xl">💊</div>
+            {product.isPrescriptionRequired && (
+              <div className="absolute top-6 left-6">
+                <span className="inline-flex items-center px-3 py-1 rounded-md text-sm font-bold bg-white text-red-600 border border-red-100 shadow-sm">
+                  Rx Prescription Required
+                </span>
+              </div>
+            )}
+            {product.stockQuantity === 0 && (
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-10">
+                <span className="bg-gray-900 text-white px-6 py-2 rounded-full text-lg font-bold uppercase tracking-wider shadow-lg">
+                  Out of Stock
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Details Section */}
+          <div className="p-8 lg:p-12 flex flex-col">
+            <div className="mb-2">
+              <span className="text-sm font-semibold text-primary-600 uppercase tracking-wide">
+                {product.category}
+              </span>
+            </div>
+
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{product.name}</h1>
+            <p className="text-lg text-gray-500 mb-6">{product.manufacturer}</p>
+
+            <div className="flex items-baseline mb-8">
+              <span className="text-4xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
+              <span className="ml-2 text-sm text-gray-500">per unit</span>
+            </div>
+
+            <div className="prose prose-sm text-gray-500 mb-8 border-t border-b border-gray-100 py-6">
+              <h3 className="text-gray-900 font-semibold text-lg mb-2">Description</h3>
+              <p className="leading-relaxed">{product.description}</p>
+            </div>
+
+            <div className="mt-auto">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm font-medium text-gray-700">Quantity</span>
+                <span className={`text-sm font-medium ${product.stockQuantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {product.stockQuantity > 0 ? `${product.stockQuantity} available` : 'Out of stock'}
+                </span>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex items-center border border-gray-200 rounded-lg bg-gray-50">
+                  <button
+                    className="px-4 py-3 hover:bg-gray-100 text-gray-600 rounded-l-lg transition-colors disabled:opacity-50"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={product.stockQuantity === 0}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    max={product.stockQuantity}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.min(product.stockQuantity, Math.max(1, parseInt(e.target.value) || 1)))}
+                    className="w-16 text-center bg-transparent border-none focus:ring-0 text-gray-900 font-medium p-0"
+                  />
+                  <button
+                    className="px-4 py-3 hover:bg-gray-100 text-gray-600 rounded-r-lg transition-colors disabled:opacity-50"
+                    onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
+                    disabled={product.stockQuantity === 0}
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  onClick={handleAddToCart}
+                  disabled={product.stockQuantity === 0 || addingToCart}
+                  className={`flex-1 flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white shadow-sm transition-all duration-200 ${product.stockQuantity === 0
+                    ? 'bg-gray-300 cursor-not-allowed'
+                    : 'bg-primary-600 hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-600/30'
+                    }`}
+                >
+                  {addingToCart ? 'Adding...' : 'Add to Cart'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex space-x-2">
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            {product.category}
-          </span>
-          {product.isPrescriptionRequired && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-              Rx Required
-            </span>
-          )}
-        </div>
-      </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl className="sm:divide-y sm:divide-gray-200">
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Price</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 text-xl font-bold">
-              ${product.price.toFixed(2)}
-            </dd>
-          </div>
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Description</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {product.description}
-            </dd>
-          </div>
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Stock Status</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {product.stockQuantity > 0 ? (
-                <span className="text-green-600 font-medium">{product.stockQuantity} In Stock</span>
-              ) : (
-                <span className="text-red-600 font-medium">Out of Stock</span>
-              )}
-            </dd>
-          </div>
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Quantity</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
-              <button
-                className="bg-gray-200 px-3 py-1 rounded-l hover:bg-gray-300"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={product.stockQuantity === 0}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                min="1"
-                max={product.stockQuantity}
-                value={quantity}
-                onChange={(e) => setQuantity(Math.min(product.stockQuantity, Math.max(1, parseInt(e.target.value) || 1)))}
-                className="w-16 text-center border-t border-b border-gray-200 py-1"
-              />
-              <button
-                className="bg-gray-200 px-3 py-1 rounded-r hover:bg-gray-300"
-                onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
-                disabled={product.stockQuantity === 0}
-              >
-                +
-              </button>
-            </dd>
-          </div>
-        </dl>
       </div>
 
-      <div className="px-4 py-4 sm:px-6 bg-gray-50 flex justify-end">
+      <div className="mt-8">
         <button
           onClick={() => navigate('/products')}
-          className="mr-4 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="text-gray-500 hover:text-gray-900 font-medium flex items-center transition-colors"
         >
-          Back
-        </button>
-        <button
-          onClick={handleAddToCart}
-          disabled={product.stockQuantity === 0 || addingToCart}
-          className={`inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${(product.stockQuantity === 0 || addingToCart) ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-        >
-          {addingToCart ? 'Adding...' : 'Add to Cart'}
+          ← Back to Products
         </button>
       </div>
     </div>
