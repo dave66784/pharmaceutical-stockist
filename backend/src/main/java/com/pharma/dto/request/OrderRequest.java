@@ -1,5 +1,7 @@
 package com.pharma.dto.request;
 
+import com.pharma.model.enums.PaymentMethod;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,4 +16,6 @@ public class OrderRequest {
     private String shippingAddress;
 
     private Long addressId;
+
+    private PaymentMethod paymentMethod;
 }

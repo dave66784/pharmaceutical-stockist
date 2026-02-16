@@ -9,6 +9,7 @@ import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
 import Checkout from './pages/Checkout';
 import Payment from './pages/Payment';
 import OrderConfirmation from './pages/OrderConfirmation';
@@ -49,6 +50,10 @@ function App() {
                 <Cart />
               </ProtectedRoute>
             }
+          />
+          <Route
+            path="/orders/:id"
+            element={<OrderDetails />}
           />
           <Route
             path="/orders"

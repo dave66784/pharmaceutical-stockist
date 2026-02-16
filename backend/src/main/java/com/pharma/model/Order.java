@@ -2,6 +2,8 @@ package com.pharma.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pharma.model.enums.OrderStatus;
+import com.pharma.model.enums.PaymentMethod;
+import com.pharma.model.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +34,16 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+
+    private String transactionId;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String shippingAddress;

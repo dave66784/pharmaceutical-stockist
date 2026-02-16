@@ -24,7 +24,7 @@ const Checkout: React.FC = () => {
                 ]);
 
                 setSavedAddresses(addressResponse.data);
-                setCart(cartData.data);
+                setCart(cartData.data || null);
 
                 // Pre-select default address if exists
                 const defaultAddr = addressResponse.data.find(a => a.default);
