@@ -41,7 +41,10 @@ public class Product {
     @Column(nullable = false)
     private ProductCategory category;
 
-    private String imageUrl;
+    @ElementCollection
+    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image_url")
+    private java.util.List<String> imageUrls = new java.util.ArrayList<>();
 
     private LocalDate expiryDate;
 

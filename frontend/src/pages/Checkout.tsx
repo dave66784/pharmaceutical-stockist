@@ -265,7 +265,7 @@ const Checkout: React.FC = () => {
                                                         value={newAddress.street}
                                                         onChange={handleInputChange}
                                                         required={selectedAddressId === 'new'}
-                                                        className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        className="shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-600 block w-full sm:text-sm border-2 border-gray-400 rounded-md bg-white transition-all duration-200"
                                                     />
                                                 </div>
                                             </div>
@@ -283,7 +283,7 @@ const Checkout: React.FC = () => {
                                                             value={newAddress.city}
                                                             onChange={handleInputChange}
                                                             required={selectedAddressId === 'new'}
-                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            className="shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-600 block w-full sm:text-sm border-2 border-gray-400 rounded-md bg-white transition-all duration-200"
                                                         />
                                                     </div>
                                                 </div>
@@ -300,7 +300,7 @@ const Checkout: React.FC = () => {
                                                             value={newAddress.state}
                                                             onChange={handleInputChange}
                                                             required={selectedAddressId === 'new'}
-                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            className="shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-600 block w-full sm:text-sm border-2 border-gray-400 rounded-md bg-white transition-all duration-200"
                                                         />
                                                     </div>
                                                 </div>
@@ -319,7 +319,7 @@ const Checkout: React.FC = () => {
                                                             value={newAddress.zipCode}
                                                             onChange={handleInputChange}
                                                             required={selectedAddressId === 'new'}
-                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            className="shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-600 block w-full sm:text-sm border-2 border-gray-400 rounded-md bg-white transition-all duration-200"
                                                         />
                                                     </div>
                                                 </div>
@@ -334,7 +334,7 @@ const Checkout: React.FC = () => {
                                                             name="country"
                                                             value={newAddress.country}
                                                             onChange={handleInputChange}
-                                                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            className="shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-600 block w-full sm:text-sm border-2 border-gray-400 rounded-md bg-white transition-all duration-200"
                                                         >
                                                             <option value="USA">United States</option>
                                                             <option value="Canada">Canada</option>
@@ -400,8 +400,19 @@ const Checkout: React.FC = () => {
                                 <ul role="list" className="divide-y divide-gray-200 mb-6 max-h-80 overflow-y-auto">
                                     {cart?.items.map((item) => (
                                         <li key={item.id} className="flex py-4">
-                                            <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center text-2xl">
-                                                💊
+                                            <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-50">
+                                                {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
+                                                    <img
+                                                        src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                                                        alt={item.product.name}
+                                                        className="h-full w-full object-cover object-center"
+                                                        onError={(e) => {
+                                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=No+Image';
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <div className="h-full w-full flex items-center justify-center text-2xl">💊</div>
+                                                )}
                                             </div>
                                             <div className="ml-4 flex flex-1 flex-col">
                                                 <div>

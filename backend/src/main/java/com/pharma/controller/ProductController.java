@@ -1,5 +1,12 @@
 package com.pharma.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.UUID;
+
 import com.pharma.dto.request.ProductRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Product;
@@ -141,6 +148,37 @@ public class ProductController {
             log.error("Bulk delete failed: {}", e.getMessage());
             return ResponseEntity.internalServerError()
                     .body(new ApiResponse<>(false, "Failed to process bulk delete: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/images")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<java.util.List<String>>> uploadImages(
+            @RequestParam("files") MultipartFile[] files) {
+        try {
+            java.util.List<String> fileUrls = new ArrayList<>();
+            Path uploadDir = Paths.get("uploads/images");
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            for (MultipartFile file : files) {
+                String originalFilename = file.getOriginalFilename();
+                String extension = "";
+                if (originalFilename != null && originalFilename.contains(".")) {
+                    extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                }
+                String filename = UUID.randomUUID().toString() + extension;
+                Path filePath = uploadDir.resolve(filename);
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                fileUrls.add("/uploads/images/" + filename);
+            }
+
+            return ResponseEntity.ok(new ApiResponse<>(true, "Images uploaded successfully", fileUrls));
+        } catch (Exception e) {
+            log.error("Failed to upload images", e);
+            return ResponseEntity.internalServerError()
+                    .body(new ApiResponse<>(false, "Failed to upload images: " + e.getMessage()));
         }
     }
 }

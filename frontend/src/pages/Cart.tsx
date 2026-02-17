@@ -104,7 +104,21 @@ const Cart: React.FC = () => {
       <div className="border-t border-gray-200">
         <ul className="divide-y divide-gray-200">
           {cart.items.map((item) => (
-            <li key={item.id} className="px-4 py-4 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <li key={item.id} className="px-4 py-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex-shrink-0 h-20 w-20 border border-gray-200 rounded-md overflow-hidden">
+                {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
+                  <img
+                    src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                    alt={item.product.name}
+                    className="h-full w-full object-cover object-center"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/80?text=No+Image';
+                    }}
+                  />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center bg-gray-100 text-2xl">💊</div>
+                )}
+              </div>
               <div className="flex-1 mb-4 sm:mb-0">
                 <h3 className="text-lg font-medium text-blue-600">
                   <Link to={`/products/${item.product.id}`}>{item.product.name}</Link>

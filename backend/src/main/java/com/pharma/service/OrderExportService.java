@@ -19,13 +19,46 @@ public class OrderExportService {
 
     public byte[] exportUserOrders(String email) throws IOException {
         List<Order> orders = orderService.getUserOrders(email);
+        return exportOrders(orders);
+    }
 
+    public byte[] exportAllOrders() throws IOException {
+        List<Order> orders = orderService.getAllOrdersList();
+        return exportOrders(orders);
+    }
+
+    public byte[] exportAllOrders(String customerEmail, java.time.LocalDateTime startDate,
+            java.time.LocalDateTime endDate) throws IOException {
+        List<Order> orders = orderService.getAllOrdersList();
+
+        // Apply filters
+        java.util.stream.Stream<Order> stream = orders.stream();
+
+        if (customerEmail != null && !customerEmail.isEmpty()) {
+            stream = stream.filter(o -> o.getUser() != null
+                    && o.getUser().getEmail().toLowerCase().contains(customerEmail.toLowerCase()));
+        }
+
+        if (startDate != null) {
+            stream = stream.filter(o -> o.getOrderDate().isAfter(startDate) || o.getOrderDate().isEqual(startDate));
+        }
+
+        if (endDate != null) {
+            stream = stream.filter(o -> o.getOrderDate().isBefore(endDate) || o.getOrderDate().isEqual(endDate));
+        }
+
+        List<Order> filteredOrders = stream.collect(java.util.stream.Collectors.toList());
+        return exportOrders(filteredOrders);
+    }
+
+    private byte[] exportOrders(List<Order> orders) throws IOException {
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Sheet sheet = workbook.createSheet("Orders");
 
             // Header
             Row headerRow = sheet.createRow(0);
-            String[] headers = { "Order ID", "Date", "Status", "Total Amount", "Payment Method", "Payment Status" };
+            String[] headers = { "Order ID", "Date", "Customer Email", "Status", "Total Amount", "Payment Method",
+                    "Payment Status" };
             CellStyle headerStyle = workbook.createCellStyle();
             Font font = workbook.createFont();
             font.setBold(true);
@@ -44,10 +77,11 @@ public class OrderExportService {
                 Row row = sheet.createRow(rowIdx++);
                 row.createCell(0).setCellValue(order.getId());
                 row.createCell(1).setCellValue(order.getOrderDate().format(formatter));
-                row.createCell(2).setCellValue(order.getStatus().name());
-                row.createCell(3).setCellValue(order.getTotalAmount().doubleValue());
-                row.createCell(4).setCellValue(order.getPaymentMethod().name());
-                row.createCell(5).setCellValue(order.getPaymentStatus().name());
+                row.createCell(2).setCellValue(order.getUser() != null ? order.getUser().getEmail() : "N/A");
+                row.createCell(3).setCellValue(order.getStatus().name());
+                row.createCell(4).setCellValue(order.getTotalAmount().doubleValue());
+                row.createCell(5).setCellValue(order.getPaymentMethod().name());
+                row.createCell(6).setCellValue(order.getPaymentStatus().name());
             }
 
             for (int i = 0; i < headers.length; i++) {

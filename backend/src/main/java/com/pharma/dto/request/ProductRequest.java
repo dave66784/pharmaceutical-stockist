@@ -16,28 +16,28 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRequest {
-    
+
     @NotBlank(message = "Product name is required")
     private String name;
-    
+
     private String description;
-    
+
     private String manufacturer;
-    
+
     @NotNull(message = "Price is required")
     @Positive(message = "Price must be positive")
     private BigDecimal price;
-    
+
     @NotNull(message = "Stock quantity is required")
     @PositiveOrZero(message = "Stock quantity must be zero or positive")
     private Integer stockQuantity;
-    
+
     @NotNull(message = "Category is required")
     private ProductCategory category;
-    
-    private String imageUrl;
-    
+
+    private java.util.List<String> imageUrls;
+
     private LocalDate expiryDate;
-    
+
     private Boolean isPrescriptionRequired = false;
 }

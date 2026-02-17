@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { X, Upload } from 'lucide-react';
 import { Product, ProductCategory } from '../../types';
 import { productService } from '../../services/productService';
 
@@ -16,11 +17,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         price: 0,
         stockQuantity: 0,
         category: 'OTHER' as ProductCategory,
-        imageUrl: '',
+        imageUrls: [] as string[],
         isPrescriptionRequired: false,
+        expiryDate: '',
     });
 
     const [loading, setLoading] = useState(false);
+    const [uploadingImages, setUploadingImages] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -32,8 +35,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 price: product.price,
                 stockQuantity: product.stockQuantity,
                 category: product.category,
-                imageUrl: product.imageUrl || '',
+                imageUrls: product.imageUrls || ((product as any).imageUrl ? [(product as any).imageUrl] : []),
                 isPrescriptionRequired: product.isPrescriptionRequired,
+                expiryDate: product.expiryDate || '',
             });
         }
     }, [product]);
@@ -51,6 +55,32 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         setFormData(prev => ({
             ...prev,
             [name]: checked,
+        }));
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setUploadingImages(true);
+            try {
+                const filesArray = Array.from(e.target.files);
+                const urls = await productService.uploadImages(filesArray);
+                setFormData(prev => ({
+                    ...prev,
+                    imageUrls: [...(prev.imageUrls || []), ...(urls.data || [])]
+                }));
+            } catch (err) {
+                console.error('Failed to upload images', err);
+                setError('Failed to upload images');
+            } finally {
+                setUploadingImages(false);
+            }
+        }
+    };
+
+    const handleRemoveImage = (index: number) => {
+        setFormData(prev => ({
+            ...prev,
+            imageUrls: prev.imageUrls?.filter((_, i) => i !== index)
         }));
     };
 
@@ -158,14 +188,58 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                         </select>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Image URL</label>
+                        <label className="block text-sm font-medium text-gray-700">Product Images</label>
+                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md relative hover:bg-gray-50 transition-colors">
+                            <div className="space-y-1 text-center">
+                                {uploadingImages ? (
+                                    <div className="flex flex-col items-center">
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                        <p className="mt-2 text-sm text-gray-500">Uploading...</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                                        <div className="flex text-sm text-gray-600">
+                                            <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                                <span>Upload files</span>
+                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" multiple onChange={handleFileChange} accept="image/*" />
+                                            </label>
+                                            <p className="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        {formData.imageUrls && formData.imageUrls.length > 0 && (
+                            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                                {formData.imageUrls.map((url, index) => (
+                                    <div key={index} className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                                        <img src={`http://localhost:8080${url}`} alt={`Product ${index + 1}`} className="object-cover w-full h-full" onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image';
+                                        }} />
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveImage(index)}
+                                            className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Expiry Date</label>
                         <input
-                            type="text"
-                            name="imageUrl"
-                            value={formData.imageUrl}
+                            type="date"
+                            name="expiryDate"
+                            value={formData.expiryDate}
                             onChange={handleChange}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                         />
+                        <p className="mt-1 text-xs text-gray-500">Leave blank if not applicable</p>
                     </div>
                     <div className="flex items-center">
                         <input
