@@ -14,6 +14,7 @@ const ProductDetail: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -90,8 +91,44 @@ const ProductDetail: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8">
           {/* Image Section */}
-          <div className="bg-gray-50 p-8 flex items-center justify-center min-h-[400px] lg:h-full relative">
-            <div className="text-9xl">💊</div>
+          <div className="bg-gray-50 p-8 flex flex-col items-center justify-center min-h-[400px] lg:h-full relative">
+            {product.imageUrls && product.imageUrls.length > 0 ? (
+              <>
+                <div className="w-full h-[300px] lg:h-[400px] flex items-center justify-center mb-4">
+                  <img
+                    src={`http://localhost:8080${product.imageUrls[selectedImageIndex]}`}
+                    alt={product.name}
+                    className="max-w-full max-h-full object-contain rounded-lg shadow-sm"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400?text=Image+Error';
+                    }}
+                  />
+                </div>
+                {product.imageUrls.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto p-2 w-full justify-center">
+                    {product.imageUrls.map((url, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImageIndex(index)}
+                        className={`border-2 rounded-md overflow-hidden h-16 w-16 flex-shrink-0 transition-all ${selectedImageIndex === index ? 'border-primary-600 ring-2 ring-primary-100' : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                      >
+                        <img
+                          src={`http://localhost:8080${url}`}
+                          alt={`${product.name} ${index + 1}`}
+                          className="h-full w-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=Error';
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-9xl">💊</div>
+            )}
             {product.isPrescriptionRequired && (
               <div className="absolute top-6 left-6">
                 <span className="inline-flex items-center px-3 py-1 rounded-md text-sm font-bold bg-white text-red-600 border border-red-100 shadow-sm">

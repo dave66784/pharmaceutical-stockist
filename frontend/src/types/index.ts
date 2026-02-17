@@ -38,7 +38,7 @@ export interface Product {
   price: number;
   stockQuantity: number;
   category: ProductCategory;
-  imageUrl?: string;
+  imageUrls?: string[];
   expiryDate?: string;
   isPrescriptionRequired: boolean;
   createdAt: string;

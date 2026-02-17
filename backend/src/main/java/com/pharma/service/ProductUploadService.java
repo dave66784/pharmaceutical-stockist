@@ -118,8 +118,14 @@ public class ProductUploadService {
                     String.join(", ", getValidCategories()));
         }
 
-        // Column 6: Image URL
-        product.setImageUrl(getCellValueAsString(row.getCell(6)));
+        // Column 6: Image URL (comma separated for multiple)
+        String imageUrlStr = getCellValueAsString(row.getCell(6));
+        if (imageUrlStr != null && !imageUrlStr.trim().isEmpty()) {
+            java.util.List<String> urls = java.util.Arrays.asList(imageUrlStr.split(","));
+            // Trim each URL
+            urls = urls.stream().map(String::trim).collect(java.util.stream.Collectors.toList());
+            product.setImageUrls(urls);
+        }
 
         // Column 7: Prescription Required (default false)
         Boolean prescriptionRequired = getCellValueAsBoolean(row.getCell(7));

@@ -45,7 +45,7 @@ public class ProductService {
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
         product.setCategory(request.getCategory());
-        product.setImageUrl(request.getImageUrl());
+        product.setImageUrls(request.getImageUrls());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
         product.setIsDeleted(false);
@@ -63,7 +63,7 @@ public class ProductService {
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
         product.setCategory(request.getCategory());
-        product.setImageUrl(request.getImageUrl());
+        product.setImageUrls(request.getImageUrls());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
 

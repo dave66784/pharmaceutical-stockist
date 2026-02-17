@@ -33,10 +33,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     return (
         <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 overflow-hidden relative">
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-100 relative group-hover:opacity-95 transition-opacity">
-                {/* Placeholder for product image */}
-                <div className="flex items-center justify-center w-full h-48 bg-gradient-to-br from-gray-50 to-gray-100 text-4xl">
-                    💊
-                </div>
+                {product.imageUrls && product.imageUrls.length > 0 ? (
+                    <img
+                        src={`http://localhost:8080${product.imageUrls[0]}`}
+                        alt={product.name}
+                        className="w-full h-48 object-cover object-center"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300?text=No+Image';
+                        }}
+                    />
+                ) : (
+                    <div className="flex items-center justify-center w-full h-48 bg-gradient-to-br from-gray-50 to-gray-100 text-4xl">
+                        💊
+                    </div>
+                )}
                 {product.stockQuantity === 0 && (
                     <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex items-center justify-center z-10">
                         <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">

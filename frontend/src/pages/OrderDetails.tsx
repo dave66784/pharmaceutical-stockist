@@ -113,12 +113,17 @@ const OrderDetails: React.FC = () => {
                                 {order.orderItems.map((item) => (
                                     <li key={item.id} className="p-4 sm:p-6 flex items-center">
                                         <div className="flex-shrink-0 h-16 w-16 border border-gray-200 rounded-md overflow-hidden bg-gray-100">
-                                            {item.product.imageUrl ? (
-                                                <img src={item.product.imageUrl} alt={item.product.name} className="h-full w-full object-cover object-center" />
+                                            {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
+                                                <img
+                                                    src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                                                    alt={item.product.name}
+                                                    className="h-full w-full object-cover"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=No+Image';
+                                                    }}
+                                                />
                                             ) : (
-                                                <div className="h-full w-full flex items-center justify-center text-gray-400">
-                                                    <Package className="h-8 w-8" />
-                                                </div>
+                                                <div className="h-full w-full flex items-center justify-center text-3xl">💊</div>
                                             )}
                                         </div>
                                         <div className="ml-4 flex-1">

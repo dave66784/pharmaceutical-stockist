@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { orderService } from '../services/orderService';
 import { Order } from '../types';
 import { Link } from 'react-router-dom';
+import { Download, ExternalLink } from 'lucide-react';
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -80,7 +81,9 @@ const Orders: React.FC = () => {
                 <div className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-blue-600 truncate">
-                      Order #{order.id}
+                      <Link to={`/orders/${order.id}`} className="hover:underline">
+                        Order #{order.id}
+                      </Link>
                     </p>
                     <div className="ml-2 flex-shrink-0 flex">
                       <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -90,6 +93,37 @@ const Orders: React.FC = () => {
                               'bg-yellow-100 text-yellow-800'}`}>
                         {order.status}
                       </p>
+                    </div>
+                    <div className="ml-4 flex-shrink-0 flex items-center space-x-4">
+                      <button
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          try {
+                            const blob = await orderService.downloadReceipt(order.id);
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', `receipt_${order.id}.pdf`);
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
+                            window.URL.revokeObjectURL(url);
+                          } catch (err) {
+                            console.error('Failed to download receipt', err);
+                          }
+                        }}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                      >
+                        <Download className="mr-1.5 h-4 w-4" />
+                        Receipt
+                      </button>
+                      <Link
+                        to={`/orders/${order.id}`}
+                        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900"
+                      >
+                        <ExternalLink className="mr-1.5 h-4 w-4" />
+                        Details
+                      </Link>
                     </div>
                   </div>
                   <div className="mt-2 sm:flex sm:justify-between">
