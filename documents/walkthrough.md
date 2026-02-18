@@ -21,6 +21,13 @@ We have successfully increased the backend test coverage to **91.8%** across the
 - All **41 tests** passed successfully.
 - Jacoco report generated at `target/site/jacoco/index.html`.
 
+    *   **Quick Run (Helper Script):**
+        ```bash
+        ./scripts/run_ui_tests.sh           # Run all tests headless
+        ./scripts/run_ui_tests.sh chromium  # Run in Chrome only
+        ./scripts/run_ui_tests.sh ui        # Open interactive UI mode
+        ./scripts/run_ui_tests.sh master    # JUST the Master Flow (Combined Video)
+        ```
     *   **Visual Report (Screenshots & Video):**
         The report now includes a special **"End-to-End Master Flow"** test with a single combined video showing the entire human-speed journey.
         ```bash
