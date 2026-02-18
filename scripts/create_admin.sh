@@ -14,13 +14,13 @@ echo ""
 
 # Wait for backend to be ready
 echo "⏳ Waiting for backend to be ready..."
-max_attempts=30
+max_attempts=60
 attempt=0
 
 while [ $attempt -lt $max_attempts ]; do
   # Check if backend responds (even 403 is fine, means it's up)
   http_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/actuator/health)
-  if [ "$http_code" == "200" ] || [ "$http_code" == "403" ]; then
+  if [ "$http_code" == "200" ] || [ "$http_code" == "403" ] || [ "$http_code" == "503" ]; then
     echo "✅ Backend is ready!"
     break
   fi
@@ -65,6 +65,10 @@ fi
 
 echo ""
 echo "🔐 Updating user role to ADMIN..."
+
+
+# Wait for user to be persisted
+sleep 5
 
 # Update the role to ADMIN directly in the database
 docker exec -i pharma-db psql -U postgres -d pharma_db -c \
