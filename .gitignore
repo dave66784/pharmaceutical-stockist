@@ -78,3 +78,6 @@ docker-compose.override.yml
 uploads/
 .DS_Store
 test_images/
+
+# Monitoring
+monitoring/alertmanager.yml

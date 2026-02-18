@@ -41,6 +41,10 @@ public class User {
     @Column(nullable = false)
     private Role role = Role.CUSTOMER;
 
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

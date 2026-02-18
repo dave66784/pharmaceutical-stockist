@@ -24,6 +24,7 @@ public class OrderService {
     private final CartService cartService;
     private final UserService userService;
     private final ProductService productService;
+    private final EmailService emailService;
 
     @Transactional
     public Order createOrder(String email, OrderRequest request) {
@@ -76,6 +77,9 @@ public class OrderService {
 
         // Clear cart
         cartService.clearCart(email);
+
+        // Send notification
+        emailService.sendOrderPlacedNotification(savedOrder);
 
         return savedOrder;
     }
