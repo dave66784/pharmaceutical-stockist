@@ -17,7 +17,17 @@ We have successfully increased the backend test coverage to **91.8%** across the
 - **Comprehensive Scenarios**: Added tests for success paths, error handling (e.g., `InsufficientStockException`, `ResourceNotFoundException`), and edge cases.
 - **Fixed Logic Errors**: Corrected mocked repository calls in `ProductServiceTest` to match actual implementation.
 
-## Verification Results
+## 1. Unified Build & Deploy
+To build both frontend and backend and deploy the entire stack (including monitoring) in one go:
+
+```bash
+./scripts/build_and_deploy.sh         # Standard deployment
+./scripts/build_and_deploy.sh --test  # Run tests before deploying
+```
+
+This script handles dependency verification, Docker image rebuilding, and service health checks.
+
+## 2. Verification Results
 - All **41 tests** passed successfully.
 - Jacoco report generated at `target/site/jacoco/index.html`.
 
