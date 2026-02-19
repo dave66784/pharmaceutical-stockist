@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: Pharmaceutical Stockist API
+  description: API for managing pharmaceutical products, orders, and inventory.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /api/auth/register:
+    $ref: './paths/auth.yaml#/register'
+  /api/auth/login:
+    $ref: './paths/auth.yaml#/login'
+  /api/products:
+    $ref: './paths/products.yaml#/products'
+  /api/products/{id}:
+    $ref: './paths/products.yaml#/productById'
+  /api/products/search:
+    $ref: './paths/products.yaml#/searchProducts'
+  /api/products/category/{category}:
+    $ref: './paths/products.yaml#/productsByCategory'
+  /api/cart:
+    $ref: './paths/cart.yaml#/cart'
+  /api/cart/items:
+    $ref: './paths/cart.yaml#/cartItems'
+  /api/cart/items/{itemId}:
+    $ref: './paths/cart.yaml#/cartItemDetail'
+  /api/cart/clear:
+    $ref: './paths/cart.yaml#/clearCart'
+  /api/orders:
+    $ref: './paths/orders.yaml#/orders'
+  /api/orders/{id}:
+    $ref: './paths/orders.yaml#/orderDetail'
+  /api/addresses:
+    $ref: './paths/address.yaml#/paths/~1api~1addresses'
+  /api/addresses/{id}:
+    $ref: './paths/address.yaml#/paths/~1api~1addresses~1{id}'
+  /api/admin/orders:
+    $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders'
+  /api/admin/orders/status/{status}:
+    $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders~1status~1{status}'
+  /api/admin/orders/{orderId}/status:
+    $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders~1{orderId}~1status'
+  /api/admin/orders/export:
+    $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders~1export'
+  /api/admin/dashboard/stats:
+    $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1stats'
+  /api/admin/dashboard/daily-revenue:
+    $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1daily-revenue'
+  /api/admin/dashboard/expiring-products:
+    $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1expiring-products'
+  /api/admin/dashboard/top-products:
+    $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1top-products'
+  /api/admin/users:
+    $ref: './paths/user.yaml#/paths/~1api~1admin~1users'
+  /api/admin/users/role/{role}:
+    $ref: './paths/user.yaml#/paths/~1api~1admin~1users~1role~1{role}'
+  /api/admin/users/{userId}/role:
+    $ref: './paths/user.yaml#/paths/~1api~1admin~1users~1{userId}~1role'

@@ -1,0 +1,76 @@
+components:
+  schemas:
+    DashboardStatsResponse:
+      type: object
+      properties:
+        totalRevenue:
+          type: number
+        todayRevenue:
+          type: number
+        monthRevenue:
+          type: number
+        totalOrders:
+          type: integer
+          format: int64
+        todayOrders:
+          type: integer
+          format: int64
+        totalProducts:
+          type: integer
+          format: int64
+        lowStockProducts:
+          type: integer
+          format: int64
+        outOfStockProducts:
+          type: integer
+          format: int64
+        totalCustomers:
+          type: integer
+          format: int64
+        newCustomersThisMonth:
+          type: integer
+          format: int64
+        ordersByStatus:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+
+    DailyRevenueDto:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        revenue:
+          type: number
+
+    ExpiringProductDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        expiryDate:
+          type: string
+          format: date
+        stockQuantity:
+          type: integer
+        daysUntilExpiry:
+          type: integer
+
+    ProductSalesDto:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        productName:
+          type: string
+        totalQuantitySold:
+          type: integer
+          format: int64
+        totalRevenue:
+          type: number

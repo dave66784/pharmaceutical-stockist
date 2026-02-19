@@ -1,0 +1,180 @@
+products:
+  get:
+    tags:
+      - Products
+    summary: Get all products
+    operationId: getAllProducts
+    parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        schema:
+          type: integer
+          default: 12
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          default: id
+    responses:
+      '200':
+        description: List of products
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+  post:
+    tags:
+      - Products
+    summary: Create a new product (Admin only)
+    operationId: createProduct
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/ProductRequest'
+    responses:
+      '200':
+        description: Product created
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+
+productById:
+  get:
+    tags:
+      - Products
+    summary: Get product by ID
+    operationId: getProductById
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Product found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+  put:
+    tags:
+      - Products
+    summary: Update product (Admin only)
+    operationId: updateProduct
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/ProductRequest'
+    responses:
+      '200':
+        description: Product updated
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+  delete:
+    tags:
+      - Products
+    summary: Delete product (Admin only)
+    operationId: deleteProduct
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Product deleted
+
+searchProducts:
+  get:
+    tags:
+      - Products
+    summary: Search products
+    operationId: searchProducts
+    parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        schema:
+          type: integer
+          default: 12
+    responses:
+      '200':
+        description: Search results
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+
+productsByCategory:
+  get:
+    tags:
+      - Products
+    summary: Get products by category
+    operationId: getProductsByCategory
+    parameters:
+      - name: category
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: size
+        in: query
+        schema:
+          type: integer
+          default: 12
+    responses:
+      '200':
+        description: Products in category
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas/product.yaml#/components/schemas/Product'

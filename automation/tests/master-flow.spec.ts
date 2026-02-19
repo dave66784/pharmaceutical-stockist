@@ -81,6 +81,9 @@ test('End-to-End Master Flow', async ({ page, request }) => {
     await expect(page.getByText('Order placed successfully')).toBeVisible();
     await expect(page.getByText('Order Items')).toBeVisible();
 
+    // Wait for the success toast to disappear before clicking the menu
+    await expect(page.getByText('Order placed successfully')).toBeHidden({ timeout: 15000 });
+
     // 9. Order History
     await page.getByRole('button', { name: 'Open user menu' }).click();
     await page.getByRole('menuitem', { name: 'My Orders' }).click();

@@ -1,0 +1,129 @@
+paths:
+  /api/admin/users:
+    get:
+      summary: Get all users
+      tags:
+        - Admin Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          content:
+                            type: array
+                            items:
+                              $ref: '../components/schemas/user.yaml#/components/schemas/User'
+                          totalElements:
+                            type: integer
+                            format: int64
+                          totalPages:
+                            type: integer
+                          size:
+                            type: integer
+                          number:
+                            type: integer
+  /api/admin/users/role/{role}:
+    get:
+      summary: Get users by role
+      tags:
+        - Admin Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: role
+          in: path
+          required: true
+          schema:
+            $ref: '../components/schemas/user.yaml#/components/schemas/Role'
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          content:
+                            type: array
+                            items:
+                              $ref: '../components/schemas/user.yaml#/components/schemas/User'
+                          totalElements:
+                            type: integer
+                            format: int64
+                          totalPages:
+                            type: integer
+                          size:
+                            type: integer
+                          number:
+                            type: integer
+  /api/admin/users/{userId}/role:
+    put:
+      summary: Update user role
+      tags:
+        - Admin Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: role
+          in: query
+          required: true
+          schema:
+            $ref: '../components/schemas/user.yaml#/components/schemas/Role'
+      responses:
+        '200':
+          description: User role updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '../components/schemas/user.yaml#/components/schemas/User'

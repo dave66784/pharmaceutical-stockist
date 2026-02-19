@@ -1,0 +1,39 @@
+register:
+  post:
+    tags:
+      - Auth
+    summary: Register a new user
+    operationId: registerUser
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/auth.yaml#/components/schemas/RegisterRequest'
+    responses:
+      '200':
+        description: User registered successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+
+login:
+  post:
+    tags:
+      - Auth
+    summary: Login user
+    operationId: loginUser
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/auth.yaml#/components/schemas/LoginRequest'
+    responses:
+      '200':
+        description: Login successful
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
