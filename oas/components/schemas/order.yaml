@@ -1,0 +1,54 @@
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        totalAmount:
+          type: number
+          format: double
+        status:
+          type: string
+          enum: [PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED]
+        shippingAddress:
+          type: string
+        addressId:
+          type: integer
+          format: int64
+        orderDate:
+          type: string
+          format: date-time
+        deliveryDate:
+          type: string
+          format: date-time
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product:
+          $ref: 'product.yaml#/components/schemas/Product'
+        quantity:
+          type: integer
+        price:
+          type: number
+          format: double
+
+    OrderRequest:
+      type: object
+      required:
+        - shippingAddress
+      properties:
+        shippingAddress:
+          type: string
+        addressId:
+          type: integer
+          format: int64

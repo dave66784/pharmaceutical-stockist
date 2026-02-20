@@ -1,0 +1,170 @@
+paths:
+  /api/admin/orders:
+    get:
+      summary: Get all orders
+      tags:
+        - Admin Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            default: orderDate
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          content:
+                            type: array
+                            items:
+                              $ref: '../components/schemas/order.yaml#/components/schemas/Order'
+                          totalElements:
+                            type: integer
+                            format: int64
+                          totalPages:
+                            type: integer
+                          size:
+                            type: integer
+                          number:
+                            type: integer
+  /api/admin/orders/status/{status}:
+    get:
+      summary: Get orders by status
+      tags:
+        - Admin Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED]
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          content:
+                            type: array
+                            items:
+                              $ref: '../components/schemas/order.yaml#/components/schemas/Order'
+                          totalElements:
+                            type: integer
+                            format: int64
+                          totalPages:
+                            type: integer
+                          size:
+                            type: integer
+                          number:
+                            type: integer
+  /api/admin/orders/{orderId}/status:
+    put:
+      summary: Update order status
+      tags:
+        - Admin Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED]
+      responses:
+        '200':
+          description: Order status updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '../components/schemas/order.yaml#/components/schemas/Order'
+  /api/admin/orders/export:
+    get:
+      summary: Export orders to Excel
+      tags:
+        - Admin Orders
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: customerEmail
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Excel file containing orders
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
