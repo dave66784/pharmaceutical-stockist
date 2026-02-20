@@ -35,7 +35,7 @@ components:
           type: integer
           format: int64
         product:
-          $ref: '../product.yaml#/components/schemas/Product'
+          $ref: 'product.yaml#/components/schemas/Product'
         quantity:
           type: integer
         price:
