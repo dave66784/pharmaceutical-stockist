@@ -21,9 +21,16 @@ export const productService = {
     return response.data;
   },
 
-  getProductsByCategory: async (category: string, page = 0, size = 12) => {
+  getProductsByCategory: async (category: string, page = 0, size = 12, subCategories?: string[]) => {
+    // If subCategories is provided and not empty, pass it as a parameter, otherwise omit it.
+    // Axios will automatically stringify the array as subCategory=A&subCategory=B
+    const params: any = { page, size };
+    if (subCategories && subCategories.length > 0) {
+      params.subCategory = subCategories.join(',');
+    }
+    console.log("Fetching by category:", category, "params:", params, "subCategories provided:", subCategories);
     const response = await api.get<ApiResponse<PageResponse<Product>>>(`/products/category/${category}`, {
-      params: { page, size },
+      params,
     });
     return response.data;
   },

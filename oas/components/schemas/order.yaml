@@ -41,6 +41,8 @@ components:
         price:
           type: number
           format: double
+        freeQuantity:
+          type: integer
 
     OrderRequest:
       type: object

@@ -16,6 +16,10 @@ The file should have the following columns (in this exact order):
 | F | Category | Text | Yes | PAIN_RELIEF |
 | G | Image URL | Text | No | https://example.com/image.jpg |
 | H | Prescription Required | Boolean | No | false |
+| I | Is Bundle Offer | Boolean | No | true |
+| J | Bundle Buy Quantity | Number | No | 10 |
+| K | Bundle Free Quantity | Number | No | 2 |
+| L | Bundle Price | Number | No | 50.00 |
 
 ## Valid Categories
 
@@ -34,11 +38,11 @@ The file should have the following columns (in this exact order):
 ## Sample Data
 
 ```
-Name,Description,Manufacturer,Price,Stock Quantity,Category,Image URL,Prescription Required
-Paracetamol 500mg,Pain relief tablets,PharmaCo,5.99,100,PAIN_RELIEF,https://example.com/paracetamol.jpg,false
-Vitamin C 1000mg,Immune support,VitaCo,12.99,50,VITAMINS,https://example.com/vitaminc.jpg,false
-Amoxicillin 500mg,Antibiotic capsules,AntibioMed,25.00,30,ANTIBIOTICS,https://example.com/amoxicillin.jpg,true
-COVID-19 Vaccine,mRNA vaccine,VaxCorp,0.00,200,VACCINES,,true
+Name,Description,Manufacturer,Price,Stock Quantity,Category,Image URL,Prescription Required,Is Bundle Offer,Bundle Buy Quantity,Bundle Free Quantity,Bundle Price
+Paracetamol 500mg,Pain relief tablets,PharmaCo,5.99,100,PAIN_RELIEF,https://example.com/paracetamol.jpg,false,true,10,2,50.00
+Vitamin C 1000mg,Immune support,VitaCo,12.99,50,VITAMINS,https://example.com/vitaminc.jpg,false,false,,,
+Amoxicillin 500mg,Antibiotic capsules,AntibioMed,25.00,30,ANTIBIOTICS,https://example.com/amoxicillin.jpg,true,false,,,
+COVID-19 Vaccine,mRNA vaccine,VaxCorp,0.00,200,VACCINES,,true,false,,,
 ```
 
 ## Notes

@@ -73,7 +73,23 @@ const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, onClose })
                                                     <td className="px-4 py-2 text-sm text-gray-900">{item.product.name}</td>
                                                     <td className="px-4 py-2 text-sm text-gray-500">{item.quantity}</td>
                                                     <td className="px-4 py-2 text-sm text-gray-500">${item.price.toFixed(2)}</td>
-                                                    <td className="px-4 py-2 text-sm text-gray-900">${(item.price * item.quantity).toFixed(2)}</td>
+                                                    <td className="px-4 py-2 text-sm text-gray-900">
+                                                        {(item.price * item.quantity).toFixed(2) !== item.subtotal.toFixed(2) ? (
+                                                            <div className="text-right">
+                                                                <span className="text-xs text-gray-500 line-through mr-2">
+                                                                    ${(item.price * item.quantity).toFixed(2)}
+                                                                </span>
+                                                                <span className="font-bold text-primary-600">
+                                                                    ${item.subtotal.toFixed(2)}
+                                                                </span>
+                                                                <div className="text-[10px] text-green-600 font-semibold">
+                                                                    (Bundle Discount Applied)
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            `$${item.subtotal.toFixed(2)}`
+                                                        )}
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>

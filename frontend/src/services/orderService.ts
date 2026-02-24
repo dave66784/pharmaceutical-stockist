@@ -44,6 +44,9 @@ export const orderService = {
   downloadReceipt: async (orderId: number) => {
     const response = await api.get(`/orders/${orderId}/receipt`, {
       responseType: 'blob',
+      headers: {
+        'Accept': 'application/pdf',
+      }
     });
     return response.data;
   },

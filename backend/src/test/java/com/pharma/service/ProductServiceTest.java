@@ -1,28 +1,33 @@
 package com.pharma.service;
 
-import com.pharma.model.Product;
-import com.pharma.repository.ProductRepository;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.anyInt;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.pharma.model.Product;
+import com.pharma.repository.ProductRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -134,6 +139,23 @@ class ProductServiceTest {
                 any(Pageable.class))).thenReturn(productPage);
 
         Page<Product> result = productService.getProductsByCategory(com.pharma.model.enums.ProductCategory.PAIN_RELIEF,
+                PageRequest.of(0, 10));
+
+        assertNotNull(result);
+        assertEquals(1, result.getTotalElements());
+    }
+
+    @Test
+    void getProductsByCategoryAndSubCategory_Success() {
+        Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
+        when(productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(
+                any(com.pharma.model.enums.ProductCategory.class),
+                anyList(),
+                any(Pageable.class))).thenReturn(productPage);
+
+        Page<Product> result = productService.getProductsByCategoryAndSubCategory(
+                com.pharma.model.enums.ProductCategory.PAIN_RELIEF,
+                List.of("Paracetamol"),
                 PageRequest.of(0, 10));
 
         assertNotNull(result);

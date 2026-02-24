@@ -38,11 +38,16 @@ export interface Product {
   price: number;
   stockQuantity: number;
   category: ProductCategory;
+  subCategory?: string;
   imageUrls?: string[];
   expiryDate?: string;
   isPrescriptionRequired: boolean;
   createdAt: string;
   updatedAt: string;
+  isBundleOffer: boolean;
+  bundleBuyQuantity?: number;
+  bundleFreeQuantity?: number;
+  bundlePrice?: number;
 }
 
 export type ProductCategory =
@@ -75,6 +80,8 @@ export interface OrderItem {
   product: Product;
   quantity: number;
   price: number;
+  freeQuantity?: number;
+  subtotal: number;
 }
 
 export interface Order {

@@ -5,6 +5,7 @@ import { cartService } from '../services/cartService';
 import { Cart, PaymentMethod } from '../types';
 import { useToast } from '../hooks/useToast';
 import { CreditCard, Truck, Check } from 'lucide-react';
+import { calculateItemTotal } from '../utils/pricing';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
@@ -74,8 +75,7 @@ const Payment: React.FC = () => {
 
     const calculateTotal = () => {
         if (!cart) return 0;
-        const subtotal = cart.items.reduce((total, item) => total + (item.product.price * item.quantity), 0);
-        return subtotal > 50 ? subtotal : subtotal + 10; // Assuming $10 shipping if <= $50
+        return cart.items.reduce((total, item) => total + calculateItemTotal(item.product, item.quantity), 0);
     };
 
     if (pageLoading) {

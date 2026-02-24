@@ -7,22 +7,32 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.pharma.dto.request.ProductRequest;
-import com.pharma.dto.response.ApiResponse;
-import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
-import com.pharma.service.ProductService;
-import com.pharma.service.ProductUploadService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.pharma.dto.request.ProductRequest;
+import com.pharma.dto.response.ApiResponse;
+import com.pharma.model.Product;
+import com.pharma.model.enums.ProductCategory;
+import com.pharma.service.ProductService;
+import com.pharma.service.ProductUploadService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -39,7 +49,7 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
             @RequestParam(defaultValue = "id") String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
         Page<Product> products = productService.getAllProducts(pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }
@@ -55,7 +65,7 @@ public class ProductController {
             @RequestParam String query,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
         Page<Product> products = productService.searchProducts(query, pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Search results retrieved successfully", products));
     }
@@ -63,10 +73,16 @@ public class ProductController {
     @GetMapping("/category/{category}")
     public ResponseEntity<ApiResponse<Page<Product>>> getProductsByCategory(
             @PathVariable ProductCategory category,
+            @RequestParam(required = false) java.util.List<String> subCategory,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Product> products = productService.getProductsByCategory(category, pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        Page<Product> products;
+        if (subCategory != null && !subCategory.isEmpty()) {
+            products = productService.getProductsByCategoryAndSubCategory(category, subCategory, pageable);
+        } else {
+            products = productService.getProductsByCategory(category, pageable);
+        }
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }
 
