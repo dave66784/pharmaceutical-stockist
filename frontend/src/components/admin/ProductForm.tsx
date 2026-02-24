@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
-import { Product, ProductCategory } from '../../types';
+import { Category, Product, SubCategory } from '../../types';
 import { productService } from '../../services/productService';
+import { categoryService } from '../../services/categoryService';
 
 interface ProductFormProps {
     product?: Product;
@@ -16,7 +17,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         manufacturer: '',
         price: 0,
         stockQuantity: 0,
-        category: 'OTHER' as ProductCategory,
+        categoryId: 0,
+        subCategoryId: 0 as number | undefined,
         imageUrls: [] as string[],
         isPrescriptionRequired: false,
         expiryDate: '',
@@ -30,6 +32,47 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
     const [uploadingImages, setUploadingImages] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    // Dynamic Category State
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const cats = await categoryService.getAllCategories();
+                setCategories(cats);
+                if (cats.length > 0 && formData.categoryId === 0 && !product) {
+                    setFormData(prev => ({ ...prev, categoryId: cats[0].id }));
+                }
+            } catch (err) {
+                console.error('Failed to fetch categories', err);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        const fetchSubCategories = async () => {
+            const activeCategoryId = formData.categoryId || product?.category?.id;
+            if (activeCategoryId) {
+                try {
+                    const subCats = await categoryService.getSubCategoriesByCategory(activeCategoryId);
+                    setSubCategories(subCats);
+
+                    // Auto-select first subcategory if switching categories, else preserve existing
+                    if (subCats.length > 0 && !product) {
+                        setFormData(prev => ({ ...prev, subCategoryId: subCats[0].id }));
+                    } else if (subCats.length === 0) {
+                        setFormData(prev => ({ ...prev, subCategoryId: undefined }));
+                    }
+                } catch (err) {
+                    console.error('Failed to fetch subcategories', err);
+                }
+            }
+        };
+        fetchSubCategories();
+    }, [formData.categoryId, product]);
+
     useEffect(() => {
         if (product) {
             setFormData({
@@ -38,7 +81,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 manufacturer: product.manufacturer || '',
                 price: product.price,
                 stockQuantity: product.stockQuantity,
-                category: product.category,
+                categoryId: product.category.id,
+                subCategoryId: product.subCategory?.id,
                 imageUrls: product.imageUrls || ((product as any).imageUrl ? [(product as any).imageUrl] : []),
                 isPrescriptionRequired: product.isPrescriptionRequired,
                 expiryDate: product.expiryDate || '',
@@ -98,25 +142,33 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         setError(null);
 
         try {
+            const payload = {
+                ...formData,
+                // Send undefined for expiryDate when blank — empty string fails LocalDate parsing on backend
+                expiryDate: formData.expiryDate || undefined,
+                // Send undefined for subCategoryId when not selected
+                subCategoryId: formData.subCategoryId || undefined,
+                // Ensure categoryId is a number
+                categoryId: Number(formData.categoryId),
+            };
+
             if (product) {
-                await productService.updateProduct(product.id, formData);
+                await productService.updateProduct(product.id, payload);
             } else {
-                await productService.createProduct(formData);
+                await productService.createProduct(payload);
             }
             onSuccess();
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            setError('Failed to save product');
+            const msg = err?.response?.data?.message || 'Failed to save product';
+            setError(msg);
         } finally {
             setLoading(false);
         }
     };
 
-    const categories: ProductCategory[] = [
-        'PAIN_RELIEF', 'ANTIBIOTICS', 'VITAMINS', 'COLD_FLU',
-        'DIGESTIVE', 'DIABETES', 'CARDIOVASCULAR', 'SKINCARE',
-        'FIRST_AID', 'OTHER'
-    ];
+
+
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -185,13 +237,34 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Category</label>
                         <select
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                            name="categoryId"
+                            value={formData.categoryId}
+                            onChange={(e) => {
+                                const newCategoryId = parseInt(e.target.value);
+                                setFormData(prev => ({ ...prev, categoryId: newCategoryId, subCategoryId: undefined }));
+                            }}
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
                         >
+                            <option value={0} disabled>Select a Category</option>
                             {categories.map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Sub-Category</label>
+                        <select
+                            name="subCategoryId"
+                            value={formData.subCategoryId || ''}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                setFormData(prev => ({ ...prev, subCategoryId: val ? parseInt(val) : undefined }));
+                            }}
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
+                        >
+                            <option value="">None</option>
+                            {subCategories.map(subCat => (
+                                <option key={subCat.id} value={subCat.id}>{subCat.name}</option>
                             ))}
                         </select>
                     </div>

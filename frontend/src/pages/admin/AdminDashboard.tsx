@@ -7,6 +7,7 @@ import {
 import ManageProducts from './ManageProducts';
 import ManageOrders from './ManageOrders';
 import ManageUsers from './ManageUsers';
+import ManageCategories from './ManageCategories';
 
 const AdminDashboard: React.FC = () => {
   const location = useLocation();
@@ -36,6 +37,9 @@ const AdminDashboard: React.FC = () => {
             <Link to="/admin/users" className={`block px-6 py-3 ${isActive('/admin/users')}`}>
               Manage Users
             </Link>
+            <Link to="/admin/categories" className={`block px-6 py-3 ${isActive('/admin/categories')}`}>
+              Manage Categories
+            </Link>
           </nav>
         </div>
 
@@ -47,6 +51,7 @@ const AdminDashboard: React.FC = () => {
               <Link to="/admin/products" className="text-blue-600">Products</Link>
               <Link to="/admin/orders" className="text-blue-600">Orders</Link>
               <Link to="/admin/users" className="text-blue-600">Users</Link>
+              <Link to="/admin/categories" className="text-blue-600">Categories</Link>
             </div>
           </div>
 
@@ -55,6 +60,7 @@ const AdminDashboard: React.FC = () => {
             <Route path="products" element={<ManageProducts />} />
             <Route path="orders" element={<ManageOrders />} />
             <Route path="users" element={<ManageUsers />} />
+            <Route path="categories" element={<ManageCategories />} />
           </Routes>
         </div>
       </div>

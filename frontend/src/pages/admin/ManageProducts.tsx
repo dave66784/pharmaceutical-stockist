@@ -291,7 +291,7 @@ const ManageProducts: React.FC = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.category}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.category?.name || 'Unknown'}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${product.price.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`text-sm font-semibold ${product.stockQuantity === 0 ? 'text-red-600' :
@@ -313,8 +313,8 @@ const ManageProducts: React.FC = () => {
 
                                         return (
                                             <span className={`font-medium ${isExpired ? 'text-red-600' :
-                                                    isExpiringSoon ? 'text-orange-600' :
-                                                        'text-gray-700'
+                                                isExpiringSoon ? 'text-orange-600' :
+                                                    'text-gray-700'
                                                 }`}>
                                                 {new Date(product.expiryDate).toLocaleDateString()}
                                                 {isExpired && ' (Expired)'}

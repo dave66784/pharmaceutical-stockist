@@ -3,8 +3,6 @@ package com.pharma.dto.request;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.pharma.model.enums.ProductCategory;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -33,10 +31,10 @@ public class ProductRequest {
     @PositiveOrZero(message = "Stock quantity must be zero or positive")
     private Integer stockQuantity;
 
-    @NotNull(message = "Category is required")
-    private ProductCategory category;
+    @NotNull(message = "Category ID is required")
+    private Long categoryId;
 
-    private String subCategory;
+    private Long subCategoryId;
 
     private java.util.List<String> imageUrls;
 

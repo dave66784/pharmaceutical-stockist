@@ -91,11 +91,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="p-5 flex-grow flex flex-col">
                 <div className="mb-2 flex items-center justify-between">
                     <span className="text-xs font-medium text-primary-600 uppercase tracking-wide">
-                        {product.category.replace('_', ' ')}
+                        {product.category.name}
                     </span>
                     {product.subCategory && (
                         <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-                            {product.subCategory}
+                            {product.subCategory.name}
                         </span>
                     )}
                 </div>

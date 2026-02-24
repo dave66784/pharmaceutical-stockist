@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pharma.dto.request.ProductRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
 import com.pharma.service.ProductService;
 import com.pharma.service.ProductUploadService;
 
@@ -70,18 +69,18 @@ public class ProductController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Search results retrieved successfully", products));
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/category/{categorySlug}")
     public ResponseEntity<ApiResponse<Page<Product>>> getProductsByCategory(
-            @PathVariable ProductCategory category,
+            @PathVariable String categorySlug,
             @RequestParam(required = false) java.util.List<String> subCategory,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
         Page<Product> products;
         if (subCategory != null && !subCategory.isEmpty()) {
-            products = productService.getProductsByCategoryAndSubCategory(category, subCategory, pageable);
+            products = productService.getProductsByCategoryAndSubCategory(categorySlug, subCategory, pageable);
         } else {
-            products = productService.getProductsByCategory(category, pageable);
+            products = productService.getProductsByCategory(categorySlug, pageable);
         }
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }

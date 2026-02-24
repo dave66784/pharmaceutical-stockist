@@ -1,0 +1,427 @@
+{
+  "config": {
+    "configFile": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/playwright.config.ts",
+    "rootDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "core.spec.ts",
+      "file": "core.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Customer Core Workflows",
+          "file": "core.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should list products and filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1045,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:00.092Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-dde5f4be90fe886dfe26",
+              "file": "core.spec.ts",
+              "line": 63,
+              "column": 9
+            },
+            {
+              "title": "should add item to cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:01.985Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-ee0bb3ef1bad891acb2e",
+              "file": "core.spec.ts",
+              "line": 75,
+              "column": 9
+            },
+            {
+              "title": "should view cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4546,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:03.133Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-bd4415f5d691f58e48bb",
+              "file": "core.spec.ts",
+              "line": 93,
+              "column": 9
+            },
+            {
+              "title": "should complete checkout workflow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4809,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "PAGE LOG: Render state: {loading: true, error: null, order: null}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Render state: {loading: true, error: null, order: null}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: OrderDetails mounted, id: 27\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Fetching order: 27\n"
+                        },
+                        {
+                          "text": "PAGE LOG: OrderDetails mounted, id: 27\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Fetching order: 27\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Order data received: {success: true, message: Order retrieved successfully, data: Object}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Setting order state: {id: 27, user: Object, totalAmount: 76.5, status: PENDING, paymentMethod: COD}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Order data received: {success: true, message: Order retrieved successfully, data: Object}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Setting order state: {id: 27, user: Object, totalAmount: 76.5, status: PENDING, paymentMethod: COD}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:07.692Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-41dfccf05e7044ea4566",
+              "file": "core.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "should view order history",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4561,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:12.513Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-0d909b4e70a0bd683aa9",
+              "file": "core.spec.ts",
+              "line": 165,
+              "column": 9
+            },
+            {
+              "title": "should view product list as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1364,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-02-24T21:20:17.083Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-a359f06c7dfbbadba8fe",
+              "file": "core.spec.ts",
+              "line": 192,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-02-24T21:19:58.969Z",
+    "duration": 19649.831,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

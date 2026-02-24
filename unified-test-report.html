@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Test Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6f8; color: #333; margin: 0; padding: 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { color: #1a202c; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 1.5rem; }
+        .card h2 { margin-top: 0; font-size: 1.25rem; color: #2d3748; display: flex; justify-content: space-between; align-items: center; }
+        .stats { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 0.95rem; }
+        .badge { padding: 4px 8px; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+        .badge-success { background: #def7ec; color: #03543f; }
+        .badge-error { background: #fde8e8; color: #9b1c1c; }
+        .badge-warning { background: #fef4cd; color: #7b5a03; }
+        .api-details { margin-top: 1rem; font-size: 0.85rem; border-top: 1px solid #edf2f7; padding-top: 1rem; }
+        .api-details li { margin-bottom: 0.25rem; }
+        .pass-text { color: #046c4e; }
+        .fail-text { color: #c81e1e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unified Test Execution Report</h1>
+        <p>Generated on: 2/24/2026, 9:20:18 PM</p>
+        
+        <div class="grid">
+            <!-- Backend -->
+            <div class="card">
+                <h2>📦 Backend (JUnit) <span class="badge badge-success">Passing</span></h2>
+                <div class="stats">
+                    <div class="stat-row"><span>Total Tests:</span> <strong>47</strong></div>
+                    <div class="stat-row"><span>Passed:</span> <strong class="pass-text">47</strong></div>
+                    <div class="stat-row"><span>Failed:</span> <strong class="fail-text">0</strong></div>
+                    <div class="stat-row"><span>Skipped:</span> <strong>0</strong></div>
+                    <div class="stat-row"><span>Duration:</span> <strong>19.30s</strong></div>
+                </div>
+            </div>
+
+            <!-- API -->
+            <div class="card">
+                <h2>🌐 API (cURL) <span class="badge badge-success">Passing</span></h2>
+                <div class="stats">
+                    <div class="stat-row"><span>Total Tests:</span> <strong>3</strong></div>
+                    <div class="stat-row"><span>Passed:</span> <strong class="pass-text">3</strong></div>
+                    <div class="stat-row"><span>Failed:</span> <strong class="fail-text">0</strong></div>
+                    <div class="stat-row"><span>Duration:</span> <strong>0.08s</strong></div>
+                </div>
+                <div class="api-details">
+                    <ul style="padding-left: 1rem; margin: 0;">
+                        <li>Get All Products: <span class="pass-text">Passed</span></li><li>Filter Vaccines by SubCategory Tdap: <span class="pass-text">Passed</span></li><li>Verify Tdap Results Count = 1: <span class="pass-text">Passed</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Frontend -->
+            <div class="card">
+                <h2>🖥️ Frontend (Playwright) <span class="badge badge-success">Passing</span></h2>
+                <div class="stats">
+                    <div class="stat-row"><span>Total Tests:</span> <strong>6</strong></div>
+                    <div class="stat-row"><span>Passed:</span> <strong class="pass-text">6</strong></div>
+                    <div class="stat-row"><span>Failed:</span> <strong class="fail-text">0</strong></div>
+                    <div class="stat-row"><span>Skipped:</span> <strong>0</strong></div>
+                    <div class="stat-row"><span>Duration:</span> <strong>19.65s</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

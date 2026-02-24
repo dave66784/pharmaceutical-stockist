@@ -16,9 +16,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pharma.model.Category;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import com.pharma.model.SubCategory;
+import com.pharma.repository.CategoryRepository;
 import com.pharma.repository.ProductRepository;
+import com.pharma.repository.SubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductUploadService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public Map<String, Object> uploadProducts(MultipartFile file) throws IOException {
         Map<String, Object> result = new HashMap<>();
@@ -115,13 +120,9 @@ public class ProductUploadService {
         if (categoryStr == null || categoryStr.trim().isEmpty()) {
             throw new IllegalArgumentException("Category is required");
         }
-        try {
-            ProductCategory category = ProductCategory.valueOf(categoryStr.trim().toUpperCase());
-            product.setCategory(category);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid category: " + categoryStr + ". Valid categories are: " +
-                    String.join(", ", getValidCategories()));
-        }
+        Category category = categoryRepository.findByNameIgnoreCase(categoryStr.trim())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category: " + categoryStr + ". Please ensure this category exists in the system."));
+        product.setCategory(category);
 
         // Column 6: Image URL (comma separated for multiple)
         String imageUrlStr = getCellValueAsString(row.getCell(6));
@@ -159,7 +160,12 @@ public class ProductUploadService {
         }
 
         // Column 12: Sub-Category
-        product.setSubCategory(getCellValueAsString(row.getCell(12)));
+        String subCategoryStr = getCellValueAsString(row.getCell(12));
+        if (subCategoryStr != null && !subCategoryStr.trim().isEmpty()) {
+            SubCategory subCategory = subCategoryRepository.findByNameIgnoreCaseAndCategory(subCategoryStr.trim(), product.getCategory())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid sub-category: " + subCategoryStr + " for category: " + product.getCategory().getName()));
+            product.setSubCategory(subCategory);
+        }
 
         return product;
     }
@@ -220,11 +226,5 @@ public class ProductUploadService {
         }
     }
 
-    private List<String> getValidCategories() {
-        List<String> categories = new ArrayList<>();
-        for (ProductCategory category : ProductCategory.values()) {
-            categories.add(category.name());
-        }
-        return categories;
-    }
+
 }

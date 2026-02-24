@@ -1,6 +1,7 @@
 package com.pharma.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pharma.dto.request.ProductRequest;
 import com.pharma.exception.ResourceNotFoundException;
+import com.pharma.model.Category;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import com.pharma.model.SubCategory;
+import com.pharma.repository.CategoryRepository;
 import com.pharma.repository.ProductRepository;
+import com.pharma.repository.SubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public Page<Product> getAllProducts(Pageable pageable) {
         return productRepository.findByIsDeletedFalse(pageable);
@@ -34,12 +40,22 @@ public class ProductService {
         return productRepository.searchProducts(searchTerm, pageable);
     }
 
-    public Page<Product> getProductsByCategory(ProductCategory category, Pageable pageable) {
+    public Page<Product> getProductsByCategory(String categorySlug, Pageable pageable) {
+        Category category = categoryRepository.findBySlug(categorySlug)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found: " + categorySlug));
         return productRepository.findByCategoryAndIsDeletedFalse(category, pageable);
     }
 
-    public Page<Product> getProductsByCategoryAndSubCategory(ProductCategory category, List<String> subCategories, Pageable pageable) {
-        return productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(category, subCategories, pageable);
+    public Page<Product> getProductsByCategoryAndSubCategory(String categorySlug, List<String> subCategorySlugs, Pageable pageable) {
+        Category category = categoryRepository.findBySlug(categorySlug)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found: " + categorySlug));
+
+        List<SubCategory> subCategoryEntities = subCategorySlugs.stream()
+                .map(slug -> subCategoryRepository.findBySlugAndCategory(slug, category)
+                        .orElseThrow(() -> new ResourceNotFoundException("SubCategory not found: " + slug)))
+                .collect(Collectors.toList());
+
+        return productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(category, subCategoryEntities, pageable);
     }
 
     @Transactional
@@ -50,11 +66,21 @@ public class ProductService {
         product.setManufacturer(request.getManufacturer());
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
-        product.setCategory(request.getCategory());
-        product.setImageUrls(request.getImageUrls());
+        
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId()));
+        product.setCategory(category);
+        
+        if (request.getSubCategoryId() != null) {
+            SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("SubCategory not found with id: " + request.getSubCategoryId()));
+            product.setSubCategory(subCategory);
+        }
+        
+        product.setImageUrls(request.getImageUrls() != null ? request.getImageUrls() : new java.util.ArrayList<>());
         product.setExpiryDate(request.getExpiryDate());
-        product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
-        product.setIsBundleOffer(request.getIsBundleOffer());
+        product.setIsPrescriptionRequired(Boolean.TRUE.equals(request.getIsPrescriptionRequired()));
+        product.setIsBundleOffer(Boolean.TRUE.equals(request.getIsBundleOffer()));
         product.setBundleBuyQuantity(request.getBundleBuyQuantity());
         product.setBundleFreeQuantity(request.getBundleFreeQuantity());
         product.setBundlePrice(request.getBundlePrice());
@@ -72,11 +98,23 @@ public class ProductService {
         product.setManufacturer(request.getManufacturer());
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
-        product.setCategory(request.getCategory());
-        product.setImageUrls(request.getImageUrls());
+        
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId()));
+        product.setCategory(category);
+        
+        if (request.getSubCategoryId() != null) {
+            SubCategory subCategory = subCategoryRepository.findById(request.getSubCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("SubCategory not found with id: " + request.getSubCategoryId()));
+            product.setSubCategory(subCategory);
+        } else {
+            product.setSubCategory(null);
+        }
+
+        product.setImageUrls(request.getImageUrls() != null ? request.getImageUrls() : new java.util.ArrayList<>());
         product.setExpiryDate(request.getExpiryDate());
-        product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
-        product.setIsBundleOffer(request.getIsBundleOffer());
+        product.setIsPrescriptionRequired(Boolean.TRUE.equals(request.getIsPrescriptionRequired()));
+        product.setIsBundleOffer(Boolean.TRUE.equals(request.getIsBundleOffer()));
         product.setBundleBuyQuantity(request.getBundleBuyQuantity());
         product.setBundleFreeQuantity(request.getBundleFreeQuantity());
         product.setBundlePrice(request.getBundlePrice());
