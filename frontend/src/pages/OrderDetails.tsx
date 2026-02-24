@@ -130,11 +130,31 @@ const OrderDetails: React.FC = () => {
                                             <div className="flex justify-between">
                                                 <div>
                                                     <h4 className="text-sm font-medium text-gray-900">{item.product.name}</h4>
-                                                    <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                                                    <p className="text-sm text-gray-500">
+                                                        Qty: {item.quantity}
+                                                        {item.freeQuantity && item.freeQuantity > 0 ? (
+                                                            <span className="ml-2 text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded text-xs">
+                                                                (Includes {item.freeQuantity} Free)
+                                                            </span>
+                                                        ) : null}
+                                                    </p>
                                                 </div>
-                                                <p className="text-sm font-medium text-gray-900">
-                                                    ${(item.price * item.quantity).toFixed(2)}
-                                                </p>
+                                                <div className="text-right">
+                                                    {(item.price * item.quantity).toFixed(2) !== item.subtotal.toFixed(2) ? (
+                                                        <>
+                                                            <p className="text-xs text-gray-500 line-through">
+                                                                ${(item.price * item.quantity).toFixed(2)}
+                                                            </p>
+                                                            <p className="text-sm font-bold text-primary-600">
+                                                                ${item.subtotal.toFixed(2)}
+                                                            </p>
+                                                        </>
+                                                    ) : (
+                                                        <p className="text-sm font-medium text-gray-900">
+                                                            ${item.subtotal.toFixed(2)}
+                                                        </p>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </li>

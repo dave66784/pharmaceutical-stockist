@@ -14,6 +14,7 @@ const ProductDetail: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [addingBundleToCart, setAddingBundleToCart] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
@@ -61,6 +62,28 @@ const ProductDetail: React.FC = () => {
       errorToast('Failed to add item to cart. Please try again.');
     } finally {
       setAddingToCart(false);
+    }
+  };
+
+  const handleAddToCartBundle = async () => {
+    if (!authService.getToken()) {
+      navigate('/login');
+      return;
+    }
+
+    if (!product || !product.bundleBuyQuantity || !product.bundleFreeQuantity) return;
+
+    const totalQty = product.bundleBuyQuantity + product.bundleFreeQuantity;
+
+    try {
+      setAddingBundleToCart(true);
+      await cartService.addToCart(product.id, totalQty);
+      success(`Added ${product.name} Bundle (${totalQty} units) to cart`);
+    } catch (err) {
+      console.error('Failed to add bundle to cart', err);
+      errorToast('Failed to add bundle to cart. Please try again.');
+    } finally {
+      setAddingBundleToCart(false);
     }
   };
 
@@ -160,6 +183,31 @@ const ProductDetail: React.FC = () => {
               <span className="text-4xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
               <span className="ml-2 text-sm text-gray-500">per unit</span>
             </div>
+
+            {product.isBundleOffer && (
+              <div className="bg-green-50 border border-green-100 rounded-xl p-6 mb-8">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-green-800 font-bold text-lg">Special Bundle Offer!</h3>
+                  <span className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider">
+                    Best Value
+                  </span>
+                </div>
+                <p className="text-green-700 mb-4">
+                  Buy <span className="font-bold underline">{product.bundleBuyQuantity} units</span> and get <span className="font-bold underline text-green-800">{product.bundleFreeQuantity} units FREE</span>!
+                  Total <span className="font-bold">{product.bundleBuyQuantity! + product.bundleFreeQuantity!} items</span> for just <span className="font-bold text-xl text-green-900">${product.bundlePrice?.toFixed(2)}</span>
+                </p>
+                <button
+                  onClick={handleAddToCartBundle}
+                  disabled={product.stockQuantity < (product.bundleBuyQuantity! + product.bundleFreeQuantity!) || addingBundleToCart}
+                  className={`w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-bold rounded-lg text-white shadow-md transition-all duration-200 ${product.stockQuantity < (product.bundleBuyQuantity! + product.bundleFreeQuantity!)
+                    ? 'bg-gray-300 cursor-not-allowed'
+                    : 'bg-green-600 hover:bg-green-700 hover:shadow-lg hover:shadow-green-600/30'
+                    }`}
+                >
+                  {addingBundleToCart ? 'Adding Bundle...' : `Add ${product.bundleBuyQuantity}+${product.bundleFreeQuantity} Bundle to Cart`}
+                </button>
+              </div>
+            )}
 
             <div className="prose prose-sm text-gray-500 mb-8 border-t border-b border-gray-100 py-6">
               <h3 className="text-gray-900 font-semibold text-lg mb-2">Description</h3>

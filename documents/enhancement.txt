@@ -1,0 +1,75 @@
+‘Our Products’page ‘Category’ need to be enhanced 
+
+for exampel : 
+Vaccine :
+	BCG 
+		Tubervac (Serum Institute)
+
+	OPV
+		BioPolio (Bharat Biotech)
+	MMR
+		Tresivac (Serum)
+		Priorix (GSK)
+		Zayvac MMR (Zydus)
+Rotavirus:-
+	Rotavac 5D( Bharat Biotech)
+	Rotasil (Serum Institute)
+	Rotarix (GSK)
+	Rotateq (MSD)
+Pneumococcal :-
+	Prevenar 13 (Pfizer)
+	Synflorix (GSK)
+	Pneumosil (Serum)
+	PneuBEvax 14 (BE)
+	Pneumoshield (Abbot)
+	Prevenar20 (Pfizer)
+
+Hexa-Valant 
+	Hexaxim (Dr Reddy)
+	Infanrix Hexa (GSK)
+	EasySix (Panecia Biotech)
+	Hexasil (Serum )
+Chickenpox :-
+	Varilrix (GSK)
+Varipad (MSD)
+Naxipox (Novo)
+Typhoid :-
+	Typbar TCV (Bharat Biotceh)
+	Zayvac TCV (Zydus)
+	Biovac TCV (Dr Reddy)
+	EntroShield (Abott)
+
+Hepatitis A :-
+	Havrix 720 ( GSK)
+	HavShield (Abott)
+	Hapibev (BE)
+
+JApnease Encephalitis:-
+	JenVac (Bharat Biotech)
+	Jeev (BE)
+	JE Shield (Abott)
+
+Meningitis:-
+	Menctra (Dr Reddy)
+	Menveo (GSK)
+
+Flu :-
+	Influvac Tetra (Abott)
+	Flurix Tetra (GSK)
+	Vaxigrip (Dr Reddy)
+	VaxiFlu (Zydus)
+	VaxiFlu 4 (Zydus)
+
+HPV :-
+	Cervavac ( Serum)
+	Gardasil (MSD)
+	Gardasil 9 (MSD)
+
+Pneumococcal 23 Valant:-
+	Pneumovax23 (MSD)
+	VaxiMune23 (GC Chemie)
+Tdap :-
+	Boostrix (GSK)
+	
+Same of other product types as well 
+

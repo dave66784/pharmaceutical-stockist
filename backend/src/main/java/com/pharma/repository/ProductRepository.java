@@ -1,7 +1,7 @@
 package com.pharma.repository;
 
-import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,11 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.pharma.model.Product;
+import com.pharma.model.enums.ProductCategory;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryAndIsDeletedFalse(ProductCategory category, Pageable pageable);
+    
+    Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalse(ProductCategory category, List<String> subCategories, Pageable pageable);
 
     Page<Product> findByIsDeletedFalse(Pageable pageable);
 

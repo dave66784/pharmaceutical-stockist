@@ -109,10 +109,13 @@ services:
 
 volumes:
   postgres-data:
+    external: true
   prometheus-data:
+    external: true
   grafana-data:
+    external: true
   loki-data:
-
+    external: true
 
 networks:
   pharma-network:

@@ -5,6 +5,7 @@ import { cartService } from '../services/cartService';
 import { Address, Cart } from '../types';
 import { Plus, Check, MapPin, Truck } from 'lucide-react';
 import { useToast } from '../hooks/useToast';
+import { calculateItemTotal } from '../utils/pricing';
 
 const Checkout: React.FC = () => {
     const navigate = useNavigate();
@@ -115,7 +116,7 @@ const Checkout: React.FC = () => {
     const calculateTotal = () => {
         if (!cart || !cart.items) return 0;
         return cart.items.reduce((total, item) => {
-            return total + (item.product.price * item.quantity);
+            return total + calculateItemTotal(item.product, item.quantity);
         }, 0);
     };
 
@@ -129,8 +130,7 @@ const Checkout: React.FC = () => {
     );
 
     const subtotal = calculateTotal();
-    const shippingCost = subtotal > 50 ? 0 : 10;
-    const total = subtotal + shippingCost;
+    const total = subtotal;
 
     return (
         <div className="min-h-screen bg-gray-50 py-12">
@@ -418,7 +418,20 @@ const Checkout: React.FC = () => {
                                                 <div>
                                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                                         <h3 className="line-clamp-1 mr-2">{item.product.name}</h3>
-                                                        <p className="ml-4">${(item.product.price * item.quantity).toFixed(2)}</p>
+                                                        <div className="text-right">
+                                                            {calculateItemTotal(item.product, item.quantity) < item.product.price * item.quantity ? (
+                                                                <>
+                                                                    <p className="text-xs text-gray-500 line-through">
+                                                                        ${(item.product.price * item.quantity).toFixed(2)}
+                                                                    </p>
+                                                                    <p className="text-sm font-bold text-primary-600">
+                                                                        ${calculateItemTotal(item.product, item.quantity).toFixed(2)}
+                                                                    </p>
+                                                                </>
+                                                            ) : (
+                                                                <p className="ml-4">${(item.product.price * item.quantity).toFixed(2)}</p>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     <p className="mt-1 text-sm text-gray-500">{item.product.manufacturer}</p>
                                                 </div>
@@ -435,30 +448,11 @@ const Checkout: React.FC = () => {
                                         <p>Subtotal</p>
                                         <p>${subtotal.toFixed(2)}</p>
                                     </div>
-                                    <div className="flex items-center justify-between text-sm text-gray-600">
-                                        <p>Shipping</p>
-                                        <p>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</p>
-                                    </div>
                                     <div className="border-t border-gray-200 pt-4 flex items-center justify-between text-base font-medium text-gray-900">
                                         <p>Total</p>
                                         <p>${total.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                {shippingCost === 0 && (
-                                    <div className="mt-4 rounded-md bg-green-50 p-4">
-                                        <div className="flex">
-                                            <div className="flex-shrink-0">
-                                                <Check className="h-5 w-5 text-green-400" aria-hidden="true" />
-                                            </div>
-                                            <div className="ml-3">
-                                                <h3 className="text-sm font-medium text-green-800">Free shipping applied</h3>
-                                                <div className="mt-2 text-sm text-green-700">
-                                                    <p>Your order qualifies for free shipping.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>

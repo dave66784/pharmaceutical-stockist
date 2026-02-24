@@ -1,17 +1,19 @@
 package com.pharma.service;
 
-import com.pharma.dto.request.ProductRequest;
-import com.pharma.exception.ResourceNotFoundException;
-import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
-import com.pharma.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.pharma.dto.request.ProductRequest;
+import com.pharma.exception.ResourceNotFoundException;
+import com.pharma.model.Product;
+import com.pharma.model.enums.ProductCategory;
+import com.pharma.repository.ProductRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +38,10 @@ public class ProductService {
         return productRepository.findByCategoryAndIsDeletedFalse(category, pageable);
     }
 
+    public Page<Product> getProductsByCategoryAndSubCategory(ProductCategory category, List<String> subCategories, Pageable pageable) {
+        return productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(category, subCategories, pageable);
+    }
+
     @Transactional
     public Product createProduct(ProductRequest request) {
         Product product = new Product();
@@ -48,6 +54,10 @@ public class ProductService {
         product.setImageUrls(request.getImageUrls());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
+        product.setIsBundleOffer(request.getIsBundleOffer());
+        product.setBundleBuyQuantity(request.getBundleBuyQuantity());
+        product.setBundleFreeQuantity(request.getBundleFreeQuantity());
+        product.setBundlePrice(request.getBundlePrice());
         product.setIsDeleted(false);
 
         return productRepository.save(product);
@@ -66,6 +76,10 @@ public class ProductService {
         product.setImageUrls(request.getImageUrls());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(request.getIsPrescriptionRequired());
+        product.setIsBundleOffer(request.getIsBundleOffer());
+        product.setBundleBuyQuantity(request.getBundleBuyQuantity());
+        product.setBundleFreeQuantity(request.getBundleFreeQuantity());
+        product.setBundlePrice(request.getBundlePrice());
 
         return productRepository.save(product);
     }

@@ -1,5 +1,11 @@
 package com.pharma.service;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.pharma.dto.request.LoginRequest;
 import com.pharma.dto.request.RegisterRequest;
 import com.pharma.dto.response.AuthResponse;
@@ -7,12 +13,8 @@ import com.pharma.exception.ResourceNotFoundException;
 import com.pharma.model.User;
 import com.pharma.model.enums.Role;
 import com.pharma.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

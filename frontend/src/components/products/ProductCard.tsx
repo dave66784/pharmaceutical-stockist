@@ -12,7 +12,27 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { success, error: errorToast } = useToast();
     const [adding, setAdding] = useState(false);
+    const [addingBundle, setAddingBundle] = useState(false);
+    const handleAddToCartBundle = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
 
+        if (!product.bundleBuyQuantity || !product.bundleFreeQuantity) return;
+
+        const totalQty = product.bundleBuyQuantity + product.bundleFreeQuantity;
+
+        try {
+            setAddingBundle(true);
+            await cartService.addToCart(product.id, totalQty);
+            window.dispatchEvent(new Event('cartUpdated'));
+            success(`Added ${product.name} Bundle (${totalQty} units) to cart`);
+        } catch (err) {
+            console.error('Failed to add bundle to cart:', err);
+            errorToast('Failed to add bundle to cart');
+        } finally {
+            setAddingBundle(false);
+        }
+    };
     const handleAddToCart = async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -60,14 +80,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                             Rx Only
                         </span>
                     )}
+                    {product.isBundleOffer && (
+                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-bold bg-green-50 text-green-600 border border-green-100 shadow-sm animate-pulse">
+                            {product.bundleBuyQuantity}+{product.bundleFreeQuantity} Offer
+                        </span>
+                    )}
                 </div>
             </div>
 
             <div className="p-5 flex-grow flex flex-col">
-                <div className="mb-2">
+                <div className="mb-2 flex items-center justify-between">
                     <span className="text-xs font-medium text-primary-600 uppercase tracking-wide">
-                        {product.category}
+                        {product.category.replace('_', ' ')}
                     </span>
+                    {product.subCategory && (
+                        <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                            {product.subCategory}
+                        </span>
+                    )}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1 group-hover:text-primary-600 transition-colors">
                     <Link to={`/products/${product.id}`}>
@@ -87,21 +117,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                         </span>
                     </div>
 
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={adding || product.stockQuantity === 0}
-                        className={`p-2.5 rounded-xl transition-all duration-200 shadow-sm ${product.stockQuantity === 0
-                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                            : 'bg-primary-50 text-primary-600 hover:bg-primary-600 hover:text-white hover:shadow-primary-500/30'
-                            }`}
-                        title="Add to Cart"
-                    >
-                        {adding ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                        ) : (
-                            <Plus className="h-5 w-5" />
+                    <div className="flex items-center gap-2">
+                        {product.isBundleOffer && (
+                            <button
+                                onClick={handleAddToCartBundle}
+                                disabled={addingBundle || product.stockQuantity < (product.bundleBuyQuantity! + product.bundleFreeQuantity!)}
+                                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 shadow-sm whitespace-nowrap ${product.stockQuantity < (product.bundleBuyQuantity! + product.bundleFreeQuantity!)
+                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                    : 'bg-green-600 text-white hover:bg-green-700 hover:shadow-green-500/30'
+                                    }`}
+                                title={`Add ${product.bundleBuyQuantity}+${product.bundleFreeQuantity} Bundle`}
+                            >
+                                {addingBundle ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                    `Add Bundle`
+                                )}
+                            </button>
                         )}
-                    </button>
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={adding || product.stockQuantity === 0}
+                            className={`p-2.5 rounded-xl transition-all duration-200 shadow-sm ${product.stockQuantity === 0
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-primary-50 text-primary-600 hover:bg-primary-600 hover:text-white hover:shadow-primary-500/30'
+                                }`}
+                            title="Add to Cart"
+                        >
+                            {adding ? (
+                                <Loader2 className="h-5 w-5 animate-spin" />
+                            ) : (
+                                <Plus className="h-5 w-5" />
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

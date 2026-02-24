@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cartService } from '../services/cartService';
 import { Cart as CartType } from '../types';
+import { calculateItemTotal } from '../utils/pricing';
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartType | null>(null);
@@ -62,7 +63,7 @@ const Cart: React.FC = () => {
   const calculateTotal = () => {
     if (!cart || !cart.items) return 0;
     return cart.items.reduce((total, item) => {
-      return total + (item.product.price * item.quantity);
+      return total + calculateItemTotal(item.product, item.quantity);
     }, 0);
   };
 
@@ -140,8 +141,20 @@ const Cart: React.FC = () => {
                     disabled={item.quantity >= item.product.stockQuantity}
                   >+</button>
                 </div>
-                <div className="text-lg font-bold text-gray-900 w-24 text-right">
-                  ${(item.product.price * item.quantity).toFixed(2)}
+                <div className="text-lg font-bold text-gray-900 w-24 text-right flex flex-col items-end">
+                  {calculateItemTotal(item.product, item.quantity) < item.product.price * item.quantity ? (
+                    <>
+                      <span className="text-xs text-green-600 font-bold mb-1 bg-green-50 px-2 py-0.5 rounded">Bundle Applied</span>
+                      <span className="text-xs text-gray-500 line-through">
+                        ${(item.product.price * item.quantity).toFixed(2)}
+                      </span>
+                      <span className="text-primary-600">
+                        ${calculateItemTotal(item.product, item.quantity).toFixed(2)}
+                      </span>
+                    </>
+                  ) : (
+                    <span>${(item.product.price * item.quantity).toFixed(2)}</span>
+                  )}
                 </div>
                 <button
                   onClick={() => handleRemoveItem(item.id)}

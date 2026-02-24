@@ -33,6 +33,15 @@ components:
         updatedAt:
           type: string
           format: date-time
+        isBundleOffer:
+          type: boolean
+        bundleBuyQuantity:
+          type: integer
+        bundleFreeQuantity:
+          type: integer
+        bundlePrice:
+          type: number
+          format: double
     
     ProductRequest:
       type: object

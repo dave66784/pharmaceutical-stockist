@@ -20,6 +20,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         imageUrls: [] as string[],
         isPrescriptionRequired: false,
         expiryDate: '',
+        isBundleOffer: false,
+        bundleBuyQuantity: 0,
+        bundleFreeQuantity: 0,
+        bundlePrice: 0,
     });
 
     const [loading, setLoading] = useState(false);
@@ -38,6 +42,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 imageUrls: product.imageUrls || ((product as any).imageUrl ? [(product as any).imageUrl] : []),
                 isPrescriptionRequired: product.isPrescriptionRequired,
                 expiryDate: product.expiryDate || '',
+                isBundleOffer: product.isBundleOffer || false,
+                bundleBuyQuantity: product.bundleBuyQuantity || 0,
+                bundleFreeQuantity: product.bundleFreeQuantity || 0,
+                bundlePrice: product.bundlePrice || 0,
             });
         }
     }, [product]);
@@ -253,6 +261,64 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                         <label htmlFor="isPrescriptionRequired" className="ml-2 block text-sm text-gray-900">
                             Prescription Required
                         </label>
+                    </div>
+
+                    <div className="sm:col-span-2 border-t pt-4 mt-2">
+                        <div className="flex items-center mb-4">
+                            <input
+                                id="isBundleOffer"
+                                name="isBundleOffer"
+                                type="checkbox"
+                                checked={formData.isBundleOffer}
+                                onChange={handleCheckboxChange}
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <label htmlFor="isBundleOffer" className="ml-2 block font-medium text-gray-900">
+                                Enable Bundle Offer (e.g., 10+2)
+                            </label>
+                        </div>
+
+                        {formData.isBundleOffer && (
+                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 bg-blue-50 p-4 rounded-lg">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Buy Quantity</label>
+                                    <input
+                                        type="number"
+                                        name="bundleBuyQuantity"
+                                        min="1"
+                                        value={formData.bundleBuyQuantity}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                        placeholder="e.g., 10"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Free Quantity</label>
+                                    <input
+                                        type="number"
+                                        name="bundleFreeQuantity"
+                                        min="1"
+                                        value={formData.bundleFreeQuantity}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                        placeholder="e.g., 2"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Bundle Price ($)</label>
+                                    <input
+                                        type="number"
+                                        name="bundlePrice"
+                                        step="0.01"
+                                        min="0"
+                                        value={formData.bundlePrice}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                        placeholder="e.g., 50.00"
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="mt-6 flex justify-end space-x-3">

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { productService } from '../services/productService';
 import { Product } from '../types';
 import ProductCard from '../components/products/ProductCard';
 
 const Products: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>([]);
 
   const categories: string[] = [
     'ALL',
@@ -22,10 +26,36 @@ const Products: React.FC = () => {
     'CARDIOVASCULAR',
     'SKINCARE',
     'FIRST_AID',
+    'VACCINES',
     'OTHER',
   ];
 
+  const subCategories: Record<string, string[]> = {
+    VACCINES: [
+      'BCG', 'OPV', 'MMR', 'Rotavirus', 'Pneumococcal', 'Hexa-Valent',
+      'Chickenpox', 'Typhoid', 'Hepatitis A', 'Japanese Encephalitis',
+      'Meningitis', 'Flu', 'HPV', 'Pneumococcal 23 Valent', 'Tdap'
+    ],
+    PAIN_RELIEF: ['Paracetamol', 'Ibuprofen', 'General'],
+  };
+
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const categoryParam = queryParams.get('category');
+    if (categoryParam && categories.includes(categoryParam)) {
+      setSelectedCategory(categoryParam);
+      setSelectedSubCategories([]);
+      setPage(0);
+    } else if (!categoryParam) {
+      setSelectedCategory('ALL');
+      setSelectedSubCategories([]);
+      setPage(0);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    let isActive = true;
+
     const fetchProducts = async () => {
       try {
         setLoading(true);
@@ -33,29 +63,55 @@ const Products: React.FC = () => {
         if (selectedCategory === 'ALL') {
           data = await productService.getAllProducts(page);
         } else {
-          data = await productService.getProductsByCategory(selectedCategory, page);
+          // Pass subCategory array if selected
+          data = await productService.getProductsByCategory(selectedCategory, page, 12, selectedSubCategories);
         }
 
-        if (data && data.data) {
-          setProducts(data.data.content);
-          setTotalPages(data.data.totalPages);
-        } else {
-          setProducts([]);
+        if (isActive) {
+          if (data && data.data) {
+            setProducts(data.data.content);
+            setTotalPages(data.data.totalPages);
+          } else {
+            setProducts([]);
+          }
         }
       } catch (err) {
-        setError('Failed to load products');
-        console.error(err);
+        if (isActive) {
+          setError('Failed to load products');
+          console.error(err);
+        }
       } finally {
-        setLoading(false);
+        if (isActive) {
+          setLoading(false);
+        }
       }
     };
 
     fetchProducts();
-  }, [page, selectedCategory]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [page, selectedCategory, selectedSubCategories]);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.target.value);
-    setPage(0); // Reset to first page on filter change
+    const newCategory = e.target.value;
+    if (newCategory === 'ALL') {
+      navigate('/products');
+    } else {
+      navigate(`/products?category=${newCategory}`);
+    }
+  };
+
+  const handleSubCategoryChange = (sub: string) => {
+    if (sub === '') {
+      setSelectedSubCategories([]);
+    } else {
+      setSelectedSubCategories((prev) =>
+        prev.includes(sub) ? prev.filter((s) => s !== sub) : [...prev, sub]
+      );
+    }
+    setPage(0);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -112,6 +168,35 @@ const Products: React.FC = () => {
           </select>
         </div>
       </div>
+
+      {/* Sub-category Filter */}
+      {selectedCategory !== 'ALL' && subCategories[selectedCategory] && (
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+          <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2">
+            <button
+              onClick={() => handleSubCategoryChange('')}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${selectedSubCategories.length === 0
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                }`}
+            >
+              All Sub-categories
+            </button>
+            {subCategories[selectedCategory].map((sub) => (
+              <button
+                key={sub}
+                onClick={() => handleSubCategoryChange(sub)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${selectedSubCategories.includes(sub)
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                  }`}
+              >
+                {sub}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {products.length === 0 ? (
         <div className="text-center py-12">

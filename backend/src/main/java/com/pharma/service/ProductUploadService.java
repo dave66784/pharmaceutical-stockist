@@ -1,15 +1,5 @@
 package com.pharma.service;
 
-import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
-import com.pharma.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -17,6 +7,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.pharma.model.Product;
+import com.pharma.model.enums.ProductCategory;
+import com.pharma.repository.ProductRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -130,6 +135,31 @@ public class ProductUploadService {
         // Column 7: Prescription Required (default false)
         Boolean prescriptionRequired = getCellValueAsBoolean(row.getCell(7));
         product.setIsPrescriptionRequired(prescriptionRequired != null ? prescriptionRequired : false);
+
+        // Column 8: Is Bundle Offer (default false)
+        Boolean isBundleOffer = getCellValueAsBoolean(row.getCell(8));
+        product.setIsBundleOffer(isBundleOffer != null ? isBundleOffer : false);
+
+        // Column 9: Bundle Buy Quantity
+        Double bundleBuyQty = getCellValueAsDouble(row.getCell(9));
+        if (bundleBuyQty != null) {
+            product.setBundleBuyQuantity(bundleBuyQty.intValue());
+        }
+
+        // Column 10: Bundle Free Quantity
+        Double bundleFreeQty = getCellValueAsDouble(row.getCell(10));
+        if (bundleFreeQty != null) {
+            product.setBundleFreeQuantity(bundleFreeQty.intValue());
+        }
+
+        // Column 11: Bundle Price
+        Double bundlePrice = getCellValueAsDouble(row.getCell(11));
+        if (bundlePrice != null) {
+            product.setBundlePrice(BigDecimal.valueOf(bundlePrice));
+        }
+
+        // Column 12: Sub-Category
+        product.setSubCategory(getCellValueAsString(row.getCell(12)));
 
         return product;
     }

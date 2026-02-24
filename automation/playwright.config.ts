@@ -14,7 +14,7 @@ export default defineConfig({
         screenshot: 'on',
         video: 'on',
         launchOptions: {
-            slowMo: 2000, // 2000ms (2s) delay between actions for human-speed videos
+            // slowMo: 2000, // 2000ms (2s) delay between actions for human-speed videos
         },
     },
     projects: [
