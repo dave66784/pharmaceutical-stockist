@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -122,6 +124,22 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
                     .body(new ApiResponse<>(false, "Failed to process file: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/upload/template")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> downloadTemplate() {
+        try {
+            byte[] excelData = productUploadService.generateTemplate();
+            
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"product_upload_template.xlsx\"")
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .body(excelData);
+        } catch (Exception e) {
+            log.error("Error generating Excel template", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.pharma.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -9,9 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.DataValidationConstraint;
+import org.apache.poi.ss.usermodel.DataValidationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,6 +88,83 @@ public class ProductUploadService {
         result.put("errors", errors);
 
         return result;
+    }
+
+    public byte[] generateTemplate() throws IOException {
+        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            
+            // 1. Create the main "Products" sheet
+            Sheet sheet = workbook.createSheet("Products");
+            Row headerRow = sheet.createRow(0);
+            
+            String[] columns = {
+                "Name *", "Description", "Manufacturer", "Price *", "Stock Quantity *", 
+                "Category *", "Image URL", "Prescription Required", "Is Bundle Offer", 
+                "Bundle Buy Quantity", "Bundle Free Quantity", "Bundle Price", "Sub-Category"
+            };
+            
+            for (int i = 0; i < columns.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columns[i]);
+            }
+
+            // 2. Create the hidden "Data" sheet for dropdown values
+            Sheet dataSheet = workbook.createSheet("Data");
+            
+            // Populate Categories
+            List<Category> categories = categoryRepository.findAll();
+            Row categoryHeader = dataSheet.createRow(0);
+            categoryHeader.createCell(0).setCellValue("Categories");
+            
+            int rowIndex = 1;
+            for (Category category : categories) {
+                Row row = dataSheet.getRow(rowIndex);
+                if (row == null) row = dataSheet.createRow(rowIndex);
+                row.createCell(0).setCellValue(category.getName());
+                rowIndex++;
+            }
+            
+            // Populate Sub-Categories
+            List<SubCategory> subCategories = subCategoryRepository.findAll();
+            categoryHeader.createCell(1).setCellValue("SubCategories");
+            
+            rowIndex = 1;
+            for (SubCategory subCategory : subCategories) {
+                Row row = dataSheet.getRow(rowIndex);
+                if (row == null) row = dataSheet.createRow(rowIndex);
+                row.createCell(1).setCellValue(subCategory.getName());
+                rowIndex++;
+            }
+
+            // Hide the Data sheet
+            workbook.setSheetHidden(1, true);
+
+            // 3. Add Data Validation for the "Products" sheet
+            DataValidationHelper validationHelper = sheet.getDataValidationHelper();
+
+            // Setup Category Validation (Column F / Index 5)
+            if (!categories.isEmpty()) {
+                CellRangeAddressList categoryAddressList = new CellRangeAddressList(1, 1000, 5, 5);
+                String categoryFormula = "Data!$A$2:$A$" + (categories.size() + 1);
+                DataValidationConstraint categoryConstraint = validationHelper.createFormulaListConstraint(categoryFormula);
+                DataValidation categoryValidation = validationHelper.createValidation(categoryConstraint, categoryAddressList);
+                categoryValidation.setShowErrorBox(true);
+                sheet.addValidationData(categoryValidation);
+            }
+
+            // Setup Sub-Category Validation (Column M / Index 12)
+            if (!subCategories.isEmpty()) {
+                CellRangeAddressList subCategoryAddressList = new CellRangeAddressList(1, 1000, 12, 12);
+                String subCategoryFormula = "Data!$B$2:$B$" + (subCategories.size() + 1);
+                DataValidationConstraint subCategoryConstraint = validationHelper.createFormulaListConstraint(subCategoryFormula);
+                DataValidation subCategoryValidation = validationHelper.createValidation(subCategoryConstraint, subCategoryAddressList);
+                subCategoryValidation.setShowErrorBox(true);
+                sheet.addValidationData(subCategoryValidation);
+            }
+
+            workbook.write(out);
+            return out.toByteArray();
+        }
     }
 
     private Product parseProductFromRow(Row row, int rowNum) {

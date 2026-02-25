@@ -193,6 +193,35 @@ const ManageProducts: React.FC = () => {
         }
     };
 
+    const handleDownloadTemplate = async () => {
+        try {
+            setUploadMessage(null);
+            const response = await fetch('/api/products/upload/template', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to download template');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'product_upload_template.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (err) {
+            console.error('Error downloading template:', err);
+            setUploadMessage('Failed to download template. Please try again.');
+        }
+    };
+
     if (isEditing) {
         return (
             <ProductForm
@@ -237,6 +266,15 @@ const ManageProducts: React.FC = () => {
                                 className="hidden"
                             />
                         </label>
+                        <button
+                            onClick={handleDownloadTemplate}
+                            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                        >
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download Template
+                        </button>
                         <button
                             onClick={handleAdd}
                             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
