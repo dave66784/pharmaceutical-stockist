@@ -62,7 +62,26 @@ public class ProductUploadService {
                 try {
                     Product product = parseProductFromRow(row, rowNum);
                     if (product != null) {
-                        validProducts.add(product);
+                        List<Product> existingList = productRepository.findByNameIgnoreCase(product.getName());
+                        if (!existingList.isEmpty()) {
+                            Product existing = existingList.get(0);
+                            existing.setDescription(product.getDescription());
+                            existing.setManufacturer(product.getManufacturer());
+                            existing.setPrice(product.getPrice());
+                            existing.setStockQuantity(product.getStockQuantity());
+                            existing.setCategory(product.getCategory());
+                            existing.setImageUrls(product.getImageUrls());
+                            existing.setIsPrescriptionRequired(product.getIsPrescriptionRequired());
+                            existing.setIsBundleOffer(product.getIsBundleOffer());
+                            existing.setBundleBuyQuantity(product.getBundleBuyQuantity());
+                            existing.setBundleFreeQuantity(product.getBundleFreeQuantity());
+                            existing.setBundlePrice(product.getBundlePrice());
+                            existing.setSubCategory(product.getSubCategory());
+                            existing.setIsDeleted(false); // Restore if it was soft-deleted
+                            validProducts.add(existing);
+                        } else {
+                            validProducts.add(product);
+                        }
                     }
                 } catch (Exception e) {
                     errors.add("Row " + (rowNum + 1) + ": " + e.getMessage());

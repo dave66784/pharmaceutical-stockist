@@ -15,6 +15,8 @@ import com.pharma.model.SubCategory;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> findByNameIgnoreCase(String name);
+
     Page<Product> findByCategoryAndIsDeletedFalse(Category category, Pageable pageable);
     
     Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalse(Category category, List<SubCategory> subCategories, Pageable pageable);
