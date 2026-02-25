@@ -15,6 +15,11 @@ test('End-to-End Master Flow', async ({ page, request }) => {
     const loginData = await loginRes.json();
     const token = loginData.data.token;
 
+    const catRes = await request.get('/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+    const catData = await catRes.json();
+    const firstCat = catData.data[0];
+    const testCategorySlug = firstCat.slug;
+
     await request.post('/api/products', {
         headers: { 'Authorization': `Bearer ${token}` },
         data: {
@@ -22,7 +27,7 @@ test('End-to-End Master Flow', async ({ page, request }) => {
             description: 'This is a master product for the combined video flow.',
             price: 50.00,
             stockQuantity: 100,
-            category: 'OTHER',
+            categoryId: firstCat.id,
             manufacturer: 'MasterFlow Corp'
         }
     });
@@ -49,7 +54,7 @@ test('End-to-End Master Flow', async ({ page, request }) => {
     // 3. Browse and Filter
     await page.getByRole('link', { name: 'Products' }).first().click();
     await expect(page).toHaveURL(/.*products/);
-    await page.getByLabel('Category:').selectOption('OTHER');
+    await page.getByLabel('Category:').selectOption(testCategorySlug);
     await expect(page.getByText(productName)).toBeVisible();
 
     // 4. Add to Cart

@@ -5,6 +5,7 @@ const adminPass = 'admin123';
 const customerEmail = `customer_${Date.now()}@test.com`;
 const customerPass = 'Password123!';
 const productName = `Test Product ${Date.now()}`;
+let testCategorySlug = '';
 
 test.describe('Customer Core Workflows', () => {
     test.describe.configure({ mode: 'serial' });
@@ -19,6 +20,11 @@ test.describe('Customer Core Workflows', () => {
         const token = loginData.data.token;
         expect(token).toBeTruthy();
 
+        const catRes = await request.get('/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+        const catData = await catRes.json();
+        const firstCat = catData.data[0];
+        testCategorySlug = firstCat.slug;
+
         // 2. Create Product
         const productRes = await request.post('/api/products', {
             headers: { 'Authorization': `Bearer ${token}` },
@@ -27,7 +33,7 @@ test.describe('Customer Core Workflows', () => {
                 description: 'Description for test product',
                 price: 25.50,
                 stockQuantity: 100,
-                category: 'OTHER',
+                categoryId: firstCat.id,
                 manufacturer: 'PharmaTest Inc'
             }
         });
@@ -66,7 +72,7 @@ test.describe('Customer Core Workflows', () => {
         await expect(page).toHaveURL(/.*products/);
 
         // Filter by OTHER since we created one
-        await page.getByLabel('Category:').selectOption('OTHER');
+        await page.getByLabel('Category:').selectOption(testCategorySlug);
 
         // Wait for product to appear
         await expect(page.getByText(productName)).toBeVisible();
@@ -76,7 +82,7 @@ test.describe('Customer Core Workflows', () => {
         await page.getByRole('link', { name: 'Products' }).first().click();
 
         // Filter to find our specific product
-        await page.getByLabel('Category:').selectOption('OTHER');
+        await page.getByLabel('Category:').selectOption(testCategorySlug);
         await expect(page.getByText(productName)).toBeVisible();
 
         // Click Add to Cart button (using title attribute)
@@ -94,7 +100,7 @@ test.describe('Customer Core Workflows', () => {
         await page.getByRole('link', { name: 'Products' }).first().click();
 
         // Add item first to ensure cart is not empty
-        await page.getByLabel('Category:').selectOption('OTHER');
+        await page.getByLabel('Category:').selectOption(testCategorySlug);
         // Wait for product to exist
         await expect(page.getByText(productName)).toBeVisible();
 
@@ -112,7 +118,7 @@ test.describe('Customer Core Workflows', () => {
     test('should complete checkout workflow', async ({ page }) => {
         // 1. Add item to cart
         await page.getByRole('link', { name: 'Products' }).first().click();
-        await page.getByLabel('Category:').selectOption('OTHER');
+        await page.getByLabel('Category:').selectOption(testCategorySlug);
         await expect(page.getByText(productName)).toBeVisible();
         const productCard = page.locator('div', { hasText: productName }).last();
         await productCard.locator('button[title="Add to Cart"]').click();

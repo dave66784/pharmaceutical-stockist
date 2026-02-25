@@ -5,6 +5,7 @@ const adminPass = 'admin123';
 const customerEmail = `cart_user_${Date.now()}@test.com`;
 const customerPass = 'Password123!';
 const productName = `Cart Test Product ${Date.now()}`;
+let testCategorySlug = '';
 
 test.describe('Cart Workflows', () => {
     test.describe.configure({ mode: 'serial' });
@@ -17,6 +18,12 @@ test.describe('Cart Workflows', () => {
         const loginData = await loginRes.json();
         const token = loginData.data.token;
 
+        // Fetch category to use
+        const catRes = await request.get('/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+        const catData = await catRes.json();
+        const firstCat = catData.data[0];
+        testCategorySlug = firstCat.slug;
+
         // 2. Create Product
         await request.post('/api/products', {
             headers: { 'Authorization': `Bearer ${token}` },
@@ -25,7 +32,7 @@ test.describe('Cart Workflows', () => {
                 description: 'Description for cart test product',
                 price: 15.75,
                 stockQuantity: 50,
-                category: 'OTHER',
+                categoryId: firstCat.id,
                 manufacturer: 'Pharma Cart Inc'
             }
         });
@@ -54,7 +61,7 @@ test.describe('Cart Workflows', () => {
     test('should update item quantity in cart', async ({ page }) => {
         // Add item to cart
         await page.getByRole('link', { name: 'Products' }).first().click();
-        await page.getByLabel('Category:').selectOption('OTHER');
+        await page.getByLabel('Category:').selectOption(testCategorySlug);
         await expect(page.getByText(productName)).toBeVisible();
         const productCard = page.locator('div', { hasText: productName }).last();
         await productCard.locator('button[title="Add to Cart"]').click();

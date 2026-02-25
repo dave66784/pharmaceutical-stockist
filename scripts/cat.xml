@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="BCG">
+        <menu>
+            <item android:title="Tubervac (Serum Institute of India)" />
+        </menu>
+    </item>
+
+    <item android:title="OPV">
+        <menu>
+            <item android:title="BioPolio (Bharat Biotech)" />
+        </menu>
+    </item>
+
+    <item android:title="MMR">
+        <menu>
+            <item android:title="Tresivac (Serum Institute of India)" />
+            <item android:title="Priorix (GlaxoSmithKline - GSK)" />
+            <item android:title="Zayvac MMR (Zydus Lifesciences)" />
+        </menu>
+    </item>
+
+    <item android:title="Rotavirus">
+        <menu>
+            <item android:title="Rotavac 5D (Bharat Biotech)" />
+            <item android:title="Rotasil (Serum Institute of India)" />
+            <item android:title="Rotarix (GlaxoSmithKline - GSK)" />
+            <item android:title="RotaTeq (MSD)" />
+        </menu>
+    </item>
+
+    <item android:title="Pneumococcal">
+        <menu>
+            <item android:title="Prevenar 13 (Pfizer)" />
+            <item android:title="Synflorix (GlaxoSmithKline - GSK)" />
+            <item android:title="Pneumosil (Serum Institute of India)" />
+            <item android:title="PneuBEvax 14 (Biological E)" />
+            <item android:title="Pneumoshield (Abbott)" />
+            <item android:title="Prevenar 20 (Pfizer)" />
+        </menu>
+    </item>
+
+    <item android:title="Hexa-Valent">
+        <menu>
+            <item android:title="Hexaxim (Dr. Reddy's Laboratories)" />
+            <item android:title="Infanrix Hexa (GlaxoSmithKline - GSK)" />
+            <item android:title="EasySix (Panacea Biotec)" />
+            <item android:title="Hexasil (Serum Institute of India)" />
+        </menu>
+    </item>
+
+    <item android:title="Chickenpox">
+        <menu>
+            <item android:title="Varilrix (GlaxoSmithKline - GSK)" />
+            <item android:title="Varivax (MSD)" />
+            <item android:title="Naxipox (Novo Medi Sciences)" />
+        </menu>
+    </item>
+
+    <item android:title="Typhoid">
+        <menu>
+            <item android:title="Typbar TCV (Bharat Biotech)" />
+            <item android:title="Zayvac TCV (Zydus Lifesciences)" />
+            <item android:title="Biovac TCV (Dr. Reddy's Laboratories)" />
+            <item android:title="EntroShield (Abbott)" />
+        </menu>
+    </item>
+
+    <item android:title="Hepatitis A">
+        <menu>
+            <item android:title="Havrix 720 (GlaxoSmithKline - GSK)" />
+            <item android:title="HavShield (Abbott)" />
+            <item android:title="Hapibev (Biological E)" />
+        </menu>
+    </item>
+
+    <item android:title="Japanese Encephalitis">
+        <menu>
+            <item android:title="JenVac (Bharat Biotech)" />
+            <item android:title="Jeev (Biological E)" />
+            <item android:title="JE Shield (Abbott)" />
+        </menu>
+    </item>
+
+    <item android:title="Meningitis">
+        <menu>
+            <item android:title="Menactra (Dr. Reddy's Laboratories)" />
+            <item android:title="Menveo (GlaxoSmithKline - GSK)" />
+        </menu>
+    </item>
+
+    <item android:title="Flu">
+        <menu>
+            <item android:title="Influvac Tetra (Abbott)" />
+            <item android:title="Fluarix Tetra (GlaxoSmithKline - GSK)" />
+            <item android:title="Vaxigrip (Dr. Reddy's Laboratories)" />
+            <item android:title="VaxiFlu (Zydus Lifesciences)" />
+            <item android:title="VaxiFlu 4 (Zydus Lifesciences)" />
+        </menu>
+    </item>
+
+    <item android:title="HPV">
+        <menu>
+            <item android:title="Cervavac (Serum Institute of India)" />
+            <item android:title="Gardasil (MSD)" />
+            <item android:title="Gardasil 9 (MSD)" />
+        </menu>
+    </item>
+
+    <item android:title="Pneumococcal 23 Valent">
+        <menu>
+            <item android:title="Pneumovax 23 (MSD)" />
+            <item android:title="VaxiMune 23 (GC Chemie)" />
+        </menu>
+    </item>
+
+    <item android:title="Tdap">
+        <menu>
+            <item android:title="Boostrix (GlaxoSmithKline - GSK)" />
+        </menu>
+    </item>
+
+</menu>
