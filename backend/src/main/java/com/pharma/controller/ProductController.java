@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pharma.dto.request.ProductRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
 import com.pharma.service.ProductService;
 import com.pharma.service.ProductUploadService;
 
@@ -70,18 +71,18 @@ public class ProductController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Search results retrieved successfully", products));
     }
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/category/{categorySlug}")
     public ResponseEntity<ApiResponse<Page<Product>>> getProductsByCategory(
-            @PathVariable ProductCategory category,
+            @PathVariable String categorySlug,
             @RequestParam(required = false) java.util.List<String> subCategory,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
         Page<Product> products;
         if (subCategory != null && !subCategory.isEmpty()) {
-            products = productService.getProductsByCategoryAndSubCategory(category, subCategory, pageable);
+            products = productService.getProductsByCategoryAndSubCategory(categorySlug, subCategory, pageable);
         } else {
-            products = productService.getProductsByCategory(category, pageable);
+            products = productService.getProductsByCategory(categorySlug, pageable);
         }
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }
@@ -123,6 +124,22 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
                     .body(new ApiResponse<>(false, "Failed to process file: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/upload/template")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<byte[]> downloadTemplate() {
+        try {
+            byte[] excelData = productUploadService.generateTemplate();
+            
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"product_upload_template.xlsx\"")
+                    .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                    .body(excelData);
+        } catch (Exception e) {
+            log.error("Error generating Excel template", e);
+            return ResponseEntity.internalServerError().build();
         }
     }
 

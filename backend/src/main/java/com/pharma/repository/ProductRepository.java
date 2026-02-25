@@ -9,14 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.pharma.model.Category;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import com.pharma.model.SubCategory;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Page<Product> findByCategoryAndIsDeletedFalse(ProductCategory category, Pageable pageable);
+    List<Product> findByNameIgnoreCase(String name);
+
+    Page<Product> findByCategoryAndIsDeletedFalse(Category category, Pageable pageable);
     
-    Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalse(ProductCategory category, List<String> subCategories, Pageable pageable);
+    Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalse(Category category, List<SubCategory> subCategories, Pageable pageable);
 
     Page<Product> findByIsDeletedFalse(Pageable pageable);
 

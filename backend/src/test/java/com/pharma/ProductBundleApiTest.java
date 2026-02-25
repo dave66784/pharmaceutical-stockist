@@ -22,10 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharma.dto.request.CartItemRequest;
 import com.pharma.dto.request.OrderRequest;
 import com.pharma.dto.request.ProductRequest;
+import com.pharma.model.Category;
 import com.pharma.model.User;
 import com.pharma.model.enums.PaymentMethod;
-import com.pharma.model.enums.ProductCategory;
 import com.pharma.model.enums.Role;
+import com.pharma.repository.CategoryRepository;
 import com.pharma.repository.UserRepository;
 
 @SpringBootTest(properties = {
@@ -48,6 +49,11 @@ public class ProductBundleApiTest {
     @MockBean
     private JavaMailSender javaMailSender;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    private Long testCategoryId;
+
     @BeforeEach
     public void setup() {
         if (!userRepository.existsByEmail("admin@example.com")) {
@@ -59,6 +65,15 @@ public class ProductBundleApiTest {
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
         }
+
+        Category cat = categoryRepository.findBySlug("pain-relief")
+            .orElseGet(() -> {
+                Category c = new Category();
+                c.setName("Pain Relief");
+                c.setSlug("pain-relief");
+                return categoryRepository.save(c);
+            });
+        testCategoryId = cat.getId();
     }
 
     @Test
@@ -70,7 +85,7 @@ public class ProductBundleApiTest {
         productRequest.setDescription("A test product for bundles");
         productRequest.setPrice(BigDecimal.valueOf(10.0));
         productRequest.setStockQuantity(100);
-        productRequest.setCategory(ProductCategory.PAIN_RELIEF);
+        productRequest.setCategoryId(testCategoryId);
         productRequest.setIsBundleOffer(true);
         productRequest.setBundleBuyQuantity(10);
         productRequest.setBundleFreeQuantity(2);
@@ -118,7 +133,7 @@ public class ProductBundleApiTest {
         productRequest.setName("Remainder Test Product");
         productRequest.setPrice(BigDecimal.valueOf(10.0));
         productRequest.setStockQuantity(100);
-        productRequest.setCategory(ProductCategory.VITAMINS);
+        productRequest.setCategoryId(testCategoryId);
         productRequest.setIsBundleOffer(true);
         productRequest.setBundleBuyQuantity(10);
         productRequest.setBundleFreeQuantity(2);

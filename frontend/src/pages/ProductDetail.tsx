@@ -172,7 +172,7 @@ const ProductDetail: React.FC = () => {
           <div className="p-8 lg:p-12 flex flex-col">
             <div className="mb-2">
               <span className="text-sm font-semibold text-primary-600 uppercase tracking-wide">
-                {product.category}
+                {product.category?.name || 'Unknown Category'}
               </span>
             </div>
 

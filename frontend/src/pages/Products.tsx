@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { productService } from '../services/productService';
-import { Product } from '../types';
+import { categoryService } from '../services/categoryService';
+import { Category, Product, SubCategory } from '../types';
 import ProductCard from '../components/products/ProductCard';
 
 const Products: React.FC = () => {
@@ -15,34 +16,44 @@ const Products: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>([]);
 
-  const categories: string[] = [
-    'ALL',
-    'PAIN_RELIEF',
-    'ANTIBIOTICS',
-    'VITAMINS',
-    'COLD_FLU',
-    'DIGESTIVE',
-    'DIABETES',
-    'CARDIOVASCULAR',
-    'SKINCARE',
-    'FIRST_AID',
-    'VACCINES',
-    'OTHER',
-  ];
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
-  const subCategories: Record<string, string[]> = {
-    VACCINES: [
-      'BCG', 'OPV', 'MMR', 'Rotavirus', 'Pneumococcal', 'Hexa-Valent',
-      'Chickenpox', 'Typhoid', 'Hepatitis A', 'Japanese Encephalitis',
-      'Meningitis', 'Flu', 'HPV', 'Pneumococcal 23 Valent', 'Tdap'
-    ],
-    PAIN_RELIEF: ['Paracetamol', 'Ibuprofen', 'General'],
-  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const cats = await categoryService.getAllCategories();
+        setCategories(cats);
+      } catch (err) {
+        console.error('Failed to load categories', err);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      if (selectedCategory !== 'ALL') {
+        try {
+          const activeCat = categories.find(c => c.slug === selectedCategory);
+          if (activeCat) {
+            const subs = await categoryService.getSubCategoriesByCategory(activeCat.id);
+            setSubCategories(subs);
+          }
+        } catch (err) {
+          console.error('Failed to load subcategories', err);
+        }
+      } else {
+        setSubCategories([]);
+      }
+    };
+    fetchSubCategories();
+  }, [selectedCategory, categories]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const categoryParam = queryParams.get('category');
-    if (categoryParam && categories.includes(categoryParam)) {
+    if (categoryParam) {
       setSelectedCategory(categoryParam);
       setSelectedSubCategories([]);
       setPage(0);
@@ -160,9 +171,10 @@ const Products: React.FC = () => {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category.replace('_', ' ')}
+            <option value="ALL">All Products</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.slug}>
+                {cat.name}
               </option>
             ))}
           </select>
@@ -170,7 +182,8 @@ const Products: React.FC = () => {
       </div>
 
       {/* Sub-category Filter */}
-      {selectedCategory !== 'ALL' && subCategories[selectedCategory] && (
+      {/* Sub-category Filter */}
+      {selectedCategory !== 'ALL' && subCategories.length > 0 && (
         <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
           <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2">
             <button
@@ -182,16 +195,16 @@ const Products: React.FC = () => {
             >
               All Sub-categories
             </button>
-            {subCategories[selectedCategory].map((sub) => (
+            {subCategories.map((sub) => (
               <button
-                key={sub}
-                onClick={() => handleSubCategoryChange(sub)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${selectedSubCategories.includes(sub)
+                key={sub.id}
+                onClick={() => handleSubCategoryChange(sub.slug)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${selectedSubCategories.includes(sub.slug)
                   ? 'bg-blue-600 text-white shadow-sm'
                   : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }`}
               >
-                {sub}
+                {sub.name}
               </button>
             ))}
           </div>

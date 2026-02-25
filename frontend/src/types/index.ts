@@ -37,8 +37,8 @@ export interface Product {
   manufacturer?: string;
   price: number;
   stockQuantity: number;
-  category: ProductCategory;
-  subCategory?: string;
+  category: Category;
+  subCategory?: SubCategory;
   imageUrls?: string[];
   expiryDate?: string;
   isPrescriptionRequired: boolean;
@@ -50,18 +50,20 @@ export interface Product {
   bundlePrice?: number;
 }
 
-export type ProductCategory =
-  | 'PAIN_RELIEF'
-  | 'ANTIBIOTICS'
-  | 'VITAMINS'
-  | 'COLD_FLU'
-  | 'DIGESTIVE'
-  | 'DIABETES'
-  | 'CARDIOVASCULAR'
-  | 'SKINCARE'
-  | 'FIRST_AID'
-  | 'VACCINES'
-  | 'OTHER';
+export interface Category {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+}
+
+export interface SubCategory {
+  id: number;
+  name: string;
+  description: string;
+  slug: string;
+  categoryId: number;
+}
 
 export interface CartItem {
   id: number;

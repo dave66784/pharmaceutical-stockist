@@ -35,12 +35,12 @@ export const productService = {
     return response.data;
   },
 
-  createProduct: async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+  createProduct: async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt' | 'category' | 'subCategory'> & { categoryId: number, subCategoryId?: number }) => {
     const response = await api.post<ApiResponse<Product>>('/products', productData);
     return response.data;
   },
 
-  updateProduct: async (id: number, productData: Partial<Product>) => {
+  updateProduct: async (id: number, productData: Partial<Product> & { categoryId?: number, subCategoryId?: number }) => {
     const response = await api.put<ApiResponse<Product>>(`/products/${id}`, productData);
     return response.data;
   },

@@ -22,8 +22,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.pharma.dto.response.ApiResponse;
+import com.pharma.model.Category;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import com.pharma.model.SubCategory;
 import com.pharma.service.ProductService;
 import com.pharma.service.ProductUploadService;
 
@@ -41,28 +42,42 @@ class ProductControllerTest {
 
     private Product product;
 
+    private Category category;
+    private SubCategory subCategory;
+
     @BeforeEach
     void setUp() {
+        category = new Category();
+        category.setId(1L);
+        category.setSlug("vaccines");
+        category.setName("Vaccines");
+
+        subCategory = new SubCategory();
+        subCategory.setId(1L);
+        subCategory.setSlug("tdap");
+        subCategory.setName("Tdap");
+        subCategory.setCategory(category);
+
         product = new Product();
         product.setId(1L);
         product.setName("Test Vaccine");
-        product.setCategory(ProductCategory.VACCINES);
-        product.setSubCategory("Tdap");
+        product.setCategory(category);
+        product.setSubCategory(subCategory);
     }
 
     @Test
     void getProductsByCategory_WithSubCategory() {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
-        List<String> subCategories = List.of("Tdap");
+        List<String> subCategories = List.of("tdap");
         
         when(productService.getProductsByCategoryAndSubCategory(
-                eq(ProductCategory.VACCINES),
+                eq("vaccines"),
                 eq(subCategories),
                 any(Pageable.class)
         )).thenReturn(productPage);
 
         ResponseEntity<ApiResponse<Page<Product>>> response = productController.getProductsByCategory(
-                ProductCategory.VACCINES,
+                "vaccines",
                 subCategories,
                 0,
                 12
@@ -74,7 +89,7 @@ class ProductControllerTest {
         assertEquals(1, response.getBody().getData().getTotalElements());
         
         verify(productService).getProductsByCategoryAndSubCategory(
-                eq(ProductCategory.VACCINES),
+                eq("vaccines"),
                 eq(subCategories),
                 any(Pageable.class)
         );

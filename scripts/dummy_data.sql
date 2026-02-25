@@ -10,39 +10,91 @@ INSERT INTO users (email, password, first_name, last_name, phone, role, created_
 ON CONFLICT (email) DO UPDATE 
 SET password = EXCLUDED.password;
 
--- PRODUCTS
-ALTER TABLE products ADD COLUMN IF NOT EXISTS sub_category VARCHAR(255);
+-- PRODUCTS AND CATEGORIES
+ALTER TABLE products DROP COLUMN IF EXISTS category;
+ALTER TABLE products DROP COLUMN IF EXISTS sub_category;
 
-INSERT INTO products (name, description, manufacturer, price, stock_quantity, category, sub_category, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) VALUES
-('Paracetamol 500mg', 'Pain relief tablets', 'PharmaCo', 5.99, 100, 'PAIN_RELIEF',  NULL, false, false, false, NOW(), NOW()),
-('Ibuprofen 400mg', 'Anti-inflammatory', 'HealthMeds', 7.99, 75, 'PAIN_RELIEF',  NULL, false, false, false, NOW(), NOW()),
-('Vitamin C 1000mg', 'Immune support', 'VitaLife', 11.99, 200, 'VITAMINS',  NULL, false, false, false, NOW(), NOW()),
-('Multivitamin Daily', 'Complete daily vitamin', 'VitaLife', 14.99, 150, 'VITAMINS',  NULL, false, false, false, NOW(), NOW()),
-('Cold & Flu Relief', 'Multi-symptom relief', 'ColdCare', 9.99, 80, 'COLD_FLU',  NULL, false, false, false, NOW(), NOW()),
-('Cough Syrup', 'Soothing cough relief', 'ThroatEase', 7.50, 60, 'COLD_FLU',  NULL, false, false, false, NOW(), NOW()),
-('Antacid Tablets', 'Heartburn relief', 'DigestWell', 5.99, 120, 'DIGESTIVE',  NULL, false, false, false, NOW(), NOW()),
-('Bandages Pack', 'Sterile adhesive bandages', 'FirstAid Plus', 5.99, 300, 'FIRST_AID',  NULL, false, false, false, NOW(), NOW()),
-('Antiseptic Spray', 'Wound cleaning spray', 'WoundCare', 6.99, 90, 'FIRST_AID',  NULL, false, false, false, NOW(), NOW()),
-('Amoxicillin 500mg', 'Antibiotic (Prescription)', 'AntiBioTech', 15.99, 50, 'ANTIBIOTICS', true, false, NOW(), NOW());
+ALTER TABLE products ADD COLUMN IF NOT EXISTS category_id BIGINT;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS sub_category_id BIGINT;
 
--- Update existing products with sub-categories
-UPDATE products SET sub_category = 'General' WHERE name = 'Paracetamol 500mg' AND category = 'PAIN_RELIEF';
-UPDATE products SET sub_category = 'General' WHERE name = 'Ibuprofen 400mg' AND category = 'PAIN_RELIEF';
-UPDATE products SET sub_category = 'General' WHERE name = 'Vitamin C 1000mg' AND category = 'VITAMINS';
-UPDATE products SET sub_category = 'General' WHERE name = 'Multivitamin Daily' AND category = 'VITAMINS';
-UPDATE products SET sub_category = 'General' WHERE name = 'Cold & Flu Relief' AND category = 'COLD_FLU';
-UPDATE products SET sub_category = 'General' WHERE name = 'Cough Syrup' AND category = 'COLD_FLU';
-UPDATE products SET sub_category = 'General' WHERE name = 'Antacid Tablets' AND category = 'DIGESTIVE';
-UPDATE products SET sub_category = 'General' WHERE name = 'Bandages Pack' AND category = 'FIRST_AID';
-UPDATE products SET sub_category = 'General' WHERE name = 'Antiseptic Spray' AND category = 'FIRST_AID';
-UPDATE products SET sub_category = 'General' WHERE name = 'Amoxicillin 500mg' AND category = 'ANTIBIOTICS';
+-- Seed Categories
+INSERT INTO categories (name, description, slug, created_at, updated_at) VALUES
+('Pain Relief', 'Medications for pain management', 'pain-relief', NOW(), NOW()),
+('Antibiotics', 'Antibacterial medications', 'antibiotics', NOW(), NOW()),
+('Vitamins', 'Nutritional supplements', 'vitamins', NOW(), NOW()),
+('Cold & Flu', 'Remedies for cold and flu symptoms', 'cold-flu', NOW(), NOW()),
+('Digestive', 'Gastrointestinal relief', 'digestive', NOW(), NOW()),
+('Diabetes', 'Diabetes management', 'diabetes', NOW(), NOW()),
+('Cardiovascular', 'Heart health', 'cardiovascular', NOW(), NOW()),
+('Skincare', 'Topical derm remedies', 'skincare', NOW(), NOW()),
+('First Aid', 'First aid supplies', 'first-aid', NOW(), NOW()),
+('Vaccines', 'Immunizations', 'vaccines', NOW(), NOW()),
+('Other', 'Miscellaneous products', 'other', NOW(), NOW())
+ON CONFLICT (slug) DO NOTHING;
+
+-- Seed SubCategories for Vaccines
+INSERT INTO sub_categories (name, description, slug, category_id, created_at, updated_at) 
+SELECT 'BCG', 'Bacillus Calmette-Guérin', 'bcg', id, NOW(), NOW() FROM categories WHERE slug = 'vaccines'
+ON CONFLICT DO NOTHING;
+
+INSERT INTO sub_categories (name, description, slug, category_id, created_at, updated_at) 
+SELECT 'OPV', 'Oral Polio Vaccine', 'opv', id, NOW(), NOW() FROM categories WHERE slug = 'vaccines'
+ON CONFLICT DO NOTHING;
+
+-- Seed SubCategories for General (Adding a 'General' subcategory to other main categories)
+INSERT INTO sub_categories (name, description, slug, category_id, created_at, updated_at) 
+SELECT 'General', 'General Purpose', 'general', id, NOW(), NOW() FROM categories WHERE slug != 'vaccines'
+ON CONFLICT DO NOTHING;
+
+-- Insert Products with Foreign Keys
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Paracetamol 500mg', 'Pain relief tablets', 'PharmaCo', 5.99, 100, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'pain-relief' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Ibuprofen 400mg', 'Anti-inflammatory', 'HealthMeds', 7.99, 75, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'pain-relief' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Vitamin C 1000mg', 'Immune support', 'VitaLife', 11.99, 200, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'vitamins' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Multivitamin Daily', 'Complete daily vitamin', 'VitaLife', 14.99, 150, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'vitamins' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Cold & Flu Relief', 'Multi-symptom relief', 'ColdCare', 9.99, 80, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'cold-flu' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Cough Syrup', 'Soothing cough relief', 'ThroatEase', 7.50, 60, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'cold-flu' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Antacid Tablets', 'Heartburn relief', 'DigestWell', 5.99, 120, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'digestive' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Bandages Pack', 'Sterile adhesive bandages', 'FirstAid Plus', 5.99, 300, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'first-aid' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Antiseptic Spray', 'Wound cleaning spray', 'WoundCare', 6.99, 90, c.id, sc.id, false, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'first-aid' AND sc.slug = 'general';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Amoxicillin 500mg', 'Antibiotic (Prescription)', 'AntiBioTech', 15.99, 50, c.id, sc.id, true, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'antibiotics' AND sc.slug = 'general';
 
 -- NEW VACCINES (from enhancement.txt)
-INSERT INTO products (name, description, manufacturer, price, stock_quantity, category, sub_category, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) VALUES
--- BCG
-('Tubervac', 'BCG Vaccine', 'Serum Institute', 15.00, 100, 'VACCINES', 'BCG', true, false, false, NOW(), NOW()),
--- OPV
-('BioPolio', 'Oral Polio Vaccine', 'Bharat Biotech', 10.00, 500, 'VACCINES', 'OPV', true, false, false, NOW(), NOW()),
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'Tubervac', 'BCG Vaccine', 'Serum Institute', 15.00, 100, c.id, sc.id, true, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'vaccines' AND sc.slug = 'bcg';
+
+INSERT INTO products (name, description, manufacturer, price, stock_quantity, category_id, sub_category_id, is_prescription_required, is_bundle_offer, is_deleted, created_at, updated_at) 
+SELECT 'BioPolio', 'Oral Polio Vaccine', 'Bharat Biotech', 10.00, 500, c.id, sc.id, true, false, false, NOW(), NOW()
+FROM categories c JOIN sub_categories sc ON c.id = sc.category_id WHERE c.slug = 'vaccines' AND sc.slug = 'opv';
 -- MMR
 ('Tresivac', 'MMR Vaccine', 'Serum Institute', 25.00, 200, 'VACCINES', 'MMR', true, false, false, NOW(), NOW()),
 ('Priorix', 'MMR Vaccine', 'GSK', 45.00, 150, 'VACCINES', 'MMR', true, false, false, NOW(), NOW()),

@@ -1,5 +1,6 @@
 package com.pharma.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -9,16 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.DataValidationConstraint;
+import org.apache.poi.ss.usermodel.DataValidationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pharma.model.Category;
 import com.pharma.model.Product;
-import com.pharma.model.enums.ProductCategory;
+import com.pharma.model.SubCategory;
+import com.pharma.repository.CategoryRepository;
 import com.pharma.repository.ProductRepository;
+import com.pharma.repository.SubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +37,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductUploadService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public Map<String, Object> uploadProducts(MultipartFile file) throws IOException {
         Map<String, Object> result = new HashMap<>();
@@ -52,7 +62,26 @@ public class ProductUploadService {
                 try {
                     Product product = parseProductFromRow(row, rowNum);
                     if (product != null) {
-                        validProducts.add(product);
+                        List<Product> existingList = productRepository.findByNameIgnoreCase(product.getName());
+                        if (!existingList.isEmpty()) {
+                            Product existing = existingList.get(0);
+                            existing.setDescription(product.getDescription());
+                            existing.setManufacturer(product.getManufacturer());
+                            existing.setPrice(product.getPrice());
+                            existing.setStockQuantity(product.getStockQuantity());
+                            existing.setCategory(product.getCategory());
+                            existing.setImageUrls(product.getImageUrls());
+                            existing.setIsPrescriptionRequired(product.getIsPrescriptionRequired());
+                            existing.setIsBundleOffer(product.getIsBundleOffer());
+                            existing.setBundleBuyQuantity(product.getBundleBuyQuantity());
+                            existing.setBundleFreeQuantity(product.getBundleFreeQuantity());
+                            existing.setBundlePrice(product.getBundlePrice());
+                            existing.setSubCategory(product.getSubCategory());
+                            existing.setIsDeleted(false); // Restore if it was soft-deleted
+                            validProducts.add(existing);
+                        } else {
+                            validProducts.add(product);
+                        }
                     }
                 } catch (Exception e) {
                     errors.add("Row " + (rowNum + 1) + ": " + e.getMessage());
@@ -78,6 +107,83 @@ public class ProductUploadService {
         result.put("errors", errors);
 
         return result;
+    }
+
+    public byte[] generateTemplate() throws IOException {
+        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            
+            // 1. Create the main "Products" sheet
+            Sheet sheet = workbook.createSheet("Products");
+            Row headerRow = sheet.createRow(0);
+            
+            String[] columns = {
+                "Name *", "Description", "Manufacturer", "Price *", "Stock Quantity *", 
+                "Category *", "Image URL", "Prescription Required", "Is Bundle Offer", 
+                "Bundle Buy Quantity", "Bundle Free Quantity", "Bundle Price", "Sub-Category"
+            };
+            
+            for (int i = 0; i < columns.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columns[i]);
+            }
+
+            // 2. Create the hidden "Data" sheet for dropdown values
+            Sheet dataSheet = workbook.createSheet("Data");
+            
+            // Populate Categories
+            List<Category> categories = categoryRepository.findAll();
+            Row categoryHeader = dataSheet.createRow(0);
+            categoryHeader.createCell(0).setCellValue("Categories");
+            
+            int rowIndex = 1;
+            for (Category category : categories) {
+                Row row = dataSheet.getRow(rowIndex);
+                if (row == null) row = dataSheet.createRow(rowIndex);
+                row.createCell(0).setCellValue(category.getName());
+                rowIndex++;
+            }
+            
+            // Populate Sub-Categories
+            List<SubCategory> subCategories = subCategoryRepository.findAll();
+            categoryHeader.createCell(1).setCellValue("SubCategories");
+            
+            rowIndex = 1;
+            for (SubCategory subCategory : subCategories) {
+                Row row = dataSheet.getRow(rowIndex);
+                if (row == null) row = dataSheet.createRow(rowIndex);
+                row.createCell(1).setCellValue(subCategory.getName());
+                rowIndex++;
+            }
+
+            // Hide the Data sheet
+            workbook.setSheetHidden(1, true);
+
+            // 3. Add Data Validation for the "Products" sheet
+            DataValidationHelper validationHelper = sheet.getDataValidationHelper();
+
+            // Setup Category Validation (Column F / Index 5)
+            if (!categories.isEmpty()) {
+                CellRangeAddressList categoryAddressList = new CellRangeAddressList(1, 1000, 5, 5);
+                String categoryFormula = "Data!$A$2:$A$" + (categories.size() + 1);
+                DataValidationConstraint categoryConstraint = validationHelper.createFormulaListConstraint(categoryFormula);
+                DataValidation categoryValidation = validationHelper.createValidation(categoryConstraint, categoryAddressList);
+                categoryValidation.setShowErrorBox(true);
+                sheet.addValidationData(categoryValidation);
+            }
+
+            // Setup Sub-Category Validation (Column M / Index 12)
+            if (!subCategories.isEmpty()) {
+                CellRangeAddressList subCategoryAddressList = new CellRangeAddressList(1, 1000, 12, 12);
+                String subCategoryFormula = "Data!$B$2:$B$" + (subCategories.size() + 1);
+                DataValidationConstraint subCategoryConstraint = validationHelper.createFormulaListConstraint(subCategoryFormula);
+                DataValidation subCategoryValidation = validationHelper.createValidation(subCategoryConstraint, subCategoryAddressList);
+                subCategoryValidation.setShowErrorBox(true);
+                sheet.addValidationData(subCategoryValidation);
+            }
+
+            workbook.write(out);
+            return out.toByteArray();
+        }
     }
 
     private Product parseProductFromRow(Row row, int rowNum) {
@@ -115,13 +221,9 @@ public class ProductUploadService {
         if (categoryStr == null || categoryStr.trim().isEmpty()) {
             throw new IllegalArgumentException("Category is required");
         }
-        try {
-            ProductCategory category = ProductCategory.valueOf(categoryStr.trim().toUpperCase());
-            product.setCategory(category);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid category: " + categoryStr + ". Valid categories are: " +
-                    String.join(", ", getValidCategories()));
-        }
+        Category category = categoryRepository.findByNameIgnoreCase(categoryStr.trim())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category: " + categoryStr + ". Please ensure this category exists in the system."));
+        product.setCategory(category);
 
         // Column 6: Image URL (comma separated for multiple)
         String imageUrlStr = getCellValueAsString(row.getCell(6));
@@ -159,7 +261,12 @@ public class ProductUploadService {
         }
 
         // Column 12: Sub-Category
-        product.setSubCategory(getCellValueAsString(row.getCell(12)));
+        String subCategoryStr = getCellValueAsString(row.getCell(12));
+        if (subCategoryStr != null && !subCategoryStr.trim().isEmpty()) {
+            SubCategory subCategory = subCategoryRepository.findByNameIgnoreCaseAndCategory(subCategoryStr.trim(), product.getCategory())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid sub-category: " + subCategoryStr + " for category: " + product.getCategory().getName()));
+            product.setSubCategory(subCategory);
+        }
 
         return product;
     }
@@ -220,11 +327,5 @@ public class ProductUploadService {
         }
     }
 
-    private List<String> getValidCategories() {
-        List<String> categories = new ArrayList<>();
-        for (ProductCategory category : ProductCategory.values()) {
-            categories.add(category.name());
-        }
-        return categories;
-    }
+
 }

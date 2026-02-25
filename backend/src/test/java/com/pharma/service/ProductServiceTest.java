@@ -26,8 +26,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import com.pharma.model.Category;
 import com.pharma.model.Product;
+import com.pharma.model.SubCategory;
+import com.pharma.repository.CategoryRepository;
 import com.pharma.repository.ProductRepository;
+import com.pharma.repository.SubCategoryRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -38,16 +42,35 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
+    @Mock
+    private CategoryRepository categoryRepository;
+
+    @Mock
+    private SubCategoryRepository subCategoryRepository;
+
     private Product product;
+    private Category category;
+    private SubCategory subCategory;
 
     @BeforeEach
     void setUp() {
+        category = new Category();
+        category.setId(1L);
+        category.setSlug("pain-relief");
+
+        subCategory = new SubCategory();
+        subCategory.setId(1L);
+        subCategory.setSlug("paracetamol");
+        subCategory.setCategory(category);
+
         product = new Product();
         product.setId(1L);
         product.setName("Test Product");
         product.setPrice(BigDecimal.valueOf(100.0));
         product.setStockQuantity(50);
         product.setManufacturer("Test Manufacturer");
+        product.setCategory(category);
+        product.setSubCategory(subCategory);
     }
 
     @Test
@@ -85,7 +108,9 @@ class ProductServiceTest {
         request.setName("Test Product");
         request.setPrice(BigDecimal.valueOf(100.0));
         request.setStockQuantity(50);
+        request.setCategoryId(1L);
 
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         Product saved = productService.createProduct(request);
@@ -121,8 +146,10 @@ class ProductServiceTest {
         request.setName("Updated Product");
         request.setPrice(BigDecimal.valueOf(150.0));
         request.setStockQuantity(60);
+        request.setCategoryId(1L);
 
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
         Product updated = productService.updateProduct(1L, request);
@@ -135,10 +162,11 @@ class ProductServiceTest {
     @Test
     void getProductsByCategory_Success() {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
-        when(productRepository.findByCategoryAndIsDeletedFalse(any(com.pharma.model.enums.ProductCategory.class),
+        when(categoryRepository.findBySlug("pain-relief")).thenReturn(Optional.of(category));
+        when(productRepository.findByCategoryAndIsDeletedFalse(any(Category.class),
                 any(Pageable.class))).thenReturn(productPage);
 
-        Page<Product> result = productService.getProductsByCategory(com.pharma.model.enums.ProductCategory.PAIN_RELIEF,
+        Page<Product> result = productService.getProductsByCategory("pain-relief",
                 PageRequest.of(0, 10));
 
         assertNotNull(result);
@@ -148,14 +176,16 @@ class ProductServiceTest {
     @Test
     void getProductsByCategoryAndSubCategory_Success() {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
+        when(categoryRepository.findBySlug("pain-relief")).thenReturn(Optional.of(category));
+        when(subCategoryRepository.findBySlugAndCategory("paracetamol", category)).thenReturn(Optional.of(subCategory));
         when(productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(
-                any(com.pharma.model.enums.ProductCategory.class),
+                any(Category.class),
                 anyList(),
                 any(Pageable.class))).thenReturn(productPage);
 
         Page<Product> result = productService.getProductsByCategoryAndSubCategory(
-                com.pharma.model.enums.ProductCategory.PAIN_RELIEF,
-                List.of("Paracetamol"),
+                "pain-relief",
+                List.of("paracetamol"),
                 PageRequest.of(0, 10));
 
         assertNotNull(result);
