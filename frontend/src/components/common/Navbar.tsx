@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, Package, MapPin, LogOut } from 'lucide-react';
 import { authService } from '../../services/authService';
 import { cartService } from '../../services/cartService';
+import NotificationBell from './NotificationBell';
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -87,6 +88,9 @@ const Navbar: React.FC = () => {
                                         </span>
                                     )}
                                 </Link>
+
+                                {/* In-app notification bell */}
+                                <NotificationBell />
 
                                 {/* My Account Dropdown */}
                                 <div className="relative ml-3">

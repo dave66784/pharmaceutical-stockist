@@ -25,6 +25,7 @@ public class UserService {
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
         private final com.pharma.repository.AddressRepository addressRepository;
+        private final EmailService emailService;
 
         public AuthResponse register(RegisterRequest request) {
                 if (userRepository.existsByEmail(request.getEmail())) {
@@ -48,6 +49,9 @@ public class UserService {
                                 .build();
 
                 String token = jwtService.generateToken(userDetails);
+
+                // CUSTOMER: send welcome email (gated by its own switch)
+                emailService.sendWelcomeEmail(savedUser);
 
                 return new AuthResponse(
                                 token,
