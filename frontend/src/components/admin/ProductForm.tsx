@@ -3,6 +3,7 @@ import { X, Upload } from 'lucide-react';
 import { Category, Product, SubCategory } from '../../types';
 import { productService } from '../../services/productService';
 import { categoryService } from '../../services/categoryService';
+import { API_BASE_URL } from '../../config/env';
 
 interface ProductFormProps {
     product?: Product;
@@ -296,7 +297,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                             <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                                 {formData.imageUrls.map((url, index) => (
                                     <div key={index} className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-                                        <img src={`http://localhost:8080${url}`} alt={`Product ${index + 1}`} className="object-cover w-full h-full" onError={(e) => {
+                                        <img src={`${API_BASE_URL}${url}`} alt={`Product ${index + 1}`} className="object-cover w-full h-full" onError={(e) => {
                                             (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image';
                                         }} />
                                         <button

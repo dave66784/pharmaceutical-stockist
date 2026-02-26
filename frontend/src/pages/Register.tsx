@@ -24,6 +24,17 @@ function Register() {
   });
 
   const [otp, setOtp] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  useEffect(() => {
+    let strength = 0;
+    if (formData.password.length >= 8) strength += 1;
+    if (/[A-Z]/.test(formData.password)) strength += 1;
+    if (/[a-z]/.test(formData.password)) strength += 1;
+    if (/[0-9]/.test(formData.password)) strength += 1;
+    if (/[^A-Za-z0-9]/.test(formData.password)) strength += 1;
+    setPasswordStrength(strength);
+  }, [formData.password]);
 
   // Cooldown timer for resend button
   useEffect(() => {
@@ -46,6 +57,7 @@ function Register() {
     try {
       await authService.sendOtp(formData);
       setStep('otp');
+      setFormData(prev => ({ ...prev, password: '' }));
       setResendCooldown(60);
       successToast('OTP sent! Please check your inbox.');
     } catch (err) {
@@ -170,8 +182,25 @@ function Register() {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-lg py-3"
-                        placeholder="Minimum 8 characters" />
+                        placeholder="Min 8 chars, 1 upper, 1 lower, 1 number, 1 special" />
                     </div>
+                    {formData.password.length > 0 && (
+                      <div className="mt-2 text-xs">
+                        <div className="flex gap-1 h-1.5 mb-1">
+                          {[1, 2, 3, 4, 5].map((level) => (
+                            <div key={level} className={`h-full flex-1 rounded-full transition-colors ${passwordStrength >= level
+                                ? passwordStrength < 3 ? 'bg-red-500' : passwordStrength < 5 ? 'bg-yellow-500' : 'bg-green-500'
+                                : 'bg-gray-200'
+                              }`} />
+                          ))}
+                        </div>
+                        <p className={passwordStrength === 5 ? 'text-green-600' : 'text-gray-500'}>
+                          {passwordStrength < 3 && 'Weak: Need 8+ chars and diverse character types'}
+                          {passwordStrength >= 3 && passwordStrength < 5 && 'Good: Add a number or special character'}
+                          {passwordStrength === 5 && 'Strong password!'}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   <button type="submit" disabled={loading}

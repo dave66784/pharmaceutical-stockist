@@ -146,7 +146,7 @@ const Orders: React.FC = () => {
                       {order.orderItems.map(item => (
                         <li key={item.id} className="text-sm text-gray-600 flex justify-between">
                           <span>{item.product.name} x {item.quantity}</span>
-                          <span>${(item.price * item.quantity).toFixed(2)}</span>
+                          <span>${item.subtotal.toFixed(2)}</span>
                         </li>
                       ))}
                     </ul>

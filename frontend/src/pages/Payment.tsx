@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { cartService } from '../services/cartService';
 import { Cart, PaymentMethod } from '../types';
@@ -9,9 +9,10 @@ import { calculateItemTotal } from '../utils/pricing';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const { success, error: errorToast } = useToast();
-    const state = location.state as { shippingAddress?: string; addressId?: number } | undefined;
+
+    const savedState = sessionStorage.getItem('checkoutState');
+    const state = savedState ? JSON.parse(savedState) as { shippingAddress?: string; addressId?: number } : undefined;
 
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | ''>('COD');
     const [loading, setLoading] = useState(false);
@@ -61,6 +62,7 @@ const Payment: React.FC = () => {
 
             if (data && data.success && data.data) {
                 success('Order placed successfully!');
+                sessionStorage.removeItem('checkoutState');
                 // Dispatch event to clear cart in UI
                 window.dispatchEvent(new Event('cartUpdated'));
                 navigate(`/orders/${data.data.id}`);

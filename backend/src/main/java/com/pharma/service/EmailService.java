@@ -51,6 +51,9 @@ public class EmailService {
     @Value("${app.email.customer.notifications.order-status-update.enabled:false}")
     private boolean customerOrderStatusUpdateEnabled;
 
+    @Value("${app.email.customer.notifications.otp-verification.enabled:true}")
+    private boolean otpVerificationEnabled;
+
     // ═══════════════════════════════════════════════════════════════════════════
     // ADMIN — 1. New Order Alert
     // ═══════════════════════════════════════════════════════════════════════════
@@ -87,6 +90,25 @@ public class EmailService {
             log.info("[ADMIN EMAIL SENT] Low stock digest for {} products", lowStockProducts.size());
         } catch (Exception e) {
             log.error("[ADMIN EMAIL FAILED] Low stock digest", e);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CUSTOMER — 0. OTP Verification Email
+    // ═══════════════════════════════════════════════════════════════════════════
+    @Async
+    public void sendOtpEmail(String email, String firstName, String otp, int expiryMinutes) {
+        if (!otpVerificationEnabled) {
+            log.info("[CUSTOMER NOTIF OFF] OTP email skipped for {}", email);
+            return;
+        }
+        try {
+            sendHtmlEmail(email,
+                    "🔐 Your PharmaStockist Verification Code",
+                    buildOtpBody(firstName, otp, expiryMinutes));
+            log.info("[CUSTOMER EMAIL SENT] OTP email to {}", email);
+        } catch (Exception e) {
+            log.error("[CUSTOMER EMAIL FAILED] OTP email to {}", email, e);
         }
     }
 
@@ -205,7 +227,22 @@ public class EmailService {
                 + emailFooter();
     }
 
+    private String buildOtpBody(String firstName, String otp, int expiryMinutes) {
+        return emailHeader("🔐 Email Verification")
+                + "<p>Hi <strong>" + firstName + "</strong>,</p>"
+                + "<p>Use the verification code below to complete your PharmaStockist registration:</p>"
+                + "<div style='text-align:center;margin:28px 0'>"
+                + "<div style='display:inline-block;background:#f0f9ff;border:2px dashed #2563eb;border-radius:12px;padding:20px 40px'>"
+                + "<p style='margin:0 0 4px;font-size:13px;color:#6b7280;text-transform:uppercase;letter-spacing:1px'>Verification Code</p>"
+                + "<span style='font-size:42px;font-weight:900;letter-spacing:10px;color:#1e40af;font-family:monospace'>" + otp + "</span>"
+                + "<p style='margin:8px 0 0;font-size:12px;color:#ef4444'>⏱ Expires in " + expiryMinutes + " minutes</p>"
+                + "</div></div>"
+                + "<p style='font-size:13px;color:#6b7280'>If you did not request this code, please ignore this email. Do not share this code with anyone.</p>"
+                + emailFooter();
+    }
+
     private String buildWelcomeBody(User user) {
+
         return emailHeader("Welcome to PharmaStockist! 👋")
                 + "<p>Hi <strong>" + user.getFirstName() + "</strong>,</p>"
                 + "<p>Your account is ready. Browse our full catalogue, place orders, and track deliveries — all in one place.</p>"

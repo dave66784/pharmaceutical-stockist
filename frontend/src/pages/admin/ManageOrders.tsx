@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { orderService } from '../../services/orderService';
 import { Order } from '../../types';
 import OrderDetailsModal from '../../components/admin/OrderDetailsModal';
-import axios from 'axios';
+import api from '../../services/api';
 
 const ManageOrders: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -79,20 +79,16 @@ const ManageOrders: React.FC = () => {
     const handleExport = async () => {
         try {
             setExporting(true);
-            const token = localStorage.getItem('token');
 
             const params = new URLSearchParams();
             if (searchEmail) params.append('customerEmail', searchEmail);
             if (startDate) params.append('startDate', startDate);
             if (endDate) params.append('endDate', endDate);
 
-            const response = await axios.get(
-                `http://localhost:8080/api/admin/orders/export?${params.toString()}`,
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                    responseType: 'blob',
-                }
-            );
+            const response = await api.get('/admin/orders/export', {
+                params: Object.fromEntries(params),
+                responseType: 'blob',
+            });
 
             // Create download link
             const url = window.URL.createObjectURL(new Blob([response.data]));

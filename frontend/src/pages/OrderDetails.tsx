@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { Order } from '../types';
 import { Truck, Package, CreditCard, MapPin } from 'lucide-react';
+import { API_BASE_URL } from '../config/env';
 
 const OrderDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -115,7 +116,7 @@ const OrderDetails: React.FC = () => {
                                         <div className="flex-shrink-0 h-16 w-16 border border-gray-200 rounded-md overflow-hidden bg-gray-100">
                                             {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
                                                 <img
-                                                    src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                                                    src={`${API_BASE_URL}${item.product.imageUrls[0]}`}
                                                     alt={item.product.name}
                                                     className="h-full w-full object-cover"
                                                     onError={(e) => {

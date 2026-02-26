@@ -318,13 +318,13 @@ const DashboardOverview: React.FC = () => {
           <ResponsiveContainer width="100%" height={300}>
             {orderStatusData.length > 0 ? (
               <PieChart>
+                <Legend layout="horizontal" verticalAlign="bottom" align="center" wrapperStyle={{ paddingTop: '20px' }} />
                 <Pie
                   data={orderStatusData}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
-                  label={(entry) => `${entry.name}: ${entry.value}`}
-                  outerRadius={80}
+                  outerRadius={100}
+                  innerRadius={0}
                   fill="#8884d8"
                   dataKey="value"
                   onClick={handlePieClick}

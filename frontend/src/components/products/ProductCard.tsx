@@ -4,6 +4,7 @@ import { Loader2, Plus } from 'lucide-react';
 import { Product } from '../../types';
 import { cartService } from '../../services/cartService';
 import { useToast } from '../../hooks/useToast';
+import { API_BASE_URL } from '../../config/env';
 
 interface ProductCardProps {
     product: Product;
@@ -55,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-100 relative group-hover:opacity-95 transition-opacity">
                 {product.imageUrls && product.imageUrls.length > 0 ? (
                     <img
-                        src={`http://localhost:8080${product.imageUrls[0]}`}
+                        src={`${API_BASE_URL}${product.imageUrls[0]}`}
                         alt={product.name}
                         className="w-full h-48 object-cover object-center"
                         onError={(e) => {
