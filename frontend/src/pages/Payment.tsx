@@ -6,10 +6,12 @@ import { Cart, PaymentMethod } from '../types';
 import { useToast } from '../hooks/useToast';
 import { CreditCard, Truck, Check } from 'lucide-react';
 import { calculateItemTotal } from '../utils/pricing';
+import { useCartStore } from '../stores/cartStore';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
     const { success, error: errorToast } = useToast();
+    const fetchCartCount = useCartStore(state => state.fetchCartCount);
 
     const savedState = sessionStorage.getItem('checkoutState');
     const state = savedState ? JSON.parse(savedState) as { shippingAddress?: string; addressId?: number } : undefined;
@@ -64,7 +66,7 @@ const Payment: React.FC = () => {
                 success('Order placed successfully!');
                 sessionStorage.removeItem('checkoutState');
                 // Dispatch event to clear cart in UI
-                window.dispatchEvent(new Event('cartUpdated'));
+                await fetchCartCount();
                 navigate(`/orders/${data.data.id}`);
             }
         } catch (err: any) {

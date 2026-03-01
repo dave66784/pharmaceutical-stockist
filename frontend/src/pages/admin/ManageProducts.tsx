@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { productService } from '../../services/productService';
 import { Product } from '../../types';
 import ProductForm from '../../components/admin/ProductForm';
+import { useToast } from '../../hooks/useToast';
 
 const ManageProducts: React.FC = () => {
+    const { error: errorToast } = useToast();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -67,7 +69,7 @@ const ManageProducts: React.FC = () => {
 
     const handleBulkDelete = () => {
         if (selectedIds.size === 0) {
-            alert('Please select at least one product to delete');
+            errorToast('Please select at least one product to delete');
             return;
         }
         setConfirmAction({ show: true, type: 'bulk' });

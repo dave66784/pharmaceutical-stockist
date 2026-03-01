@@ -32,6 +32,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - uploads-data:/app/uploads
     networks:
       - pharma-network
 
@@ -118,6 +120,7 @@ volumes:
     external: true
   loki-data:
     external: true
+  uploads-data: {}
 
 networks:
   pharma-network:

@@ -17,6 +17,14 @@ const addressSchema = z.object({
     country: z.string().min(2, "Country is required")
 });
 
+const addressResponseSchema = z.union([
+    z.object({
+        success: z.boolean().optional(),
+        data: z.array(z.any()).optional()
+    }),
+    z.array(z.any())
+]);
+
 const Checkout: React.FC = () => {
     const navigate = useNavigate();
     const { error: errorToast } = useToast();
@@ -42,14 +50,14 @@ const Checkout: React.FC = () => {
                     cartService.getCart()
                 ]);
 
-                // Handle Address Response
-                // addressService.getAddresses returns AxiosResponse
-                // If backend returns ApiResponse, data is in addressResponse.data.data
-                const addrData = addressResponse.data as any;
-                if (addrData.success && addrData.data) {
-                    setSavedAddresses(addrData.data);
-                } else if (Array.isArray(addrData)) {
-                    setSavedAddresses(addrData);
+                const parsedAddr = addressResponseSchema.safeParse(addressResponse.data);
+                if (parsedAddr.success) {
+                    const addrData = parsedAddr.data;
+                    if (!Array.isArray(addrData) && addrData.success && addrData.data) {
+                        setSavedAddresses(addrData.data);
+                    } else if (Array.isArray(addrData)) {
+                        setSavedAddresses(addrData);
+                    }
                 }
 
                 // Handle Cart Response
@@ -424,7 +432,7 @@ const Checkout: React.FC = () => {
                                                         alt={item.product.name}
                                                         className="h-full w-full object-cover object-center"
                                                         onError={(e) => {
-                                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=No+Image';
+                                                            (e.target as HTMLImageElement).src = '/assets/placeholder-product.png';
                                                         }}
                                                     />
                                                 ) : (

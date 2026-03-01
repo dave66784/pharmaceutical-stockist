@@ -120,7 +120,7 @@ const OrderDetails: React.FC = () => {
                                                     alt={item.product.name}
                                                     className="h-full w-full object-cover"
                                                     onError={(e) => {
-                                                        (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=No+Image';
+                                                        (e.target as HTMLImageElement).src = '/assets/placeholder-product.png';
                                                     }}
                                                 />
                                             ) : (

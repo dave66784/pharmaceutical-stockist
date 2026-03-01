@@ -5,6 +5,7 @@ import { Product } from '../../types';
 import { cartService } from '../../services/cartService';
 import { useToast } from '../../hooks/useToast';
 import { API_BASE_URL } from '../../config/env';
+import { useCartStore } from '../../stores/cartStore';
 
 interface ProductCardProps {
     product: Product;
@@ -12,6 +13,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { success, error: errorToast } = useToast();
+    const fetchCartCount = useCartStore(state => state.fetchCartCount);
     const [adding, setAdding] = useState(false);
     const [addingBundle, setAddingBundle] = useState(false);
     const handleAddToCartBundle = async (e: React.MouseEvent) => {
@@ -25,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         try {
             setAddingBundle(true);
             await cartService.addToCart(product.id, totalQty);
-            window.dispatchEvent(new Event('cartUpdated'));
+            await fetchCartCount();
             success(`Added ${product.name} Bundle (${totalQty} units) to cart`);
         } catch (err) {
             console.error('Failed to add bundle to cart:', err);
@@ -41,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         try {
             setAdding(true);
             await cartService.addToCart(product.id, 1);
-            window.dispatchEvent(new Event('cartUpdated'));
+            await fetchCartCount();
             success(`Added ${product.name} to cart`);
         } catch (err) {
             console.error('Failed to add to cart:', err);

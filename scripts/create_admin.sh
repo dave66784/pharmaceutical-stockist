@@ -5,7 +5,7 @@
 
 BASE_URL="http://localhost:8080/api"
 ADMIN_EMAIL="admin@pharma.com"
-ADMIN_PASSWORD="admin123"
+ADMIN_PASSWORD="Admin@123"
 
 echo "=========================================="
 echo "Admin User Creation Script"
@@ -35,10 +35,10 @@ if [ $attempt -eq $max_attempts ]; then
 fi
 
 echo ""
-echo "📝 Registering admin user..."
+echo "📝 Initiating registration (sending OTP)..."
 
-# Register the admin user
-REGISTER_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/register" \
+# Step 1: Send OTP
+SEND_OTP_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/send-otp" \
   -H "Content-Type: application/json" \
   -d "{
     \"email\": \"$ADMIN_EMAIL\",
@@ -48,17 +48,34 @@ REGISTER_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/register" \
     \"phone\": \"9999999999\"
   }")
 
-echo "$REGISTER_RESPONSE" | grep -q "success.*true"
-
-if [ $? -eq 0 ]; then
-  echo "✅ Admin user registered successfully"
-else
+echo "$SEND_OTP_RESPONSE" | grep -q "success.*true"
+if [ $? -ne 0 ]; then
   # Check if user already exists
-  if echo "$REGISTER_RESPONSE" | grep -q "Email already exists"; then
+  if echo "$SEND_OTP_RESPONSE" | grep -q "already exists"; then
     echo "ℹ️  Admin user already exists, skipping registration"
   else
-    echo "❌ Failed to register admin user"
-    echo "Response: $REGISTER_RESPONSE"
+    echo "❌ Failed to initiate registration (send-otp)"
+    echo "Response: $SEND_OTP_RESPONSE"
+    exit 1
+  fi
+else
+  echo "✅ OTP initiation successful"
+  
+  echo "📝 Verifying OTP and creating account..."
+  # Step 2: Verify OTP (using test override 123456)
+  VERIFY_OTP_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/verify-otp" \
+    -H "Content-Type: application/json" \
+    -d "{
+      \"email\": \"$ADMIN_EMAIL\",
+      \"otp\": \"123456\"
+    }")
+
+  echo "$VERIFY_OTP_RESPONSE" | grep -q "success.*true"
+  if [ $? -eq 0 ]; then
+    echo "✅ Admin user registered successfully"
+  else
+    echo "❌ Failed to verify OTP"
+    echo "Response: $VERIFY_OTP_RESPONSE"
     exit 1
   fi
 fi

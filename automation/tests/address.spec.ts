@@ -7,16 +7,15 @@ test.describe('Address Management Workflows', () => {
     test.describe.configure({ mode: 'serial' });
 
     test.beforeAll(async ({ request }) => {
-        // Register Customer
-        await request.post('/api/auth/register', {
-            data: {
-                firstName: 'Address',
-                lastName: 'User',
-                email: customerEmail,
-                password: customerPass,
-                phone: '1234567890'
-            }
-        });
+        const payload = {
+            firstName: 'Address',
+            lastName: 'User',
+            email: customerEmail,
+            password: customerPass,
+            phone: '1234567890'
+        };
+        await request.post('/api/auth/send-otp', { data: payload });
+        await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: '123456' } });
     });
 
     test.beforeEach(async ({ page }) => {

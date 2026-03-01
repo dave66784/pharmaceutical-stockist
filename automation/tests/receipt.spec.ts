@@ -5,7 +5,7 @@ test.describe('Receipt Workflows', () => {
     test.beforeAll(async ({ request }) => {
         // Login as admin to get token
         const loginRes = await request.post('/api/auth/login', {
-            data: { email: 'admin@pharma.com', password: 'admin123' }
+            data: { email: 'admin@pharma.com', password: 'Admin@123' }
         });
         const loginData = await loginRes.json();
         const token = loginData.data.token;
@@ -36,7 +36,7 @@ test.describe('Receipt Workflows', () => {
         // 1. Login
         await page.goto('/login');
         await page.fill('input[type="email"]', 'admin@pharma.com');
-        await page.fill('input[type="password"]', 'admin123');
+        await page.fill('input[type="password"]', 'Admin@123');
         await page.click('text="Sign in"');
         await page.waitForTimeout(2000);
 

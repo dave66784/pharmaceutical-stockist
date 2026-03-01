@@ -4,12 +4,14 @@ import { cartService } from '../services/cartService';
 import { Cart as CartType } from '../types';
 import { calculateItemTotal } from '../utils/pricing';
 import { API_BASE_URL } from '../config/env';
+import { useCartStore } from '../stores/cartStore';
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const fetchCartCount = useCartStore(state => state.fetchCartCount);
 
   useEffect(() => {
     fetchCart();
@@ -35,7 +37,7 @@ const Cart: React.FC = () => {
     try {
       await cartService.updateCartItem(itemId, newQuantity);
       fetchCart(); // Refresh cart to get updated state
-      window.dispatchEvent(new Event('cartUpdated'));
+      await fetchCartCount();
     } catch (err) {
       console.error('Failed to update quantity', err);
       // specific error handling could be added here
@@ -46,7 +48,7 @@ const Cart: React.FC = () => {
     try {
       await cartService.removeFromCart(itemId);
       fetchCart();
-      window.dispatchEvent(new Event('cartUpdated'));
+      await fetchCartCount();
     } catch (err) {
       console.error('Failed to remove item', err);
     }
@@ -57,7 +59,7 @@ const Cart: React.FC = () => {
       try {
         await cartService.clearCart();
         fetchCart();
-        window.dispatchEvent(new Event('cartUpdated'));
+        await fetchCartCount();
       } catch (err) {
         console.error('Failed to clear cart', err);
       }

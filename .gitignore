@@ -81,3 +81,11 @@ test_images/
 
 # Monitoring
 monitoring/alertmanager.yml
+
+# Playwright
+automation/playwright-report/
+automation/test-results/
+automation/tests/test-image.png
+
+# Debug scripts
+automation/run_debug_test*.js

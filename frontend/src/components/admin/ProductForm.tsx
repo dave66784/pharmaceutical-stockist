@@ -84,7 +84,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 stockQuantity: product.stockQuantity,
                 categoryId: product.category.id,
                 subCategoryId: product.subCategory?.id,
-                imageUrls: product.imageUrls || ((product as any).imageUrl ? [(product as any).imageUrl] : []),
+                imageUrls: product.imageUrls || (('imageUrl' in product && typeof product.imageUrl === 'string') ? [product.imageUrl] : []),
                 isPrescriptionRequired: product.isPrescriptionRequired,
                 expiryDate: product.expiryDate || '',
                 isBundleOffer: product.isBundleOffer || false,
@@ -297,8 +297,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                             <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                                 {formData.imageUrls.map((url, index) => (
                                     <div key={index} className="relative group aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-                                        <img src={`${API_BASE_URL}${url}`} alt={`Product ${index + 1}`} className="object-cover w-full h-full" onError={(e) => {
-                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=No+Image';
+                                        <img src={url.startsWith('http') ? url : `${API_BASE_URL}${url}`} alt={`Product ${index + 1}`} className="object-cover w-full h-full" onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://raw.githubusercontent.com/lucide-react/lucide/main/icons/image.svg';
                                         }} />
                                         <button
                                             type="button"

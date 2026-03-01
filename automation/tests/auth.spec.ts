@@ -9,7 +9,7 @@ test.describe('Authentication', () => {
     test('should login successfully as admin', async ({ page }) => {
         await page.goto('/login');
         await page.getByLabel('Email').fill('admin@pharma.com');
-        await page.getByLabel('Password').fill('admin123');
+        await page.getByLabel('Password').fill('Admin@123');
         await page.getByRole('button', { name: 'Sign in' }).click();
 
         // Expect to be redirected to admin dashboard

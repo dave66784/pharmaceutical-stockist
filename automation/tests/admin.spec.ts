@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const adminEmail = 'admin@pharma.com';
-const adminPass = 'admin123';
+const adminPass = 'Admin@123';
 
 test.describe('Admin Dashboard Workflows', () => {
     test.describe.configure({ mode: 'serial' });

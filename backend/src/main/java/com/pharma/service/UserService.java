@@ -31,7 +31,7 @@ public class UserService {
         /** Validates email availability without creating an account. */
         public void assertEmailAvailable(String email) {
                 if (userRepository.existsByEmail(email)) {
-                        throw new RuntimeException("An account with this email already exists.");
+                        throw new IllegalArgumentException("An account with this email already exists.");
                 }
         }
 
@@ -45,7 +45,7 @@ public class UserService {
         /** Internal: create user and return JWT. */
         public AuthResponse register(RegisterRequest request) {
                 if (userRepository.existsByEmail(request.getEmail())) {
-                        throw new RuntimeException("Email already exists");
+                        throw new IllegalArgumentException("Email already exists");
                 }
 
                 User user = new User();
