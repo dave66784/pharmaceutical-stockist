@@ -1,0 +1,222 @@
+categories:
+  get:
+    tags:
+      - Categories
+    summary: Get all categories (public)
+    operationId: getAllCategories
+    security: []
+    responses:
+      '200':
+        description: Category list
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '../components/schemas/product.yaml#/components/schemas/Category'
+
+  post:
+    tags:
+      - Categories
+    summary: Create a category (Admin only)
+    operationId: createCategory
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/CategoryRequest'
+    responses:
+      '200':
+        description: Category created
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/Category'
+      '403':
+        description: Admin access required
+
+categoryById:
+  put:
+    tags:
+      - Categories
+    summary: Update a category (Admin only)
+    operationId: updateCategory
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/CategoryRequest'
+    responses:
+      '200':
+        description: Category updated
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/Category'
+      '403':
+        description: Admin access required
+      '404':
+        description: Category not found
+
+  delete:
+    tags:
+      - Categories
+    summary: Delete a category (Admin only)
+    operationId: deleteCategory
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Category deleted
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '403':
+        description: Admin access required
+
+subCategories:
+  get:
+    tags:
+      - Categories
+    summary: Get sub-categories for a category (public)
+    operationId: getSubCategoriesByCategory
+    security: []
+    parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Sub-category list
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '../components/schemas/product.yaml#/components/schemas/SubCategory'
+
+  post:
+    tags:
+      - Categories
+    summary: Add a sub-category to a category (Admin only)
+    operationId: createSubCategory
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/SubCategoryRequest'
+    responses:
+      '200':
+        description: Sub-category created
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/SubCategory'
+      '403':
+        description: Admin access required
+
+subCategoryById:
+  put:
+    tags:
+      - Categories
+    summary: Update a sub-category (Admin only)
+    operationId: updateSubCategory
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/product.yaml#/components/schemas/SubCategoryRequest'
+    responses:
+      '200':
+        description: Sub-category updated
+      '403':
+        description: Admin access required
+
+  delete:
+    tags:
+      - Categories
+    summary: Delete a sub-category (Admin only)
+    operationId: deleteSubCategory
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Sub-category deleted
+      '403':
+        description: Admin access required

@@ -1,32 +1,95 @@
 openapi: 3.0.3
 info:
   title: Pharmaceutical Stockist API
-  description: API for managing pharmaceutical products, orders, and inventory.
-  version: 1.0.0
+  description: |
+    REST API for managing pharmaceutical products, inventory, orders, and users.
+
+    ## Authentication
+    Most endpoints require a Bearer JWT token obtained via `/api/auth/login` or
+    `/api/auth/verify-otp`. Include it as: `Authorization: Bearer <token>`
+
+    ## Registration Flow (Two-Step OTP)
+    1. `POST /api/auth/send-otp` — submit registration details, receive OTP by email.
+    2. `POST /api/auth/verify-otp` — confirm OTP to create account and receive JWT.
+  version: 1.1.0
+
 servers:
   - url: http://localhost:8080
     description: Local Development Server
+  - url: https://api.pharmacare.example.com
+    description: Production Server (placeholder)
+
+tags:
+  - name: Auth
+    description: Authentication and user registration
+  - name: Products
+    description: Product catalogue management
+  - name: Categories
+    description: Product category and sub-category management
+  - name: Cart
+    description: Shopping cart operations
+  - name: Orders
+    description: Customer order operations
+  - name: Addresses
+    description: Customer address book
+  - name: Admin Orders
+    description: Admin-only order management
+  - name: Admin Users
+    description: Admin-only user management
+  - name: Dashboard
+    description: Admin analytics dashboard
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: RS256-signed JWT. Expires after 24 hours.
+
 security:
   - bearerAuth: []
+
 paths:
-  /api/auth/register:
-    $ref: './paths/auth.yaml#/register'
+  # Auth
+  /api/auth/send-otp:
+    $ref: './paths/auth.yaml#/sendOtp'
+  /api/auth/resend-otp:
+    $ref: './paths/auth.yaml#/resendOtp'
+  /api/auth/verify-otp:
+    $ref: './paths/auth.yaml#/verifyOtp'
   /api/auth/login:
     $ref: './paths/auth.yaml#/login'
+
+  # Products
   /api/products:
     $ref: './paths/products.yaml#/products'
   /api/products/{id}:
     $ref: './paths/products.yaml#/productById'
   /api/products/search:
     $ref: './paths/products.yaml#/searchProducts'
-  /api/products/category/{category}:
+  /api/products/category/{categorySlug}:
     $ref: './paths/products.yaml#/productsByCategory'
+  /api/products/upload:
+    $ref: './paths/products.yaml#/uploadProducts'
+  /api/products/upload/template:
+    $ref: './paths/products.yaml#/uploadTemplate'
+  /api/products/images:
+    $ref: './paths/products.yaml#/uploadImages'
+  /api/products/delete-bulk:
+    $ref: './paths/products.yaml#/bulkDeleteProducts'
+
+  # Categories
+  /api/categories:
+    $ref: './paths/categories.yaml#/categories'
+  /api/categories/{id}:
+    $ref: './paths/categories.yaml#/categoryById'
+  /api/categories/{categoryId}/subcategories:
+    $ref: './paths/categories.yaml#/subCategories'
+  /api/categories/subcategories/{id}:
+    $ref: './paths/categories.yaml#/subCategoryById'
+
+  # Cart
   /api/cart:
     $ref: './paths/cart.yaml#/cart'
   /api/cart/items:
@@ -35,14 +98,24 @@ paths:
     $ref: './paths/cart.yaml#/cartItemDetail'
   /api/cart/clear:
     $ref: './paths/cart.yaml#/clearCart'
+
+  # Orders
   /api/orders:
     $ref: './paths/orders.yaml#/orders'
   /api/orders/{id}:
     $ref: './paths/orders.yaml#/orderDetail'
+  /api/orders/{id}/receipt:
+    $ref: './paths/orders.yaml#/orderReceipt'
+  /api/orders/export:
+    $ref: './paths/orders.yaml#/exportUserOrders'
+
+  # Addresses
   /api/addresses:
     $ref: './paths/address.yaml#/paths/~1api~1addresses'
   /api/addresses/{id}:
     $ref: './paths/address.yaml#/paths/~1api~1addresses~1{id}'
+
+  # Admin - Orders
   /api/admin/orders:
     $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders'
   /api/admin/orders/status/{status}:
@@ -51,6 +124,8 @@ paths:
     $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders~1{orderId}~1status'
   /api/admin/orders/export:
     $ref: './paths/admin.yaml#/paths/~1api~1admin~1orders~1export'
+
+  # Admin - Dashboard
   /api/admin/dashboard/stats:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1stats'
   /api/admin/dashboard/daily-revenue:
@@ -59,6 +134,8 @@ paths:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1expiring-products'
   /api/admin/dashboard/top-products:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1top-products'
+
+  # Admin - Users
   /api/admin/users:
     $ref: './paths/user.yaml#/paths/~1api~1admin~1users'
   /api/admin/users/role/{role}:

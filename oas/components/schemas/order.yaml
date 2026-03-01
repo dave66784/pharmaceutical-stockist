@@ -12,22 +12,30 @@ components:
         status:
           type: string
           enum: [PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED]
+        paymentMethod:
+          type: string
+          enum: [COD, ONLINE]
+        paymentStatus:
+          type: string
+          enum: [PENDING, PAID, FAILED, REFUNDED]
         shippingAddress:
           type: string
         addressId:
           type: integer
           format: int64
+          nullable: true
         orderDate:
           type: string
           format: date-time
         deliveryDate:
           type: string
           format: date-time
+          nullable: true
         orderItems:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    
+
     OrderItem:
       type: object
       properties:
@@ -43,14 +51,25 @@ components:
           format: double
         freeQuantity:
           type: integer
+          description: Free items received via bundle offer (0 if not applicable)
 
     OrderRequest:
       type: object
       required:
         - shippingAddress
+        - paymentMethod
       properties:
         shippingAddress:
           type: string
+          description: Full formatted shipping address string
         addressId:
           type: integer
           format: int64
+          nullable: true
+          description: Reference to saved address (optional)
+        paymentMethod:
+          type: string
+          enum: [COD, ONLINE]
+          description: >
+            COD = Cash on Delivery; ONLINE = card / UPI / net banking
+            (no payment gateway currently integrated).
