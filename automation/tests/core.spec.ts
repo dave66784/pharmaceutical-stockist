@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const adminEmail = 'admin@pharma.com';
-const adminPass = 'admin123';
+const adminPass = 'Admin@123';
 const customerEmail = `customer_${Date.now()}@test.com`;
 const customerPass = 'Password123!';
 const productName = `Test Product ${Date.now()}`;
@@ -39,16 +39,15 @@ test.describe('Customer Core Workflows', () => {
         });
         expect(productRes.ok()).toBeTruthy();
 
-        // 3. Register Customer
-        const regRes = await request.post('/api/auth/register', {
-            data: {
-                firstName: 'Test',
-                lastName: 'Customer',
-                email: customerEmail,
-                password: customerPass,
-                phone: '1234567890'
-            }
-        });
+        const payload = {
+            firstName: 'Test',
+            lastName: 'Customer',
+            email: customerEmail,
+            password: customerPass,
+            phone: '1234567890'
+        };
+        await request.post('/api/auth/send-otp', { data: payload });
+        const regRes = await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: '123456' } });
         // If user already exists (e.g. re-run), ignoring 400.
         // But with unique email, it should be 200.
         expect(regRes.ok()).toBeTruthy();

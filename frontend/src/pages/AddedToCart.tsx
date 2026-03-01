@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { CheckCircle, ShoppingCart, ArrowRight } from 'lucide-react';
 import { cartService } from '../services/cartService';
 import { Cart } from '../types';
+import { calculateItemTotal } from '../utils/pricing';
 
 const AddedToCart: React.FC = () => {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ const AddedToCart: React.FC = () => {
     const calculateTotal = () => {
         if (!cart?.items) return 0;
         return cart.items.reduce((sum, item) => {
-            return sum + (item.product.price * item.quantity);
+            return sum + calculateItemTotal(item.product, item.quantity);
         }, 0);
     };
 
@@ -86,9 +87,20 @@ const AddedToCart: React.FC = () => {
                                         </p>
                                     </div>
                                     <div className="ml-4 text-right">
-                                        <p className="text-sm font-medium text-gray-900">
-                                            ${(item.product.price * item.quantity).toFixed(2)}
-                                        </p>
+                                        {calculateItemTotal(item.product, item.quantity) < item.product.price * item.quantity ? (
+                                            <>
+                                                <p className="text-xs text-gray-400 line-through">
+                                                    ${(item.product.price * item.quantity).toFixed(2)}
+                                                </p>
+                                                <p className="text-sm font-medium text-green-600">
+                                                    ${calculateItemTotal(item.product, item.quantity).toFixed(2)}
+                                                </p>
+                                            </>
+                                        ) : (
+                                            <p className="text-sm font-medium text-gray-900">
+                                                ${(item.product.price * item.quantity).toFixed(2)}
+                                            </p>
+                                        )}
                                         <p className="text-xs text-gray-500">
                                             ${item.product.price.toFixed(2)} each
                                         </p>

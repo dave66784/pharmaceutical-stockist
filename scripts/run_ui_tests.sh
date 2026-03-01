@@ -13,6 +13,7 @@ show_help() {
     echo "  chromium   Run chromium tests only"
     echo "  ui         Open Playwright UI"
     echo "  report     Show the latest HTML report"
+    echo "  dashboard  Generate and show the Allure Professional Dashboard"
     echo "  master     Run ONLY the End-to-End Master Flow (Combined Video)"
 }
 
@@ -30,6 +31,9 @@ case "$1" in
         ;;
     "report")
         cd "$TEST_DIR" && npx playwright show-report
+        ;;
+    "dashboard")
+        cd "$TEST_DIR" && npx playwright test && node generate_dashboard.js && open dashboard.html
         ;;
     "master")
         cd "$TEST_DIR" && npx playwright test tests/master-flow.spec.ts --project=chromium

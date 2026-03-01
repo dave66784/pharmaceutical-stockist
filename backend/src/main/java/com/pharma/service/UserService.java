@@ -25,10 +25,27 @@ public class UserService {
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
         private final com.pharma.repository.AddressRepository addressRepository;
+        private final EmailService emailService;
+        private final OtpService otpService;
 
+        /** Validates email availability without creating an account. */
+        public void assertEmailAvailable(String email) {
+                if (userRepository.existsByEmail(email)) {
+                        throw new IllegalArgumentException("An account with this email already exists.");
+                }
+        }
+
+        /** Step 2 of OTP registration: verify OTP then create the account. */
+        public AuthResponse verifyOtpAndRegister(String email, String otp) {
+                // OtpService validates OTP and returns the original RegisterRequest
+                RegisterRequest request = otpService.verifyAndConsume(email, otp);
+                return register(request);
+        }
+
+        /** Internal: create user and return JWT. */
         public AuthResponse register(RegisterRequest request) {
                 if (userRepository.existsByEmail(request.getEmail())) {
-                        throw new RuntimeException("Email already exists");
+                        throw new IllegalArgumentException("Email already exists");
                 }
 
                 User user = new User();
@@ -48,6 +65,9 @@ public class UserService {
                                 .build();
 
                 String token = jwtService.generateToken(userDetails);
+
+                // CUSTOMER: send welcome email (gated by its own switch)
+                emailService.sendWelcomeEmail(savedUser);
 
                 return new AuthResponse(
                                 token,

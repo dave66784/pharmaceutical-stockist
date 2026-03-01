@@ -5,6 +5,7 @@ import { cartService } from '../services/cartService';
 import { Product } from '../types';
 import { authService } from '../services/authService';
 import { useToast } from '../hooks/useToast';
+import { API_BASE_URL } from '../config/env';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -119,7 +120,7 @@ const ProductDetail: React.FC = () => {
               <>
                 <div className="w-full h-[300px] lg:h-[400px] flex items-center justify-center mb-4">
                   <img
-                    src={`http://localhost:8080${product.imageUrls[selectedImageIndex]}`}
+                    src={`${API_BASE_URL}${product.imageUrls[selectedImageIndex]}`}
                     alt={product.name}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-sm"
                     onError={(e) => {
@@ -137,7 +138,7 @@ const ProductDetail: React.FC = () => {
                           }`}
                       >
                         <img
-                          src={`http://localhost:8080${url}`}
+                          src={`${API_BASE_URL}${url}`}
                           alt={`${product.name} ${index + 1}`}
                           className="h-full w-full object-cover"
                           onError={(e) => {

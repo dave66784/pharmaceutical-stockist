@@ -1,27 +1,44 @@
 package com.pharma.service;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.util.Base64;
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class JwtServiceTest {
 
     private JwtService jwtService;
-    // 256-bit key (32 bytes) encoded in Base64
-    private String secretKey = "c2VjcmV0a2V5MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA==";
-    private long expiration = 1000 * 60 * 24; // 24 hours
+    private long expiration = 1000L * 60 * 60 * 24; // 24 hours
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         jwtService = new JwtService();
-        ReflectionTestUtils.setField(jwtService, "secretKey", secretKey);
+
+        // Generate a fresh RSA key pair for each test
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(2048);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+
+        PrivateKey privateKey = keyPair.getPrivate();
+        PublicKey publicKey = keyPair.getPublic();
+
+        String privateKeyBase64 = Base64.getEncoder().encodeToString(privateKey.getEncoded());
+        String publicKeyBase64 = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+
+        ReflectionTestUtils.setField(jwtService, "privateKeyBase64", privateKeyBase64);
+        ReflectionTestUtils.setField(jwtService, "publicKeyBase64", publicKeyBase64);
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", expiration);
     }
 
@@ -41,5 +58,13 @@ class JwtServiceTest {
         String token = jwtService.generateToken(userDetails);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
         assertTrue(isValid);
+    }
+
+    @Test
+    void testTokenIsInvalidForDifferentUser() {
+        UserDetails user1 = new User("user1", "password", Collections.emptyList());
+        UserDetails user2 = new User("user2", "password", Collections.emptyList());
+        String token = jwtService.generateToken(user1);
+        assertFalse(jwtService.isTokenValid(token, user2));
     }
 }

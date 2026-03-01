@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('End-to-End Master Flow', async ({ page, request }) => {
     const adminEmail = 'admin@pharma.com';
-    const adminPass = 'admin123';
+    const adminPass = 'Admin@123';
     const customerEmail = `master_${Date.now()}@test.com`;
     const customerPass = 'Password123!';
     const productName = `Master Product ${Date.now()}`;
@@ -32,15 +32,15 @@ test('End-to-End Master Flow', async ({ page, request }) => {
         }
     });
 
-    await request.post('/api/auth/register', {
-        data: {
-            firstName: 'Master',
-            lastName: 'User',
-            email: customerEmail,
-            password: customerPass,
-            phone: '1234567890'
-        }
-    });
+    const payload = {
+        firstName: 'Master',
+        lastName: 'User',
+        email: customerEmail,
+        password: customerPass,
+        phone: '1234567890'
+    };
+    await request.post('/api/auth/send-otp', { data: payload });
+    await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: '123456' } });
 
     // --- START VISUAL FLOW ---
 

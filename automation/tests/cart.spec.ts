@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const adminEmail = 'admin@pharma.com';
-const adminPass = 'admin123';
+const adminPass = 'Admin@123';
 const customerEmail = `cart_user_${Date.now()}@test.com`;
 const customerPass = 'Password123!';
 const productName = `Cart Test Product ${Date.now()}`;
@@ -37,16 +37,15 @@ test.describe('Cart Workflows', () => {
             }
         });
 
-        // 3. Register Customer
-        await request.post('/api/auth/register', {
-            data: {
-                firstName: 'Cart',
-                lastName: 'Customer',
-                email: customerEmail,
-                password: customerPass,
-                phone: '1234567890'
-            }
-        });
+        const payload = {
+            firstName: 'Cart',
+            lastName: 'Customer',
+            email: customerEmail,
+            password: customerPass,
+            phone: '1234567890'
+        };
+        await request.post('/api/auth/send-otp', { data: payload });
+        await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: '123456' } });
     });
 
     test.beforeEach(async ({ page }) => {

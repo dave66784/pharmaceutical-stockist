@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, Package, MapPin, LogOut } from 'lucide-react';
 import { authService } from '../../services/authService';
-import { cartService } from '../../services/cartService';
+import { useCartStore } from '../../stores/cartStore';
+import NotificationBell from './NotificationBell';
 
 const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [cartItemCount, setCartItemCount] = useState(0);
+    const { cartItemCount, fetchCartCount } = useCartStore();
     const navigate = useNavigate();
 
     const user = authService.getCurrentUser();
@@ -17,27 +18,8 @@ const Navbar: React.FC = () => {
     useEffect(() => {
         if (isAuthenticated) {
             fetchCartCount();
-            window.addEventListener('cartUpdated', fetchCartCount);
         }
-        return () => {
-            window.removeEventListener('cartUpdated', fetchCartCount);
-        };
-    }, [isAuthenticated]);
-
-    const fetchCartCount = async () => {
-        try {
-            const response = await cartService.getCart();
-            if (response.data?.items) {
-                const totalItems = response.data.items.reduce(
-                    (sum, item) => sum + item.quantity,
-                    0
-                );
-                setCartItemCount(totalItems);
-            }
-        } catch (error) {
-            console.error('Failed to fetch cart count:', error);
-        }
-    };
+    }, [isAuthenticated, fetchCartCount]);
 
     const handleLogout = () => {
         authService.logout();
@@ -87,6 +69,9 @@ const Navbar: React.FC = () => {
                                         </span>
                                     )}
                                 </Link>
+
+                                {/* In-app notification bell */}
+                                <NotificationBell />
 
                                 {/* My Account Dropdown */}
                                 <div className="relative ml-3">

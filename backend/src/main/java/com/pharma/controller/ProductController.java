@@ -204,7 +204,7 @@ public class ProductController {
                 String filename = UUID.randomUUID().toString() + extension;
                 Path filePath = uploadDir.resolve(filename);
                 Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-                fileUrls.add("/uploads/images/" + filename);
+                fileUrls.add("/api/uploads/images/" + filename);
             }
 
             return ResponseEntity.ok(new ApiResponse<>(true, "Images uploaded successfully", fileUrls));

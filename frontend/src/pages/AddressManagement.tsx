@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, MapPin } from 'lucide-react';
 import { addressService } from '../services/addressService';
 import { Address } from '../types';
+import { z } from 'zod';
+
+const addressResponseSchema = z.union([
+    z.object({
+        success: z.boolean().optional(),
+        data: z.array(z.any()).optional()
+    }),
+    z.array(z.any())
+]);
 
 const AddressManagement: React.FC = () => {
     const [addresses, setAddresses] = useState<Address[]>([]);
@@ -17,12 +26,16 @@ const AddressManagement: React.FC = () => {
     const fetchAddresses = async () => {
         try {
             const response = await addressService.getAddresses();
-            // Handle ApiResponse structure (response.data is the ApiResponse object, response.data.data is the list)
-            const apiResponse = response.data as any;
-            if (apiResponse.success && Array.isArray(apiResponse.data)) {
-                setAddresses(apiResponse.data);
-            } else if (Array.isArray(apiResponse)) {
-                setAddresses(apiResponse);
+            const parsed = addressResponseSchema.safeParse(response.data);
+            if (parsed.success) {
+                const apiResponse = parsed.data;
+                if (!Array.isArray(apiResponse) && apiResponse.success && Array.isArray(apiResponse.data)) {
+                    setAddresses(apiResponse.data);
+                } else if (Array.isArray(apiResponse)) {
+                    setAddresses(apiResponse);
+                } else {
+                    setAddresses([]);
+                }
             } else {
                 setAddresses([]);
             }

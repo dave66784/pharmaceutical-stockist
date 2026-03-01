@@ -2,33 +2,42 @@ products:
   get:
     tags:
       - Products
-    summary: Get all products
+    summary: Get all products (paginated)
     operationId: getAllProducts
+    security: []
     parameters:
       - name: page
         in: query
         schema:
           type: integer
           default: 0
+          minimum: 0
       - name: size
         in: query
         schema:
           type: integer
           default: 12
+          minimum: 1
+          maximum: 100
       - name: sortBy
         in: query
+        description: Field to sort by (e.g. id, price, name). Defaults to id DESC.
         schema:
           type: string
           default: id
     responses:
       '200':
-        description: List of products
+        description: Paginated product list
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/PageProduct'
+
   post:
     tags:
       - Products
@@ -44,11 +53,24 @@ products:
             $ref: '../components/schemas/product.yaml#/components/schemas/ProductRequest'
     responses:
       '200':
-        description: Product created
+        description: Product created successfully
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+      '400':
+        description: Validation error
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '403':
+        description: Admin access required
 
 productById:
   get:
@@ -56,6 +78,7 @@ productById:
       - Products
     summary: Get product by ID
     operationId: getProductById
+    security: []
     parameters:
       - name: id
         in: path
@@ -69,7 +92,19 @@ productById:
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+      '404':
+        description: Product not found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
   put:
     tags:
       - Products
@@ -96,7 +131,21 @@ productById:
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+      '403':
+        description: Admin access required
+      '404':
+        description: Product not found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
   delete:
     tags:
       - Products
@@ -114,19 +163,33 @@ productById:
     responses:
       '200':
         description: Product deleted
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '403':
+        description: Admin access required
+      '404':
+        description: Product not found
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
 
 searchProducts:
   get:
     tags:
       - Products
-    summary: Search products
+    summary: Search products by keyword
     operationId: searchProducts
+    security: []
     parameters:
       - name: query
         in: query
         required: true
         schema:
           type: string
+          minLength: 1
       - name: page
         in: query
         schema:
@@ -143,22 +206,36 @@ searchProducts:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/PageProduct'
 
 productsByCategory:
   get:
     tags:
       - Products
-    summary: Get products by category
+    summary: Get products by category slug
     operationId: getProductsByCategory
+    security: []
     parameters:
-      - name: category
+      - name: categorySlug
         in: path
         required: true
         schema:
           type: string
+        example: pain-relief
+      - name: subCategory
+        in: query
+        description: Filter by one or more sub-category names (multi-value)
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: true
       - name: page
         in: query
         schema:
@@ -175,6 +252,168 @@ productsByCategory:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '../components/schemas/product.yaml#/components/schemas/Product'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/product.yaml#/components/schemas/PageProduct'
+
+uploadProducts:
+  post:
+    tags:
+      - Products
+    summary: Bulk upload products from Excel file (Admin only)
+    description: |
+      Accepts an `.xlsx` or `.xls` file containing product data.
+      Returns a summary of imported, skipped, and failed rows.
+    operationId: uploadProducts
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - file
+            properties:
+              file:
+                type: string
+                format: binary
+                description: Excel file (.xlsx or .xls)
+    responses:
+      '200':
+        description: File processed; summary returned
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        imported:
+                          type: integer
+                        skipped:
+                          type: integer
+                        errors:
+                          type: array
+                          items:
+                            type: string
+      '400':
+        description: Invalid file type or empty file
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '403':
+        description: Admin access required
+
+uploadTemplate:
+  get:
+    tags:
+      - Products
+    summary: Download blank product upload Excel template (Admin only)
+    operationId: getUploadTemplate
+    security:
+      - bearerAuth: []
+    responses:
+      '200':
+        description: Excel template file
+        content:
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
+              format: binary
+      '403':
+        description: Admin access required
+
+uploadImages:
+  post:
+    tags:
+      - Products
+    summary: Upload product images (Admin only)
+    description: |
+      Accepts one or more image files. Returns the relative URL paths that can be
+      stored in the `imageUrl` field of a product.
+    operationId: uploadProductImages
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - files
+            properties:
+              files:
+                type: array
+                items:
+                  type: string
+                  format: binary
+    responses:
+      '200':
+        description: Upload successful — URL list returned
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: string
+                      example: ["/api/uploads/images/abc123.png"]
+      '403':
+        description: Admin access required
+
+bulkDeleteProducts:
+  delete:
+    tags:
+      - Products
+    summary: Bulk delete products by ID list (Admin only)
+    operationId: bulkDeleteProducts
+    security:
+      - bearerAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+            minItems: 1
+            example: [1, 2, 3]
+    responses:
+      '200':
+        description: Bulk delete result summary
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        deletedCount:
+                          type: integer
+                        errorCount:
+                          type: integer
+                        errors:
+                          type: array
+                          items:
+                            type: string
+      '403':
+        description: Admin access required

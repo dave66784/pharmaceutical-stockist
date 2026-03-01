@@ -109,8 +109,9 @@ public class OrderService {
         // Clear cart
         cartService.clearCart(email);
 
-        // Send notification
-        emailService.sendOrderPlacedNotification(savedOrder);
+        // Fire notifications (each individually gated by its own switch)
+        emailService.sendOrderPlacedNotification(savedOrder);          // ADMIN: new order alert
+        emailService.sendCustomerOrderConfirmation(savedOrder);        // CUSTOMER: order confirmation
 
         return savedOrder;
     }
@@ -141,6 +142,9 @@ public class OrderService {
     public Order updateOrderStatus(Long orderId, OrderStatus status) {
         Order order = getOrderById(orderId);
         order.setStatus(status);
-        return orderRepository.save(order);
+        Order saved = orderRepository.save(order);
+        // CUSTOMER: notify about the status change (gated by switch)
+        emailService.sendOrderStatusUpdate(saved, status);
+        return saved;
     }
 }

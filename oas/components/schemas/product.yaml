@@ -1,5 +1,48 @@
 components:
   schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        slug:
+          type: string
+        subCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubCategory'
+
+    SubCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+
+    CategoryRequest:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+
+    SubCategoryRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
     Product:
       type: object
       properties:
@@ -18,37 +61,46 @@ components:
         stockQuantity:
           type: integer
         category:
-          type: string
-          enum: [PAIN_RELIEF, ANTIBIOTICS, VITAMINS, COLD_FLU, DIGESTIVE, DIABETES, CARDIOVASCULAR, SKINCARE, FIRST_AID, VACCINES, OTHER]
+          $ref: '#/components/schemas/Category'
+        subCategory:
+          $ref: '#/components/schemas/SubCategory'
+          nullable: true
         imageUrl:
           type: string
+          nullable: true
         expiryDate:
           type: string
           format: date
+          nullable: true
         isPrescriptionRequired:
           type: boolean
+        isBundleOffer:
+          type: boolean
+        bundleBuyQuantity:
+          type: integer
+          nullable: true
+          description: "e.g. buy 2 get 1 → bundleBuyQuantity=2"
+        bundleFreeQuantity:
+          type: integer
+          nullable: true
+          description: "e.g. buy 2 get 1 → bundleFreeQuantity=1"
+        bundlePrice:
+          type: number
+          format: double
+          nullable: true
         createdAt:
           type: string
           format: date-time
         updatedAt:
           type: string
           format: date-time
-        isBundleOffer:
-          type: boolean
-        bundleBuyQuantity:
-          type: integer
-        bundleFreeQuantity:
-          type: integer
-        bundlePrice:
-          type: number
-          format: double
-    
+
     ProductRequest:
       type: object
       required:
         - name
         - price
-        - category
+        - categoryId
       properties:
         name:
           type: string
@@ -59,14 +111,61 @@ components:
         price:
           type: number
           format: double
+          minimum: 0
         stockQuantity:
           type: integer
-        category:
-          type: string
+          minimum: 0
+          default: 0
+        categoryId:
+          type: integer
+          format: int64
+          description: ID of the Category entity
+        subCategoryId:
+          type: integer
+          format: int64
+          nullable: true
         imageUrl:
           type: string
+          nullable: true
         expiryDate:
           type: string
           format: date
+          nullable: true
         isPrescriptionRequired:
+          type: boolean
+          default: false
+        isBundleOffer:
+          type: boolean
+          default: false
+        bundleBuyQuantity:
+          type: integer
+          nullable: true
+        bundleFreeQuantity:
+          type: integer
+          nullable: true
+        bundlePrice:
+          type: number
+          format: double
+          nullable: true
+
+    PageProduct:
+      type: object
+      description: Spring Data paginated response wrapper for Product
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+        size:
+          type: integer
+        number:
+          type: integer
+        first:
+          type: boolean
+        last:
           type: boolean

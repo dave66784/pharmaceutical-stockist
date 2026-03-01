@@ -17,7 +17,10 @@ export const calculateItemTotal = (product: Product, quantity: number): number =
         if (quantity >= unitSize) {
             const numBundles = Math.floor(quantity / unitSize);
             const remainder = quantity % unitSize;
-            return (numBundles * product.bundlePrice) + (remainder * product.price);
+            const bundleCost = (numBundles * product.bundlePrice) + (remainder * product.price);
+            const fullCost = product.price * quantity;
+            // Only apply bundle if it actually saves money
+            return bundleCost < fullCost ? bundleCost : fullCost;
         }
     }
     return product.price * quantity;

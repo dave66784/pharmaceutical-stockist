@@ -6,6 +6,24 @@ import { Address, Cart } from '../types';
 import { Plus, Check, MapPin, Truck } from 'lucide-react';
 import { useToast } from '../hooks/useToast';
 import { calculateItemTotal } from '../utils/pricing';
+import { API_BASE_URL } from '../config/env';
+import { z } from 'zod';
+
+const addressSchema = z.object({
+    street: z.string().min(5, "Street address must be at least 5 characters"),
+    city: z.string().min(2, "City is required"),
+    state: z.string().min(2, "State is required"),
+    zipCode: z.string().min(4, "Invalid ZIP code"),
+    country: z.string().min(2, "Country is required")
+});
+
+const addressResponseSchema = z.union([
+    z.object({
+        success: z.boolean().optional(),
+        data: z.array(z.any()).optional()
+    }),
+    z.array(z.any())
+]);
 
 const Checkout: React.FC = () => {
     const navigate = useNavigate();
@@ -32,14 +50,14 @@ const Checkout: React.FC = () => {
                     cartService.getCart()
                 ]);
 
-                // Handle Address Response
-                // addressService.getAddresses returns AxiosResponse
-                // If backend returns ApiResponse, data is in addressResponse.data.data
-                const addrData = addressResponse.data as any;
-                if (addrData.success && addrData.data) {
-                    setSavedAddresses(addrData.data);
-                } else if (Array.isArray(addrData)) {
-                    setSavedAddresses(addrData);
+                const parsedAddr = addressResponseSchema.safeParse(addressResponse.data);
+                if (parsedAddr.success) {
+                    const addrData = parsedAddr.data;
+                    if (!Array.isArray(addrData) && addrData.success && addrData.data) {
+                        setSavedAddresses(addrData.data);
+                    } else if (Array.isArray(addrData)) {
+                        setSavedAddresses(addrData);
+                    }
                 }
 
                 // Handle Cart Response
@@ -71,12 +89,18 @@ const Checkout: React.FC = () => {
             }
         } else {
             // Validate new address
-            const { street, city, state, zipCode, country } = newAddress;
-            if (!street || !city || !state || !zipCode || !country) {
-                errorToast('Please fill in all address fields');
+            try {
+                addressSchema.parse(newAddress);
+            } catch (err) {
+                if (err instanceof z.ZodError) {
+                    errorToast(err.errors[0].message);
+                } else {
+                    errorToast('Invalid address provided');
+                }
                 return;
             }
 
+            const { street, city, state, zipCode, country } = newAddress;
             finalAddressString = `${street}, ${city}, ${state} ${zipCode}, ${country}`;
 
             if (saveNewAddress) {
@@ -98,7 +122,8 @@ const Checkout: React.FC = () => {
             }
         }
 
-        navigate('/payment', { state: { shippingAddress: finalAddressString, addressId } });
+        sessionStorage.setItem('checkoutState', JSON.stringify({ shippingAddress: finalAddressString, addressId }));
+        navigate('/payment');
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -403,11 +428,11 @@ const Checkout: React.FC = () => {
                                             <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-50">
                                                 {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
                                                     <img
-                                                        src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                                                        src={`${API_BASE_URL}${item.product.imageUrls[0]}`}
                                                         alt={item.product.name}
                                                         className="h-full w-full object-cover object-center"
                                                         onError={(e) => {
-                                                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/64?text=No+Image';
+                                                            (e.target as HTMLImageElement).src = '/assets/placeholder-product.png';
                                                         }}
                                                     />
                                                 ) : (

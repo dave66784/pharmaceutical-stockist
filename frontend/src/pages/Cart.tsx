@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cartService } from '../services/cartService';
 import { Cart as CartType } from '../types';
 import { calculateItemTotal } from '../utils/pricing';
+import { API_BASE_URL } from '../config/env';
+import { useCartStore } from '../stores/cartStore';
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const fetchCartCount = useCartStore(state => state.fetchCartCount);
 
   useEffect(() => {
     fetchCart();
@@ -34,6 +37,7 @@ const Cart: React.FC = () => {
     try {
       await cartService.updateCartItem(itemId, newQuantity);
       fetchCart(); // Refresh cart to get updated state
+      await fetchCartCount();
     } catch (err) {
       console.error('Failed to update quantity', err);
       // specific error handling could be added here
@@ -44,6 +48,7 @@ const Cart: React.FC = () => {
     try {
       await cartService.removeFromCart(itemId);
       fetchCart();
+      await fetchCartCount();
     } catch (err) {
       console.error('Failed to remove item', err);
     }
@@ -54,6 +59,7 @@ const Cart: React.FC = () => {
       try {
         await cartService.clearCart();
         fetchCart();
+        await fetchCartCount();
       } catch (err) {
         console.error('Failed to clear cart', err);
       }
@@ -109,7 +115,7 @@ const Cart: React.FC = () => {
               <div className="flex-shrink-0 h-20 w-20 border border-gray-200 rounded-md overflow-hidden">
                 {item.product.imageUrls && item.product.imageUrls.length > 0 ? (
                   <img
-                    src={`http://localhost:8080${item.product.imageUrls[0]}`}
+                    src={`${API_BASE_URL}${item.product.imageUrls[0]}`}
                     alt={item.product.name}
                     className="h-full w-full object-cover object-center"
                     onError={(e) => {

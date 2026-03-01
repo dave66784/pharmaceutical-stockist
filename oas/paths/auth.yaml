@@ -1,9 +1,16 @@
-register:
+# Auth paths — OTP-based two-step registration + login
+
+sendOtp:
   post:
     tags:
       - Auth
-    summary: Register a new user
-    operationId: registerUser
+    summary: Step 1 – Submit registration details and receive an OTP by email
+    description: |
+      Validates the submitted details (unique email, password strength etc.) and sends
+      a 6-digit OTP to the provided email address. The pending registration is held
+      in memory for 10 minutes. No account is created at this stage.
+    operationId: sendOtp
+    security: []
     requestBody:
       required: true
       content:
@@ -12,18 +19,114 @@ register:
             $ref: '../components/schemas/auth.yaml#/components/schemas/RegisterRequest'
     responses:
       '200':
-        description: User registered successfully
+        description: OTP sent successfully
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+            example:
+              success: true
+              message: "OTP sent to user@example.com. Please check your inbox."
+              data: "otp_sent"
+      '400':
+        description: Validation error or email already registered
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+resendOtp:
+  post:
+    tags:
+      - Auth
+    summary: Resend OTP for a pending registration
+    description: |
+      Regenerates and resends the OTP for a pending registration. A 60-second cooldown
+      is enforced on the frontend; this endpoint does not enforce rate limiting server-side.
+    operationId: resendOtp
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+                format: email
+    responses:
+      '200':
+        description: OTP resent successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '400':
+        description: No pending registration found for this email
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+verifyOtp:
+  post:
+    tags:
+      - Auth
+    summary: Step 2 – Verify OTP and create account
+    description: |
+      Validates the 6-digit OTP. On success the pending registration is consumed
+      (single-use), the user account is created, and a JWT token is returned.
+      OTPs expire after 10 minutes.
+    operationId: verifyOtp
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - otp
+            properties:
+              email:
+                type: string
+                format: email
+              otp:
+                type: string
+                minLength: 6
+                maxLength: 6
+                pattern: '^\d{6}$'
+                example: "482910"
+    responses:
+      '200':
+        description: Account created — JWT token returned
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+      '400':
+        description: Invalid or expired OTP
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
 
 login:
   post:
     tags:
       - Auth
-    summary: Login user
+    summary: Login with email and password
     operationId: loginUser
+    security: []
     requestBody:
       required: true
       content:
@@ -36,4 +139,15 @@ login:
         content:
           application/json:
             schema:
-              $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+      '401':
+        description: Invalid credentials
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'

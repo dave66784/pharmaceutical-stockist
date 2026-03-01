@@ -4,6 +4,8 @@ import { Loader2, Plus } from 'lucide-react';
 import { Product } from '../../types';
 import { cartService } from '../../services/cartService';
 import { useToast } from '../../hooks/useToast';
+import { API_BASE_URL } from '../../config/env';
+import { useCartStore } from '../../stores/cartStore';
 
 interface ProductCardProps {
     product: Product;
@@ -11,6 +13,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { success, error: errorToast } = useToast();
+    const fetchCartCount = useCartStore(state => state.fetchCartCount);
     const [adding, setAdding] = useState(false);
     const [addingBundle, setAddingBundle] = useState(false);
     const handleAddToCartBundle = async (e: React.MouseEvent) => {
@@ -24,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         try {
             setAddingBundle(true);
             await cartService.addToCart(product.id, totalQty);
-            window.dispatchEvent(new Event('cartUpdated'));
+            await fetchCartCount();
             success(`Added ${product.name} Bundle (${totalQty} units) to cart`);
         } catch (err) {
             console.error('Failed to add bundle to cart:', err);
@@ -40,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         try {
             setAdding(true);
             await cartService.addToCart(product.id, 1);
-            window.dispatchEvent(new Event('cartUpdated'));
+            await fetchCartCount();
             success(`Added ${product.name} to cart`);
         } catch (err) {
             console.error('Failed to add to cart:', err);
@@ -55,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-100 relative group-hover:opacity-95 transition-opacity">
                 {product.imageUrls && product.imageUrls.length > 0 ? (
                     <img
-                        src={`http://localhost:8080${product.imageUrls[0]}`}
+                        src={`${API_BASE_URL}${product.imageUrls[0]}`}
                         alt={product.name}
                         className="w-full h-48 object-cover object-center"
                         onError={(e) => {
