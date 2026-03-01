@@ -7,6 +7,9 @@ test.describe('Receipt Workflows', () => {
         const loginRes = await request.post('/api/auth/login', {
             data: { email: 'admin@pharma.com', password: 'Admin@123' }
         });
+        if (!loginRes.ok()) {
+            throw new Error(`Login failed with status ${loginRes.status()}`);
+        }
         const loginData = await loginRes.json();
         const token = loginData.data.token;
 

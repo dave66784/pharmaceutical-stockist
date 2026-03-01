@@ -61,9 +61,14 @@ test.describe('Registration Workflows', () => {
 
         await page.getByRole('button', { name: /Send Verification Code/i }).click();
 
-        // Wait for OTP step
-        await expect(page.getByText(/Verify Your Email/i)).toBeVisible();
-        await page.fill('input[name="otp"]', '123456'); // Using test override OTP
+        // Wait for OTP step to appear
+        await expect(page.locator('text="Verify Your Email"')).toBeVisible({ timeout: 10000 });
+        await page.waitForTimeout(2000); // Give backend time to generate and save OTP
+
+        // Use the test override OTP
+        const realOtp = '123456';
+
+        await page.fill('input[name="otp"]', realOtp);
 
         await page.getByRole('button', { name: /Verify & Create Account/i }).click();
 
