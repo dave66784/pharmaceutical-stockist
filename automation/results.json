@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 4
     },
     "preserveOutput": "always",
     "projects": [
@@ -20,7 +20,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 4
         },
         "id": "chromium",
         "name": "chromium",
@@ -36,7 +36,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 4
         },
         "id": "firefox",
         "name": "firefox",
@@ -52,7 +52,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 4
         },
         "id": "webkit",
         "name": "webkit",
@@ -67,7 +67,20 @@
     "quiet": false,
     "reporter": [
       [
-        "json"
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "results.json"
+        }
       ]
     ],
     "reportSlowTests": {
@@ -85,6 +98,1694 @@
   },
   "suites": [
     {
+      "title": "address.spec.ts",
+      "file": "address.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Address Management Workflows",
+          "file": "address.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should add a new address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4430,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:09:59.243Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-bc3ab23c9b6e72892ca3",
+              "file": "address.spec.ts",
+              "line": 35,
+              "column": 9
+            },
+            {
+              "title": "should edit an existing address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2726,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:04.799Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-d66220e6c389061cb5cd",
+              "file": "address.spec.ts",
+              "line": 53,
+              "column": 9
+            },
+            {
+              "title": "should delete an address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:07.557Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-85999ffb37de47886efd",
+              "file": "address.spec.ts",
+              "line": 77,
+              "column": 9
+            },
+            {
+              "title": "should add a new address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 7202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:26.780Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-556071b06db1ce357182",
+              "file": "address.spec.ts",
+              "line": 35,
+              "column": 9
+            },
+            {
+              "title": "should edit an existing address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6590,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:36.541Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-a85fab8e28091a7542e5",
+              "file": "address.spec.ts",
+              "line": 53,
+              "column": 9
+            },
+            {
+              "title": "should delete an address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3759,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:43.158Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-6ad59b053bb635b8d934",
+              "file": "address.spec.ts",
+              "line": 77,
+              "column": 9
+            },
+            {
+              "title": "should add a new address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7237,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:17.802Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-c42b4-ws-should-add-a-new-address-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-8493b10d28804691e468",
+              "file": "address.spec.ts",
+              "line": 35,
+              "column": 9
+            },
+            {
+              "title": "should edit an existing address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4072,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:25.818Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-d6a10-ld-edit-an-existing-address-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-0127076857536a3c2e82",
+              "file": "address.spec.ts",
+              "line": 53,
+              "column": 9
+            },
+            {
+              "title": "should delete an address",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4030,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:29.910Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/address-Address-Management-a0fb2-ws-should-delete-an-address-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dcfc26db63a9a44cfefc-68f2ed63c7814bc34f58",
+              "file": "address.spec.ts",
+              "line": 77,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "admin.spec.ts",
+      "file": "admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Admin Dashboard Workflows",
+          "file": "admin.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should view main dashboard statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4258,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:09:59.260Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-caad996604ea0839f8e5",
+              "file": "admin.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should navigate to products management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3246,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:04.607Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-71f4e27488afe75908c0",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should navigate to orders management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3104,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:07.870Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-3ced739161580a22638d",
+              "file": "admin.spec.ts",
+              "line": 51,
+              "column": 9
+            },
+            {
+              "title": "should navigate to users management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3047,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:10.991Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-8a69a8e00b250a6b489f",
+              "file": "admin.spec.ts",
+              "line": 65,
+              "column": 9
+            },
+            {
+              "title": "should view main dashboard statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 8555,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:27.834Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-4718bf9301758f7b3924",
+              "file": "admin.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should navigate to products management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 7452,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:40.035Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-fe22b769e3c8a729dfe9",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should navigate to orders management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:47.511Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-6110913ad35319c25111",
+              "file": "admin.spec.ts",
+              "line": 51,
+              "column": 9
+            },
+            {
+              "title": "should navigate to users management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6674,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:53.959Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-a71432780d6f9bdd1aea",
+              "file": "admin.spec.ts",
+              "line": 65,
+              "column": 9
+            },
+            {
+              "title": "should view main dashboard statistics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6925,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:17.981Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-7c947-w-main-dashboard-statistics-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-acb3b74615c4d7722c48",
+              "file": "admin.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should navigate to products management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 5808,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:25.505Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-638ca-gate-to-products-management-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-9f959f4411e6739a5b48",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 9
+            },
+            {
+              "title": "should navigate to orders management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 4325,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:31.335Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-81b63-vigate-to-orders-management-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-c83b16ba1fdd6e03df8c",
+              "file": "admin.spec.ts",
+              "line": 51,
+              "column": 9
+            },
+            {
+              "title": "should navigate to users management",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 3863,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:35.683Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/admin-Admin-Dashboard-Work-86d3b-avigate-to-users-management-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-61372a307fb704eb8cee",
+              "file": "admin.spec.ts",
+              "line": 65,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication",
+          "file": "auth.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show login page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2771,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:09:59.213Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-cfcd6c7b58d494ca1066",
+              "file": "auth.spec.ts",
+              "line": 4,
+              "column": 9
+            },
+            {
+              "title": "should login successfully as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 4231,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:09:59.012Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-7d10551088d616979ebf",
+              "file": "auth.spec.ts",
+              "line": 9,
+              "column": 9
+            },
+            {
+              "title": "should show error on invalid credentials",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3029,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:03.140Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-1a0e60acbb789a2fdf0a",
+              "file": "auth.spec.ts",
+              "line": 20,
+              "column": 9
+            },
+            {
+              "title": "should show login page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7073,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:28.047Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-99ef5c2d2954ec474a4e",
+              "file": "auth.spec.ts",
+              "line": 4,
+              "column": 9
+            },
+            {
+              "title": "should login successfully as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 10744,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:36.668Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-f0d6ed04311fd91416aa",
+              "file": "auth.spec.ts",
+              "line": 9,
+              "column": 9
+            },
+            {
+              "title": "should show error on invalid credentials",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4840,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:40.542Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-53db83b2d24e991b1c2c",
+              "file": "auth.spec.ts",
+              "line": 20,
+              "column": 9
+            },
+            {
+              "title": "should show login page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4623,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:19.416Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-login-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-14a9d694a4c9d4c9ddc0",
+              "file": "auth.spec.ts",
+              "line": 4,
+              "column": 9
+            },
+            {
+              "title": "should login successfully as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4923,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:24.749Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-login-successfully-as-admin-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-acbf8ae3f3e8e84d6f8b",
+              "file": "auth.spec.ts",
+              "line": 9,
+              "column": 9
+            },
+            {
+              "title": "should show error on invalid credentials",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:29.851Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/auth-Authentication-should-show-error-on-invalid-credentials-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-a2dbb9365b694e9abc28",
+              "file": "auth.spec.ts",
+              "line": 20,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "cart.spec.ts",
+      "file": "cart.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Cart Workflows",
+          "file": "cart.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should update item quantity in cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6101,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:04.424Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-49073a66d6405ee3d3f7",
+              "file": "cart.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "should remove item from cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 5219,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:11.987Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-bf0b17e0dd90b56250bf",
+              "file": "cart.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "should update item quantity in cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9984,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:45.405Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-b4ce31f37f6d9062ce7b",
+              "file": "cart.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "should remove item from cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7294,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:55.954Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-d2f45ef0a80a30d9761e",
+              "file": "cart.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "should update item quantity in cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7452,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:33.556Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-update-item-quantity-in-cart-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-5ed7fb60482178802fcb",
+              "file": "cart.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "should remove item from cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7168,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:41.615Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/cart-Cart-Workflows-should-remove-item-from-cart-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1981448f0b79506fb670-8b00a0bce06766841f84",
+              "file": "cart.spec.ts",
+              "line": 95,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "core.spec.ts",
       "file": "core.spec.ts",
       "column": 0,
@@ -94,7 +1795,7 @@
         {
           "title": "Customer Core Workflows",
           "file": "core.spec.ts",
-          "line": 9,
+          "line": 10,
           "column": 6,
           "specs": [
             {
@@ -110,15 +1811,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 1045,
+                      "duration": 3420,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:00.092Z",
+                      "startTime": "2026-03-01T11:10:06.216Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -139,7 +1840,7 @@
               ],
               "id": "d064c8ac994e44e7c99b-dde5f4be90fe886dfe26",
               "file": "core.spec.ts",
-              "line": 63,
+              "line": 68,
               "column": 9
             },
             {
@@ -155,15 +1856,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 1126,
+                      "duration": 3476,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:01.985Z",
+                      "startTime": "2026-03-01T11:10:10.475Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -184,7 +1885,7 @@
               ],
               "id": "d064c8ac994e44e7c99b-ee0bb3ef1bad891acb2e",
               "file": "core.spec.ts",
-              "line": 75,
+              "line": 80,
               "column": 9
             },
             {
@@ -200,15 +1901,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4546,
+                      "duration": 5011,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:03.133Z",
+                      "startTime": "2026-03-01T11:10:13.971Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -229,7 +1930,7 @@
               ],
               "id": "d064c8ac994e44e7c99b-bd4415f5d691f58e48bb",
               "file": "core.spec.ts",
-              "line": 93,
+              "line": 98,
               "column": 9
             },
             {
@@ -245,58 +1946,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4809,
+                      "duration": 5750,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "PAGE LOG: Render state: {loading: true, error: null, order: null}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Render state: {loading: true, error: null, order: null}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: OrderDetails mounted, id: 27\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Fetching order: 27\n"
-                        },
-                        {
-                          "text": "PAGE LOG: OrderDetails mounted, id: 27\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Fetching order: 27\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Order data received: {success: true, message: Order retrieved successfully, data: Object}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Setting order state: {id: 27, user: Object, totalAmount: 76.5, status: PENDING, paymentMethod: COD}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Order data received: {success: true, message: Order retrieved successfully, data: Object}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Setting order state: {id: 27, user: Object, totalAmount: 76.5, status: PENDING, paymentMethod: COD}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
-                        },
-                        {
-                          "text": "PAGE LOG: Render state: {loading: false, error: null, order: present}\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:07.692Z",
+                      "startTime": "2026-03-01T11:10:18.998Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -317,7 +1975,7 @@
               ],
               "id": "d064c8ac994e44e7c99b-41dfccf05e7044ea4566",
               "file": "core.spec.ts",
-              "line": 112,
+              "line": 117,
               "column": 9
             },
             {
@@ -333,15 +1991,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4561,
+                      "duration": 4903,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:12.513Z",
+                      "startTime": "2026-03-01T11:10:24.759Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -362,7 +2020,7 @@
               ],
               "id": "d064c8ac994e44e7c99b-0d909b4e70a0bd683aa9",
               "file": "core.spec.ts",
-              "line": 165,
+              "line": 170,
               "column": 9
             },
             {
@@ -378,15 +2036,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 1364,
+                      "duration": 2325,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-24T21:20:17.083Z",
+                      "startTime": "2026-03-01T11:10:29.675Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -407,7 +2065,1428 @@
               ],
               "id": "d064c8ac994e44e7c99b-a359f06c7dfbbadba8fe",
               "file": "core.spec.ts",
-              "line": 192,
+              "line": 197,
+              "column": 9
+            },
+            {
+              "title": "should list products and filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4495,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:46.948Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-6df08d50a16f60eede8c",
+              "file": "core.spec.ts",
+              "line": 68,
+              "column": 9
+            },
+            {
+              "title": "should add item to cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4664,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:51.847Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-d9dafd3f40f9c1627a0f",
+              "file": "core.spec.ts",
+              "line": 80,
+              "column": 9
+            },
+            {
+              "title": "should view cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 7646,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:56.528Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-765738eaf73560c2c6c2",
+              "file": "core.spec.ts",
+              "line": 98,
+              "column": 9
+            },
+            {
+              "title": "should complete checkout workflow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8975,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:04.189Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-3541fd2cc0629eae5aa8",
+              "file": "core.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "should view order history",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6683,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:13.178Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-6c564b84dea1e2dabf84",
+              "file": "core.spec.ts",
+              "line": 170,
+              "column": 9
+            },
+            {
+              "title": "should view product list as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 13831,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:19.875Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-588907d415d4fc6c52a3",
+              "file": "core.spec.ts",
+              "line": 197,
+              "column": 9
+            },
+            {
+              "title": "should list products and filter by category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3484,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:33.971Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-dc846-ucts-and-filter-by-category-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-e5afcda93fda6080f332",
+              "file": "core.spec.ts",
+              "line": 68,
+              "column": 9
+            },
+            {
+              "title": "should add item to cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3477,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:37.973Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-add-item-to-cart-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-51e31ca15f00e6a894ee",
+              "file": "core.spec.ts",
+              "line": 80,
+              "column": 9
+            },
+            {
+              "title": "should view cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8259,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:41.484Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-cart-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-8a3059d08dbf83a09531",
+              "file": "core.spec.ts",
+              "line": 98,
+              "column": 9
+            },
+            {
+              "title": "should complete checkout workflow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8792,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:49.760Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-77cd5--complete-checkout-workflow-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-0be88b715d923c31a933",
+              "file": "core.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "should view order history",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5206,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:58.565Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflows-should-view-order-history-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-de2b4cc8546abd6878bf",
+              "file": "core.spec.ts",
+              "line": 170,
+              "column": 9
+            },
+            {
+              "title": "should view product list as admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2125,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:12:03.791Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/core-Customer-Core-Workflo-a3e53--view-product-list-as-admin-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d064c8ac994e44e7c99b-d188fefe02cd2824aeea",
+              "file": "core.spec.ts",
+              "line": 197,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "master-flow.spec.ts",
+      "file": "master-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "End-to-End Master Flow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-03-01T11:10:10.248Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-chromium/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea478087415026267495-9023061b3cf166cef4da",
+          "file": "master-flow.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "End-to-End Master Flow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 20168,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-03-01T11:10:51.885Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-firefox/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-firefox/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea478087415026267495-61d21a600d75b83a34ed",
+          "file": "master-flow.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "End-to-End Master Flow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18202,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-03-01T11:11:41.550Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-webkit/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/master-flow-End-to-End-Master-Flow-webkit/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea478087415026267495-0f5bd8f82e6178b47d27",
+          "file": "master-flow.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "product-management.spec.ts",
+      "file": "product-management.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Product Management - Image Upload",
+          "file": "product-management.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should create product with image upload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3397,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:14.095Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7b466968b1dcc758469a-4f2942b9462075073fe2",
+              "file": "product-management.spec.ts",
+              "line": 14,
+              "column": 9
+            },
+            {
+              "title": "should create product with image upload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6808,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:00.655Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7b466968b1dcc758469a-0d1134df87e894a9f043",
+              "file": "product-management.spec.ts",
+              "line": 14,
+              "column": 9
+            },
+            {
+              "title": "should create product with image upload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 7293,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:39.601Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/product-management-Product-33604-e-product-with-image-upload-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7b466968b1dcc758469a-52352ea1072bfa994f12",
+              "file": "product-management.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "receipt.spec.ts",
+      "file": "receipt.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Receipt Workflows",
+          "file": "receipt.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Download Receipt",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 7346,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-6dFEpL/9b561c4f-02f9-4514-9064-a02614dd49df\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:17.458Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933d2e14f4f45dacd57c-d8e55dfe15294055eeb2",
+              "file": "receipt.spec.ts",
+              "line": 35,
+              "column": 9
+            },
+            {
+              "title": "Download Receipt",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9307,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-9VSJdI/aa21fda0-f223-45b5-885c-8c891f1a8722\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:03.487Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933d2e14f4f45dacd57c-11d7d0932bbdf16ed483",
+              "file": "receipt.spec.ts",
+              "line": 35,
+              "column": 9
+            },
+            {
+              "title": "Download Receipt",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 9054,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-ywOCIo/66dc7802-de60-47fd-9524-093372d2a84c\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:46.962Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/receipt-Receipt-Workflows-Download-Receipt-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "933d2e14f4f45dacd57c-763d250fb389fb5b094a",
+              "file": "receipt.spec.ts",
+              "line": 35,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "register.spec.ts",
+      "file": "register.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Registration Workflows",
+          "file": "register.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should prevent registration with existing email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1434,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:17.565Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-bd5fb769eeeae13c0e64",
+              "file": "register.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should require minimum password length",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1597,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:19.211Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-d73500d43d0404dc6801",
+              "file": "register.spec.ts",
+              "line": 37,
+              "column": 9
+            },
+            {
+              "title": "should successfully register a new user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2074,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:10:20.859Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-7bf164ec54c2908804b0",
+              "file": "register.spec.ts",
+              "line": 54,
+              "column": 9
+            },
+            {
+              "title": "should prevent registration with existing email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2764,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:07.527Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-6257181c2724d22ba690",
+              "file": "register.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should require minimum password length",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2953,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:10.577Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-cc21d7381bb04313eb54",
+              "file": "register.spec.ts",
+              "line": 37,
+              "column": 9
+            },
+            {
+              "title": "should successfully register a new user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3175,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:12.077Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-2267628eeee283cd9e65",
+              "file": "register.spec.ts",
+              "line": 54,
+              "column": 9
+            },
+            {
+              "title": "should prevent registration with existing email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3740,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:49.103Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-cfba7-tration-with-existing-email-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-64e5220eb3434d57c0bf",
+              "file": "register.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "should require minimum password length",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2165,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:53.253Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-9822b-ire-minimum-password-length-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-584927f003d87b1ad5fd",
+              "file": "register.spec.ts",
+              "line": 37,
+              "column": 9
+            },
+            {
+              "title": "should successfully register a new user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3535,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-01T11:11:55.501Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/register-Registration-Work-21a0a-ssfully-register-a-new-user-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ab6fb19b790d2390d751-5e985a7ecd28ce26c423",
+              "file": "register.spec.ts",
+              "line": 54,
               "column": 9
             }
           ]
@@ -417,9 +3496,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-24T21:19:58.969Z",
-    "duration": 19649.831,
-    "expected": 6,
+    "startTime": "2026-03-01T11:09:56.853Z",
+    "duration": 129280.67599999999,
+    "expected": 72,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

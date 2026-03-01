@@ -89,3 +89,7 @@ automation/tests/test-image.png
 
 # Debug scripts
 automation/run_debug_test*.js
+
+# Automation Reports
+automation/dashboard.html
+automation/results.json
