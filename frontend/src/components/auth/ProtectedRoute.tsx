@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     const location = useLocation();
-    const isAuthenticated = !!authService.getToken();
+    const isAuthenticated = !!authService.getCurrentUser();
 
     if (!isAuthenticated) {
         return <Navigate to="/login" state={{ from: location }} replace />;

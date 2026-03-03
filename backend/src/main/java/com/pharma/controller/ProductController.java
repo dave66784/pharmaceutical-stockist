@@ -45,12 +45,17 @@ public class ProductController {
     private final ProductService productService;
     private final ProductUploadService productUploadService;
 
+    private static final java.util.Set<String> ALLOWED_SORT_FIELDS = 
+            java.util.Set.of("id", "name", "price", "createdAt", "stockQuantity");
+
     @GetMapping
     public ResponseEntity<ApiResponse<Page<Product>>> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
             @RequestParam(defaultValue = "id") String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+        
+        String sanitizedSortBy = ALLOWED_SORT_FIELDS.contains(sortBy) ? sortBy : "id";
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sanitizedSortBy));
         Page<Product> products = productService.getAllProducts(pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }

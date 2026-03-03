@@ -6,10 +6,9 @@ interface AdminRouteProps {
 }
 
 const AdminRoute = ({ children }: AdminRouteProps) => {
-    const token = authService.getToken();
     const user = authService.getCurrentUser();
 
-    if (!token) {
+    if (!user) {
         return <Navigate to="/login" replace />;
     }
 

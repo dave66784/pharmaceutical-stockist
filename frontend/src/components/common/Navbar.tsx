@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     const navigate = useNavigate();
 
     const user = authService.getCurrentUser();
-    const isAuthenticated = !!authService.getToken();
+    const isAuthenticated = !!user;
     // Ensure we check user existence before accessing role
     const userRole = user?.role;
 

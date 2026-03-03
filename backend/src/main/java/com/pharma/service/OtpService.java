@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OtpService {
 
     private final EmailService emailService;
+    private final org.springframework.core.env.Environment environment;
 
     @Value("${app.otp.expiry-minutes:10}")
     private int expiryMinutes;
@@ -31,7 +32,7 @@ public class OtpService {
     @Value("${app.email.customer.notifications.otp-verification.enabled:false}")
     private boolean otpEmailEnabled;
 
-    @Value("${app.otp.test-override:123456}")
+    @Value("${app.otp.test-override:}")
     private String testOtpOverride;
 
     // Holds pending registrations keyed by email (lowercase)
@@ -68,7 +69,9 @@ public class OtpService {
             throw new IllegalArgumentException("OTP has expired. Please request a new one.");
         }
 
-        boolean isOverrideValid = !otpEmailEnabled 
+        boolean isDevProfile = java.util.Arrays.asList(environment.getActiveProfiles()).contains("dev");
+        boolean isOverrideValid = isDevProfile
+                && !otpEmailEnabled 
                 && testOtpOverride != null 
                 && !testOtpOverride.isBlank()
                 && testOtpOverride.equals(otp.trim());

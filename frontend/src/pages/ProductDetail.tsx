@@ -44,7 +44,7 @@ const ProductDetail: React.FC = () => {
   const { success, error: errorToast } = useToast();
 
   const handleAddToCart = async () => {
-    if (!authService.getToken()) {
+    if (!authService.getCurrentUser()) {
       navigate('/login');
       return;
     }
@@ -67,7 +67,7 @@ const ProductDetail: React.FC = () => {
   };
 
   const handleAddToCartBundle = async () => {
-    if (!authService.getToken()) {
+    if (!authService.getCurrentUser()) {
       navigate('/login');
       return;
     }
