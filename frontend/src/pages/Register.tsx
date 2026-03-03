@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import { authService } from '../services/authService';
 import { User, Mail, Lock, Phone, ArrowRight, Loader2, ShieldCheck, RotateCcw } from 'lucide-react';
 import { useToast } from '../hooks/useToast';
@@ -61,8 +60,8 @@ function Register() {
       setResendCooldown(60);
       successToast('OTP sent! Please check your inbox.');
     } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
-      errorToast(axiosError.response?.data?.message || 'Failed to send OTP.');
+      // Only display safe generic message
+      errorToast('Failed to send OTP. Please check your email address and try again.');
     } finally {
       setLoading(false);
     }
@@ -76,8 +75,8 @@ function Register() {
       await authService.verifyOtp(formData.email, otp);
       navigate('/products', { replace: true });
     } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
-      errorToast(axiosError.response?.data?.message || 'Invalid or expired OTP.');
+      // Only display safe generic message
+      errorToast('Invalid or expired Verification Code.');
     } finally {
       setLoading(false);
     }
@@ -93,8 +92,8 @@ function Register() {
       setOtp('');
       successToast('New OTP sent! Please check your inbox.');
     } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
-      errorToast(axiosError.response?.data?.message || 'Failed to resend OTP.');
+      // Only display safe generic message
+      errorToast('Failed to resend OTP. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -189,8 +188,8 @@ function Register() {
                         <div className="flex gap-1 h-1.5 mb-1">
                           {[1, 2, 3, 4, 5].map((level) => (
                             <div key={level} className={`h-full flex-1 rounded-full transition-colors ${passwordStrength >= level
-                                ? passwordStrength < 3 ? 'bg-red-500' : passwordStrength < 5 ? 'bg-yellow-500' : 'bg-green-500'
-                                : 'bg-gray-200'
+                              ? passwordStrength < 3 ? 'bg-red-500' : passwordStrength < 5 ? 'bg-yellow-500' : 'bg-green-500'
+                              : 'bg-gray-200'
                               }`} />
                           ))}
                         </div>
@@ -294,14 +293,10 @@ function Register() {
         </div>
       </div>
 
-      {/* Right Side - Image */}
-      <div className="hidden lg:block relative w-0 flex-1">
-        <img
-          className="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
-          alt="Pharmacy registration"
-        />
-        <div className="absolute inset-0 bg-primary-900 mix-blend-multiply opacity-40"></div>
+      {/* Right Side - Image/Gradient */}
+      <div className="hidden lg:block relative w-0 flex-1 bg-gradient-to-br from-primary-700 to-primary-900 border-l border-primary-800">
+        {/* Subtle grid pattern overlay */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px)', backgroundSize: '64px 64px' }}></div>
         <div className="absolute inset-0 flex items-center justify-center p-12 text-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-4">Join Our Network</h1>

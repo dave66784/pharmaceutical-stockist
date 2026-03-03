@@ -36,7 +36,10 @@ function Login() {
       }
     } catch (err) {
       const axiosError = err as AxiosError<{ message: string }>;
-      errorToast(axiosError.response?.data?.message || 'Login failed');
+      // Only display known safe messages from the backend or fallback to generic
+      const rawMessage = axiosError.response?.data?.message;
+      const safeMessage = rawMessage && rawMessage.includes("credentials") ? rawMessage : 'Login failed. Please check your credentials and try again.';
+      errorToast(safeMessage);
     } finally {
       setLoading(false);
     }
@@ -141,14 +144,10 @@ function Login() {
         </div>
       </div>
 
-      {/* Right Side - Image */}
-      <div className="hidden lg:block relative w-0 flex-1">
-        <img
-          className="absolute inset-0 h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80"
-          alt="Pharmacy background"
-        />
-        <div className="absolute inset-0 bg-primary-900 mix-blend-multiply opacity-40"></div>
+      {/* Right Side - Image/Gradient */}
+      <div className="hidden lg:block relative w-0 flex-1 bg-gradient-to-br from-primary-600 to-primary-900 border-l border-primary-800">
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
         <div className="absolute inset-0 flex items-center justify-center p-12 text-center">
           <div>
             <h1 className="text-4xl font-bold text-white mb-4">PharmaCare Stockist</h1>

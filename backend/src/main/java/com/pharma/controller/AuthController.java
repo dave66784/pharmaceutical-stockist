@@ -82,6 +82,24 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Logged out successfully"));
     }
 
+    @org.springframework.web.bind.annotation.GetMapping("/me")
+    public ResponseEntity<ApiResponse<AuthResponse>> getMe() {
+        org.springframework.security.core.Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(false, "Not authenticated", null));
+        }
+        
+        com.pharma.model.User user = userService.getUserByEmail(authentication.getName());
+        AuthResponse authResponse = new AuthResponse(
+                null, // Do not return token here
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole().name());
+        return ResponseEntity.ok(new ApiResponse<>(true, "User retrieved successfully", authResponse));
+    }
+
     private void setTokenCookie(jakarta.servlet.http.HttpServletResponse response, String token) {
         org.springframework.http.ResponseCookie cookie = org.springframework.http.ResponseCookie.from("access_token", token)
                 .httpOnly(true)

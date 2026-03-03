@@ -23,6 +23,8 @@ The PharmaCare application has a well-structured foundation — JWT with RS256, 
 
 ### 🔴 CRIT-BE-01 — IDOR: Order Access Without Ownership Check
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `OrderController.java` · `GET /api/orders/{id}`
 
 The `getOrderById` endpoint fetches an order by its numeric ID without verifying that the authenticated user owns that order. Any authenticated user can enumerate orders belonging to other customers.
@@ -60,6 +62,8 @@ The `downloadReceipt` and `exportUserOrders` endpoints have similar issues and n
 
 ### 🟠 HIGH-BE-02 — Hardcoded Test OTP Override Active in Development
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `OtpService.java`, `application.properties`
 
 When `app.email.customer.notifications.otp-verification.enabled=false` (the default), any user can complete registration using the hardcoded OTP `123456`. This config is committed to the repository.
@@ -84,6 +88,8 @@ app.otp.test-override=
 
 ### 🟠 HIGH-BE-03 — Unsorted Sort Parameter Allows Potential Column Injection
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `ProductController.java`
 
 The `sortBy` query parameter is passed directly into `Sort.by()` without a whitelist. Spring Data JPA does not validate field names at compile time; an attacker can probe valid column names (useful for reconnaissance) or potentially cause errors exposing schema details.
@@ -107,6 +113,8 @@ private String sanitiseSortBy(String sortBy) {
 ---
 
 ### 🟠 HIGH-BE-04 — Image Upload: MIME Type Not Validated
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `ProductController.java` · `POST /api/products/images`
 
@@ -150,6 +158,8 @@ JWT tokens are stateless and valid for 24 hours (`jwt.expiration=86400000`). The
 
 ### 🟡 MED-BE-06 — In-Memory OTP Store is Not Cluster-Safe
 
+**Status:** ⚠️ Won't Fix (Accepted Risk for Dev)
+
 **File:** `OtpService.java`
 
 OTPs are stored in a `ConcurrentHashMap` within the application process. This means:
@@ -157,10 +167,13 @@ OTPs are stored in a `ConcurrentHashMap` within the application process. This me
 - The system cannot be horizontally scaled (multiple pods would each have a different store).
 
 **Fix:** Replace the in-memory map with a Redis key-value store with a TTL matching `app.otp.expiry-minutes`. Spring's `RedisTemplate` or Spring Data Redis make this straightforward.
+*(User confirmed this is acceptable for the current development use case).*
 
 ---
 
 ### 🟡 MED-BE-07 — Clickjacking Protection Disabled
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `SecurityConfig.java`
 
@@ -176,6 +189,8 @@ OTPs are stored in a `ConcurrentHashMap` within the application process. This me
 ---
 
 ### 🟡 MED-BE-08 — SMTP TLS Disabled
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `application.properties`
 
@@ -196,6 +211,8 @@ spring.mail.properties.mail.smtp.starttls.required=true
 
 ### 🟡 MED-BE-09 — Debug Logging in Production Config
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `application.properties`
 
 ```properties
@@ -211,6 +228,8 @@ Security-level `DEBUG` logs emit token values, filter decisions, and user detail
 
 ### 🟡 MED-BE-10 — `spring.jpa.show-sql=true` in Main Config
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `application.properties`
 
 All SQL queries (including those with user email/address data) are printed to the application log. This should never be enabled in production.
@@ -220,6 +239,8 @@ All SQL queries (including those with user email/address data) are printed to th
 ---
 
 ### 🟢 LOW-BE-11 — Actuator Health Shows Full Details Publicly
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `application.properties`
 
@@ -239,6 +260,8 @@ management.endpoint.health.show-details=when_authorized
 
 ### 🟢 LOW-BE-12 — `ddl-auto=update` is Unsafe for Production
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `application.properties`
 
 Hibernate's `update` DDL strategy silently applies schema changes on startup. This can cause irreversible data loss (dropped columns, type mismatches) in production.
@@ -254,6 +277,8 @@ spring.jpa.hibernate.ddl-auto=validate
 ## Frontend Security
 
 ### 🔴 CRIT-FE-01 — JWT Stored in `localStorage` (XSS Risk)
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `services/api.ts`, `services/authService.ts`
 
@@ -364,6 +389,8 @@ Background images are loaded directly from Unsplash CDN. These requests expose u
 
 ### 🔴 CRIT-INFRA-01 — Hardcoded Database Credentials in Docker Compose
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `docker-compose.yml`
 
 ```yaml
@@ -392,6 +419,8 @@ DB_PASSWORD=<generated-strong-password>
 
 ### 🟠 HIGH-INFRA-02 — Backend Port 8080 Exposed Directly to Host
 
+**Status:** ✅ Fixed (Phase 2)
+
 **File:** `docker-compose.yml`
 
 ```yaml
@@ -414,6 +443,8 @@ backend:
 ---
 
 ### 🟠 HIGH-INFRA-03 — Auth Rate Limit is Trivially Bypassable
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `frontend/nginx.conf`
 
@@ -440,6 +471,8 @@ Also add server-side OTP attempt counting (lock after 5 wrong attempts).
 ---
 
 ### 🟡 MED-INFRA-04 — Grafana Default Admin Password
+
+**Status:** ✅ Fixed (Phase 2)
 
 **File:** `docker-compose.yml`
 
