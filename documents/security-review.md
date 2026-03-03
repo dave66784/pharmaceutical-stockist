@@ -307,6 +307,8 @@ response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
 ### 🟠 HIGH-FE-02 — Admin Role Enforcement is Client-Side Only
 
+**Status:** ✅ Fixed (Phase 3)
+
 **File:** `components/auth/AdminRoute.tsx`
 
 ```typescript
@@ -323,6 +325,8 @@ The `user` object is read from `localStorage` and is fully attacker-controllable
 
 ### 🟠 HIGH-FE-03 — Payment Method ONLINE Has No Payment Gateway
 
+**Status:** ✅ Fixed (Phase 3)
+
 **File:** `pages/Payment.tsx`, `services/orderService.ts`
 
 The UI presents `ONLINE` as a payment option (card / UPI / net banking), but submitting an order with `paymentMethod: "ONLINE"` simply marks the order as `PAYMENT_STATUS: PENDING` without any real payment. A user can place an order without paying by selecting ONLINE and skipping any payment step.
@@ -332,6 +336,8 @@ The UI presents `ONLINE` as a payment option (card / UPI / net banking), but sub
 ---
 
 ### 🟡 MED-FE-04 — Backend Error Messages Exposed to UI
+
+**Status:** ✅ Fixed (Phase 3)
 
 **File:** Multiple pages (`Login.tsx`, `Register.tsx`, `Payment.tsx`, etc.)
 
@@ -364,6 +370,8 @@ The login form has no client-side debouncing or rate limiting on the submit butt
 
 ### 🟡 MED-FE-06 — Checkout State Stored in `sessionStorage` Without Integrity Check
 
+**Status:** ✅ Fixed (Phase 3)
+
 **File:** `pages/Payment.tsx`
 
 ```typescript
@@ -376,6 +384,8 @@ The checkout state is cast from raw sessionStorage without schema validation. A 
 ---
 
 ### 🟢 LOW-FE-07 — Third-Party Image Loading from Unsplash
+
+**Status:** ✅ Fixed (Phase 3)
 
 **File:** `pages/Login.tsx`, `pages/Register.tsx`
 
