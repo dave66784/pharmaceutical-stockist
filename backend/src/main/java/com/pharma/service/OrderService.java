@@ -147,4 +147,32 @@ public class OrderService {
         emailService.sendOrderStatusUpdate(saved, status);
         return saved;
     }
+
+    @Transactional
+    public Order cancelOrder(Long orderId, String email) {
+        Order order = getOrderById(orderId);
+        
+        if (!order.getUser().getEmail().equals(email)) {
+            throw new RuntimeException("Access denied: You can only cancel your own orders.");
+        }
+        
+        if (order.getStatus() != OrderStatus.PENDING) {
+            throw new RuntimeException("Only pending orders can be cancelled.");
+        }
+        
+        order.setStatus(OrderStatus.CANCELLED);
+        
+        // Restore stock
+        for (OrderItem item : order.getOrderItems()) {
+            Product product = item.getProduct();
+            product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
+        }
+        
+        Order savedOrder = orderRepository.save(order);
+        
+        // Optional: Send cancellation email
+        // emailService.sendOrderStatusUpdate(savedOrder, OrderStatus.CANCELLED);
+        
+        return savedOrder;
+    }
 }

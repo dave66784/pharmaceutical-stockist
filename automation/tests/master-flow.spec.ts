@@ -93,8 +93,9 @@ test('End-to-End Master Flow', async ({ page, request }) => {
 
     // 8. Order Confirmation and Details
     await expect(page).toHaveURL(/.*orders\/\d+/);
-    await expect(page.getByText('Order placed successfully')).toBeVisible();
-    await expect(page.getByText('Order Items')).toBeVisible();
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByText('Order Items')).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText('Order placed successfully')).toBeVisible({ timeout: 10000 });
 
     // Wait for the success toast to disappear before clicking the menu
     await expect(page.getByText('Order placed successfully')).toBeHidden({ timeout: 15000 });

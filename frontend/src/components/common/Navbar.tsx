@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Menu, X, ChevronDown, Package, MapPin, LogOut } from 'lucide-react';
+import { ShoppingCart, Menu, X, ChevronDown, Package, MapPin, LogOut, User } from 'lucide-react';
 import { authService } from '../../services/authService';
 import { useCartStore } from '../../stores/cartStore';
 import NotificationBell from './NotificationBell';
@@ -122,6 +122,16 @@ const Navbar: React.FC = () => {
                                                 </Link>
 
                                                 <Link
+                                                    to="/profile"
+                                                    className="group flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors"
+                                                    role="menuitem"
+                                                    onClick={() => setIsOpen(false)}
+                                                >
+                                                    <User className="mr-3 h-4 w-4 text-gray-400 group-hover:text-primary-500 transition-colors" />
+                                                    My Profile
+                                                </Link>
+
+                                                <Link
                                                     to="/account/addresses"
                                                     className="group flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-600 transition-colors"
                                                     role="menuitem"
@@ -222,6 +232,11 @@ const Navbar: React.FC = () => {
                                 <Link to="/orders" className="flex items-center px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors">
                                     <Package className="mr-3 h-5 w-5 text-gray-400" />
                                     My Orders
+                                </Link>
+
+                                <Link to="/profile" className="flex items-center px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors">
+                                    <User className="mr-3 h-5 w-5 text-gray-400" />
+                                    My Profile
                                 </Link>
 
                                 <Link to="/account/addresses" className="flex items-center px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-gray-50 transition-colors">

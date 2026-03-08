@@ -15,6 +15,7 @@ import Payment from './pages/Payment';
 import OrderConfirmation from './pages/OrderConfirmation';
 import AddedToCart from './pages/AddedToCart';
 import AddressManagement from './pages/AddressManagement';
+import Profile from './pages/Profile';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import { ToastProvider } from './context/ToastContext';
 
@@ -92,6 +93,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddressManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

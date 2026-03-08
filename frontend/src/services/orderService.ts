@@ -26,6 +26,11 @@ export const orderService = {
     return response.data;
   },
 
+  cancelOrder: async (orderId: number) => {
+    const response = await api.put<ApiResponse<Order>>(`/orders/${orderId}/cancel`);
+    return response.data;
+  },
+
   // Admin endpoints
   getAllOrders: async (page = 0, size = 20) => {
     const response = await api.get<ApiResponse<PageResponse<Order>>>('/admin/orders', {

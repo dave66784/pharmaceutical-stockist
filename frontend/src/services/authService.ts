@@ -84,5 +84,18 @@ export const authService = {
       localStorage.removeItem('user');
       throw err;
     }
+  },
+
+  updateProfile: async (data: { firstName: string; lastName: string; phone?: string }) => {
+    const response = await api.put<ApiResponse<AuthResponse>>('/profile', data);
+    if (response.data.data) {
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+    }
+    return response.data;
+  },
+
+  updatePassword: async (data: { currentPassword: string; newPassword: string }) => {
+    const response = await api.put('/profile/password', data);
+    return response.data;
   }
 };

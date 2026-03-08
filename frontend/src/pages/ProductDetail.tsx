@@ -243,7 +243,7 @@ const ProductDetail: React.FC = () => {
                   <button
                     className="px-4 py-3 hover:bg-gray-100 text-gray-600 rounded-r-lg transition-colors disabled:opacity-50"
                     onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
-                    disabled={product.stockQuantity === 0}
+                    disabled={product.stockQuantity === 0 || quantity >= product.stockQuantity}
                   >
                     +
                   </button>
@@ -260,6 +260,12 @@ const ProductDetail: React.FC = () => {
                   {addingToCart ? 'Adding...' : 'Add to Cart'}
                 </button>
               </div>
+
+              {quantity >= product.stockQuantity && product.stockQuantity > 0 && (
+                <p className="mt-2 text-sm text-amber-600 font-medium">
+                  Maximum available stock reached
+                </p>
+              )}
             </div>
           </div>
         </div>

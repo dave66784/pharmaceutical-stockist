@@ -9,6 +9,18 @@ interface ToastContextType {
 
 export const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
+export const useToast = () => {
+    const context = React.useContext(ToastContext);
+    if (context === undefined) {
+        throw new Error('useToast must be used within a ToastProvider');
+    }
+    // Map addToast to showToast to match what Profile.tsx expects
+    return {
+        showToast: (type: ToastType, message: string) => context.addToast(message, type),
+        ...context
+    };
+};
+
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
 

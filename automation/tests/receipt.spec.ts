@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+export const receiptTestProductName = `Receipt Prod ${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+
 test.describe('Receipt Workflows', () => {
 
     test.beforeAll(async ({ request }) => {
@@ -13,26 +15,40 @@ test.describe('Receipt Workflows', () => {
         const loginData = await loginRes.json();
         const token = loginData.data.token;
 
-        // Fetch products to get a valid product ID
-        const prodRes = await request.get('/api/products?size=1');
-        if (prodRes.ok()) {
-            const prodData = await prodRes.json();
-            const product = prodData.data.content[0];
+        // Fetch category to use
+        const catRes = await request.get('/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+        const catData = await catRes.json();
+        const firstCat = catData.data[0];
 
-            if (product) {
-                // Add to cart
-                await request.post('/api/cart/items', {
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    data: { productId: product.id, quantity: 1 }
-                });
-
-                // Checkout mapping cart to order
-                await request.post('/api/orders', {
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    data: { shippingAddress: '123 Admin Lane', paymentMethod: 'COD' }
-                });
+        // Create a unique product for the receipt test
+        const prodRes = await request.post('/api/products', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: {
+                name: receiptTestProductName,
+                description: 'Product for receipt testing',
+                price: 12.50,
+                stockQuantity: 10,
+                categoryId: firstCat.id,
+                manufacturer: 'ReceiptCo'
             }
+        });
+        if (!prodRes.ok()) {
+            throw new Error(`Product creation failed with status ${prodRes.status()}`);
         }
+        const prodData = await prodRes.json();
+        const product = prodData.data;
+
+        // Add to cart
+        await request.post('/api/cart/items', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: { productId: product.id, quantity: 1 }
+        });
+
+        // Checkout mapping cart to order
+        await request.post('/api/orders', {
+            headers: { 'Authorization': `Bearer ${token}` },
+            data: { shippingAddress: '123 Admin Lane', paymentMethod: 'COD' }
+        });
     });
 
     test('Download Receipt', async ({ page }) => {

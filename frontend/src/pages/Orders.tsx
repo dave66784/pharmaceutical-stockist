@@ -3,11 +3,13 @@ import { orderService } from '../services/orderService';
 import { Order } from '../types';
 import { Link } from 'react-router-dom';
 import { Download, ExternalLink } from 'lucide-react';
+import { useToast } from '../hooks/useToast';
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { success: successToast, error: errorToast } = useToast();
 
   useEffect(() => {
     fetchOrders();
@@ -95,6 +97,26 @@ const Orders: React.FC = () => {
                       </p>
                     </div>
                     <div className="ml-4 flex-shrink-0 flex items-center space-x-4">
+                      {order.status === 'PENDING' && (
+                        <button
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            if (window.confirm('Are you sure you want to cancel this order?')) {
+                              try {
+                                await orderService.cancelOrder(order.id);
+                                successToast('Order cancelled successfully');
+                                fetchOrders();
+                              } catch (err) {
+                                console.error('Failed to cancel order', err);
+                                errorToast('Failed to cancel order');
+                              }
+                            }
+                          }}
+                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      )}
                       <button
                         onClick={async (e) => {
                           e.preventDefault();

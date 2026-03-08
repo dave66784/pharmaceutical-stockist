@@ -59,6 +59,14 @@ public class OrderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Order retrieved successfully", order));
     }
 
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<ApiResponse<Order>> cancelOrder(
+            @PathVariable Long id,
+            Authentication authentication) {
+        Order order = orderService.cancelOrder(id, authentication.getName());
+        return ResponseEntity.ok(new ApiResponse<>(true, "Order cancelled successfully", order));
+    }
+
     /**
      * Download a PDF receipt for an order.
      *

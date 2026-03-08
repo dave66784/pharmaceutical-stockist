@@ -2,37 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { cartService } from '../services/cartService';
-import { Cart, PaymentMethod } from '../types';
+import { PaymentMethod } from '../types';
 import { useToast } from '../hooks/useToast';
 import { CreditCard, Truck, Check } from 'lucide-react';
-import { calculateItemTotal } from '../utils/pricing';
 import { useCartStore } from '../stores/cartStore';
-import { z } from 'zod';
-
-const checkoutStateSchema = z.object({
-    shippingAddress: z.string(),
-    addressId: z.number().optional()
-});
+import { useCheckoutStore } from '../stores/checkoutStore';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
     const { success, error: errorToast } = useToast();
-    const fetchCartCount = useCartStore(state => state.fetchCartCount);
+    const { fetchCartCount, cartTotal } = useCartStore();
 
-    const savedState = sessionStorage.getItem('checkoutState');
-    let state;
-    try {
-        const parsed = savedState ? JSON.parse(savedState) : undefined;
-        state = checkoutStateSchema.parse(parsed);
-    } catch (e) {
-        // If validation fails or state is missing, state remains undefined and triggers the redirect below
-        console.warn("Invalid checkout state", e);
-    }
+    const { shippingAddress, addressId, clearCheckoutData } = useCheckoutStore();
+    const state = { shippingAddress, addressId };
 
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | ''>('COD');
     const [loading, setLoading] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
-    const [cart, setCart] = useState<Cart | null>(null);
 
     // Redirect to checkout if no shipping address
     if (!state?.shippingAddress) {
@@ -44,7 +30,7 @@ const Payment: React.FC = () => {
             try {
                 const response = await cartService.getCart();
                 if (response.success && response.data) {
-                    setCart(response.data);
+                    fetchCartCount(); // ensure store is in sync
                 }
             } catch (err) {
                 console.error('Failed to fetch cart', err);
@@ -82,10 +68,10 @@ const Payment: React.FC = () => {
 
             if (data && data.success && data.data) {
                 success('Order placed successfully!');
-                sessionStorage.removeItem('checkoutState');
-                // Dispatch event to clear cart in UI
-                await fetchCartCount();
                 navigate(`/orders/${data.data.id}`);
+                // Clear checkout data AFTER navigating away from Payment page
+                clearCheckoutData();
+                await fetchCartCount();
             }
         } catch (err: any) {
             console.error(err);
@@ -95,10 +81,6 @@ const Payment: React.FC = () => {
         }
     };
 
-    const calculateTotal = () => {
-        if (!cart) return 0;
-        return cart.items.reduce((total, item) => total + calculateItemTotal(item.product, item.quantity), 0);
-    };
 
     if (pageLoading) {
         return (
@@ -219,7 +201,7 @@ const Payment: React.FC = () => {
 
                             <div className="flex items-center justify-between mb-6">
                                 <span className="text-base font-medium text-gray-900">Total Amount</span>
-                                <span className="text-xl font-bold text-gray-900">${calculateTotal().toFixed(2)}</span>
+                                <span className="text-xl font-bold text-gray-900">${cartTotal.toFixed(2)}</span>
                             </div>
 
                             <button

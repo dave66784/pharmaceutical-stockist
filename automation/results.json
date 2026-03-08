@@ -126,12 +126,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4691,
+                      "duration": 7524,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:32.149Z",
+                      "startTime": "2026-03-08T15:51:30.061Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -171,12 +171,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2850,
+                      "duration": 2485,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:38.087Z",
+                      "startTime": "2026-03-08T15:51:39.455Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -216,12 +216,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3068,
+                      "duration": 2670,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:40.955Z",
+                      "startTime": "2026-03-08T15:51:41.962Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -258,15 +258,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 1,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 12745,
+                      "duration": 8287,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:02.405Z",
+                      "startTime": "2026-03-08T15:52:10.541Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -303,15 +303,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 1,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6816,
+                      "duration": 4535,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:21.206Z",
+                      "startTime": "2026-03-08T15:52:24.647Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -348,15 +348,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 1,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5512,
+                      "duration": 4889,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:28.046Z",
+                      "startTime": "2026-03-08T15:52:29.218Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -394,14 +394,14 @@
                   "results": [
                     {
                       "workerIndex": 8,
-                      "parallelIndex": 1,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 6723,
+                      "duration": 5272,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:01.991Z",
+                      "startTime": "2026-03-08T15:53:08.621Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -439,14 +439,14 @@
                   "results": [
                     {
                       "workerIndex": 8,
-                      "parallelIndex": 1,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4841,
+                      "duration": 3935,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:09.362Z",
+                      "startTime": "2026-03-08T15:53:14.742Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -484,14 +484,14 @@
                   "results": [
                     {
                       "workerIndex": 8,
-                      "parallelIndex": 1,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3597,
+                      "duration": 3112,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:14.297Z",
+                      "startTime": "2026-03-08T15:53:18.694Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -548,12 +548,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4550,
+                      "duration": 7779,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:32.254Z",
+                      "startTime": "2026-03-08T15:51:30.061Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -593,12 +593,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3937,
+                      "duration": 5630,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:37.948Z",
+                      "startTime": "2026-03-08T15:51:39.005Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -638,12 +638,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3696,
+                      "duration": 5014,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:41.902Z",
+                      "startTime": "2026-03-08T15:51:44.660Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -683,12 +683,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3746,
+                      "duration": 3332,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:45.617Z",
+                      "startTime": "2026-03-08T15:51:49.689Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -725,15 +725,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8197,
+                      "duration": 7763,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:02.446Z",
+                      "startTime": "2026-03-08T15:52:10.533Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -770,15 +770,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8877,
+                      "duration": 6881,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:13.105Z",
+                      "startTime": "2026-03-08T15:52:20.670Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -815,15 +815,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 11390,
+                      "duration": 7795,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:21.996Z",
+                      "startTime": "2026-03-08T15:52:27.576Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -860,15 +860,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8985,
+                      "duration": 5896,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:33.405Z",
+                      "startTime": "2026-03-08T15:52:35.391Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -906,14 +906,14 @@
                   "results": [
                     {
                       "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 6815,
+                      "duration": 7220,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:01.946Z",
+                      "startTime": "2026-03-08T15:53:10.310Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -951,14 +951,14 @@
                   "results": [
                     {
                       "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 5825,
+                      "duration": 5284,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:09.380Z",
+                      "startTime": "2026-03-08T15:53:18.086Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -996,14 +996,14 @@
                   "results": [
                     {
                       "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 5267,
+                      "duration": 4633,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:15.225Z",
+                      "startTime": "2026-03-08T15:53:23.390Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1041,14 +1041,14 @@
                   "results": [
                     {
                       "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4668,
+                      "duration": 5178,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:20.512Z",
+                      "startTime": "2026-03-08T15:53:28.044Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1105,12 +1105,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2511,
+                      "duration": 1949,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:32.497Z",
+                      "startTime": "2026-03-08T15:51:30.062Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1150,12 +1150,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 4505,
+                      "duration": 7614,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:32.187Z",
+                      "startTime": "2026-03-08T15:51:30.095Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1195,12 +1195,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2805,
+                      "duration": 1833,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:36.019Z",
+                      "startTime": "2026-03-08T15:51:33.169Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1238,14 +1238,14 @@
                   "results": [
                     {
                       "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 6838,
+                      "duration": 5232,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:02.403Z",
+                      "startTime": "2026-03-08T15:52:12.168Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1283,14 +1283,14 @@
                   "results": [
                     {
                       "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 12810,
+                      "duration": 10362,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:09.282Z",
+                      "startTime": "2026-03-08T15:52:20.651Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1328,14 +1328,14 @@
                   "results": [
                     {
                       "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 5899,
+                      "duration": 2578,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:13.473Z",
+                      "startTime": "2026-03-08T15:52:19.863Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1375,12 +1375,12 @@
                       "workerIndex": 10,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 4494,
+                      "duration": 2978,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:03.458Z",
+                      "startTime": "2026-03-08T15:53:11.335Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1420,12 +1420,12 @@
                       "workerIndex": 10,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5627,
+                      "duration": 5704,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:08.661Z",
+                      "startTime": "2026-03-08T15:53:15.396Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1465,12 +1465,12 @@
                       "workerIndex": 10,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3101,
+                      "duration": 2485,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:14.337Z",
+                      "startTime": "2026-03-08T15:53:21.119Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1524,15 +1524,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 8570,
+                      "duration": 7523,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:37.913Z",
+                      "startTime": "2026-03-08T15:51:35.027Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1569,15 +1569,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 5513,
+                      "duration": 5110,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:47.618Z",
+                      "startTime": "2026-03-08T15:51:43.833Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1615,14 +1615,14 @@
                   "results": [
                     {
                       "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 10395,
+                      "duration": 9165,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:19.397Z",
+                      "startTime": "2026-03-08T15:52:22.473Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1660,14 +1660,14 @@
                   "results": [
                     {
                       "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 8991,
+                      "duration": 6379,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:30.244Z",
+                      "startTime": "2026-03-08T15:52:32.145Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1704,15 +1704,15 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 3,
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 7197,
+                      "duration": 6211,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:17.461Z",
+                      "startTime": "2026-03-08T15:53:21.848Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1749,15 +1749,15 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 3,
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 7117,
+                      "duration": 5766,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:25.221Z",
+                      "startTime": "2026-03-08T15:53:28.841Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1811,15 +1811,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3350,
+                      "duration": 1996,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:38.848Z",
+                      "startTime": "2026-03-08T15:51:38.862Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1856,15 +1856,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1830,
+                      "duration": 3514,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:43.633Z",
+                      "startTime": "2026-03-08T15:51:41.783Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1901,15 +1901,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6771,
+                      "duration": 5465,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:45.484Z",
+                      "startTime": "2026-03-08T15:51:45.316Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1946,15 +1946,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5957,
+                      "duration": 6650,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:52.277Z",
+                      "startTime": "2026-03-08T15:51:50.797Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -1991,15 +1991,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5411,
+                      "duration": 5048,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:58.248Z",
+                      "startTime": "2026-03-08T15:51:57.462Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2036,15 +2036,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 2060,
+                      "duration": 3225,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:03.675Z",
+                      "startTime": "2026-03-08T15:52:02.536Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2081,15 +2081,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6462,
+                      "duration": 2588,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:27.130Z",
+                      "startTime": "2026-03-08T15:52:34.164Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2126,15 +2126,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6195,
+                      "duration": 3830,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:34.515Z",
+                      "startTime": "2026-03-08T15:52:37.321Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2171,15 +2171,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 9020,
+                      "duration": 6151,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:40.727Z",
+                      "startTime": "2026-03-08T15:52:41.170Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2216,15 +2216,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 8255,
+                      "duration": 7459,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:49.760Z",
+                      "startTime": "2026-03-08T15:52:47.337Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2261,15 +2261,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 8417,
+                      "duration": 7517,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:58.033Z",
+                      "startTime": "2026-03-08T15:52:54.824Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2306,15 +2306,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 10829,
+                      "duration": 4110,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:06.465Z",
+                      "startTime": "2026-03-08T15:53:02.361Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2352,14 +2352,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4755,
+                      "duration": 4108,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:24.353Z",
+                      "startTime": "2026-03-08T15:53:29.680Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2397,14 +2397,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4648,
+                      "duration": 3755,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:30.497Z",
+                      "startTime": "2026-03-08T15:53:35.017Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2442,14 +2442,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7417,
+                      "duration": 6457,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:35.239Z",
+                      "startTime": "2026-03-08T15:53:38.833Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2487,14 +2487,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5351,
+                      "duration": 8333,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:42.672Z",
+                      "startTime": "2026-03-08T15:53:45.316Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2532,14 +2532,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4584,
+                      "duration": 6399,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:48.037Z",
+                      "startTime": "2026-03-08T15:53:53.694Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2577,14 +2577,14 @@
                   "results": [
                     {
                       "workerIndex": 11,
-                      "parallelIndex": 2,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1492,
+                      "duration": 2004,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:52.632Z",
+                      "startTime": "2026-03-08T15:54:00.124Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2634,12 +2634,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 16006,
+                  "duration": 15300,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-03-03T20:06:44.057Z",
+                  "startTime": "2026-03-08T15:51:44.696Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -2676,15 +2676,15 @@
               "projectName": "firefox",
               "results": [
                 {
-                  "workerIndex": 5,
+                  "workerIndex": 7,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 23338,
+                  "duration": 16491,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-03-03T20:07:33.580Z",
+                  "startTime": "2026-03-08T15:52:34.991Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -2721,15 +2721,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
-                  "parallelIndex": 1,
+                  "workerIndex": 10,
+                  "parallelIndex": 3,
                   "status": "passed",
-                  "duration": 17552,
+                  "duration": 16906,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-03-03T20:08:17.921Z",
+                  "startTime": "2026-03-08T15:53:23.641Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -2752,6 +2752,563 @@
           "file": "master-flow.spec.ts",
           "line": 3,
           "column": 5
+        }
+      ]
+    },
+    {
+      "title": "order-cancellation.spec.ts",
+      "file": "order-cancellation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Order Cancellation",
+          "file": "order-cancellation.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should show Cancel button only for PENDING orders on Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4299,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:51:49.209Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-883f4dfa0cba38defed9",
+              "file": "order-cancellation.spec.ts",
+              "line": 87,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4617,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:51:53.898Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-5f6fc0977f2f86b7c77a",
+              "file": "order-cancellation.spec.ts",
+              "line": 101,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Order Details page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:51:58.545Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-cd95ef954f2081faa42f",
+              "file": "order-cancellation.spec.ts",
+              "line": 119,
+              "column": 9
+            },
+            {
+              "title": "should NOT show Cancel button for a CONFIRMED order",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3237,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:00.709Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-3c7db1dec98d3288ffaf",
+              "file": "order-cancellation.spec.ts",
+              "line": 136,
+              "column": 9
+            },
+            {
+              "title": "should show Cancel button only for PENDING orders on Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5599,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:38.881Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-c1b623846a61cb31948c",
+              "file": "order-cancellation.spec.ts",
+              "line": 87,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5162,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:45.478Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-d906151e25fcbebe88e5",
+              "file": "order-cancellation.spec.ts",
+              "line": 101,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Order Details page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3668,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:50.654Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-c4ee29cd4135d8089d0f",
+              "file": "order-cancellation.spec.ts",
+              "line": 119,
+              "column": 9
+            },
+            {
+              "title": "should NOT show Cancel button for a CONFIRMED order",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4563,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:54.336Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-137dbaeefaeda6be76f8",
+              "file": "order-cancellation.spec.ts",
+              "line": 136,
+              "column": 9
+            },
+            {
+              "title": "should show Cancel button only for PENDING orders on Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5832,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:33.257Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-8996f-NDING-orders-on-Orders-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-a29616b037483a03579c",
+              "file": "order-cancellation.spec.ts",
+              "line": 87,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Orders page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6322,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:39.519Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-dc29c-DING-order-from-Orders-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-3fc682620d08fdfe0a9f",
+              "file": "order-cancellation.spec.ts",
+              "line": 101,
+              "column": 9
+            },
+            {
+              "title": "should successfully cancel a PENDING order from Order Details page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4991,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:45.871Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-3aca8-der-from-Order-Details-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-ed4c2eee72ea37672107",
+              "file": "order-cancellation.spec.ts",
+              "line": 119,
+              "column": 9
+            },
+            {
+              "title": "should NOT show Cancel button for a CONFIRMED order",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4367,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:50.900Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/order-cancellation-Order-C-76efa-utton-for-a-CONFIRMED-order-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2bd08a96015aec77bee0-e7953daa34ba6371a697",
+              "file": "order-cancellation.spec.ts",
+              "line": 136,
+              "column": 9
+            }
+          ]
         }
       ]
     },
@@ -2784,12 +3341,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2098,
+                      "duration": 2356,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:49.391Z",
+                      "startTime": "2026-03-08T15:51:53.052Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2826,15 +3383,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10511,
+                      "duration": 4544,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:40.544Z",
+                      "startTime": "2026-03-08T15:52:41.321Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2871,15 +3428,15 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 6917,
+                      "duration": 5246,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:25.201Z",
+                      "startTime": "2026-03-08T15:53:34.802Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2908,6 +3465,887 @@
       ]
     },
     {
+      "title": "profile.spec.ts",
+      "file": "profile.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "User Profile & Stock Limit",
+          "file": "profile.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to profile page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4961,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:51:55.463Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-2ffeb270fe288e4d494e",
+              "file": "profile.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "should update user first name and last name",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:00.746Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-95c6e14bdaab75fdba01",
+              "file": "profile.spec.ts",
+              "line": 77,
+              "column": 9
+            },
+            {
+              "title": "should keep Update Password button disabled when passwords do not match",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:03.114Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-db2cee9f836898616507",
+              "file": "profile.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "should disable + button when cart quantity reaches stock limit",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [
+                    {
+                      "type": "slow",
+                      "location": {
+                        "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                        "line": 114,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 6302,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:05.342Z",
+                      "annotations": [
+                        {
+                          "type": "slow",
+                          "location": {
+                            "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                            "line": 114,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-8835b8d2e91e74e49c2e",
+              "file": "profile.spec.ts",
+              "line": 113,
+              "column": 9
+            },
+            {
+              "title": "should show stock limit warning on Product Detail page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2038,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:11.691Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-71b654e0bbda342847df",
+              "file": "profile.spec.ts",
+              "line": 150,
+              "column": 9
+            },
+            {
+              "title": "should persist shipping address across page refresh on Payment page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2332,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:13.746Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-chromium/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-bf9882a884e36c89eff2",
+              "file": "profile.spec.ts",
+              "line": 176,
+              "column": 9
+            },
+            {
+              "title": "should navigate to profile page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5037,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:45.913Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-0020b2a90d33d3a96378",
+              "file": "profile.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "should update user first name and last name",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4150,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:51.293Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-167a9b31ce40272e1c31",
+              "file": "profile.spec.ts",
+              "line": 77,
+              "column": 9
+            },
+            {
+              "title": "should keep Update Password button disabled when passwords do not match",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3834,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:55.469Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-9684455789e6e16ba9c1",
+              "file": "profile.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "should disable + button when cart quantity reaches stock limit",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [
+                    {
+                      "type": "slow",
+                      "location": {
+                        "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                        "line": 114,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7270,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:52:59.314Z",
+                      "annotations": [
+                        {
+                          "type": "slow",
+                          "location": {
+                            "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                            "line": 114,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-41ad31b14283e47d83f1",
+              "file": "profile.spec.ts",
+              "line": 113,
+              "column": 9
+            },
+            {
+              "title": "should show stock limit warning on Product Detail page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4276,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:06.596Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-e18b1059c75adaf04fa2",
+              "file": "profile.spec.ts",
+              "line": 150,
+              "column": 9
+            },
+            {
+              "title": "should persist shipping address across page refresh on Payment page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11853,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:10.893Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-firefox/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-firefox/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-650f38170164f7d134bf",
+              "file": "profile.spec.ts",
+              "line": 176,
+              "column": 9
+            },
+            {
+              "title": "should navigate to profile page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5390,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:40.113Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-6e9fe-ld-navigate-to-profile-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-acf92b1175a05156629e",
+              "file": "profile.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "should update user first name and last name",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 4073,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:46.217Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-1bd70-er-first-name-and-last-name-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-98f091e097a8674af121",
+              "file": "profile.spec.ts",
+              "line": 77,
+              "column": 9
+            },
+            {
+              "title": "should keep Update Password button disabled when passwords do not match",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 3443,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:50.312Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-024b4-when-passwords-do-not-match-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-5d417f7f24dabcc57a72",
+              "file": "profile.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "should disable + button when cart quantity reaches stock limit",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 360000,
+                  "annotations": [
+                    {
+                      "type": "slow",
+                      "location": {
+                        "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                        "line": 114,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7055,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:53:53.780Z",
+                      "annotations": [
+                        {
+                          "type": "slow",
+                          "location": {
+                            "file": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/tests/profile.spec.ts",
+                            "line": 114,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-32c83-uantity-reaches-stock-limit-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-f78d4bd81be3ec7240d4",
+              "file": "profile.spec.ts",
+              "line": 113,
+              "column": 9
+            },
+            {
+              "title": "should show stock limit warning on Product Detail page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2168,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:54:00.849Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-485b3-ning-on-Product-Detail-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-ede82a5f0324f85603ab",
+              "file": "profile.spec.ts",
+              "line": 150,
+              "column": 9
+            },
+            {
+              "title": "should persist shipping address across page refresh on Payment page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2086,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-03-08T15:54:03.040Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-webkit/test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/saurabhdave/Developer/Workspace/pharmaceutical-stockist/automation/test-results/profile-User-Profile-Stock-73a4c-age-refresh-on-Payment-page-webkit/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e8b79b4ee550a37632f1-901eeb9a6182479e85a7",
+              "file": "profile.spec.ts",
+              "line": 176,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "receipt.spec.ts",
       "file": "receipt.spec.ts",
       "column": 0,
@@ -2917,7 +4355,7 @@
         {
           "title": "Receipt Workflows",
           "file": "receipt.spec.ts",
-          "line": 3,
+          "line": 5,
           "column": 6,
           "specs": [
             {
@@ -2933,19 +4371,19 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8069,
+                      "duration": 7996,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-Bfr9oo/63a7660d-2966-4c6a-9c3b-f6c465a88b2b\n"
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-Pxa4W5/448b86ca-f1b5-44be-abc9-803fd63f765f\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:51.536Z",
+                      "startTime": "2026-03-08T15:52:00.018Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -2966,7 +4404,7 @@
               ],
               "id": "933d2e14f4f45dacd57c-d8e55dfe15294055eeb2",
               "file": "receipt.spec.ts",
-              "line": 38,
+              "line": 54,
               "column": 9
             },
             {
@@ -2982,19 +4420,19 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 0,
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11802,
+                      "duration": 9565,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-s2ptcA/ab88996f-54af-42d0-a2c4-1fbd3529319c\n"
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-kVfCDC/c686a0ea-d605-4249-97ce-96bb2aaeb025\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:42.424Z",
+                      "startTime": "2026-03-08T15:52:51.502Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3015,7 +4453,7 @@
               ],
               "id": "933d2e14f4f45dacd57c-11d7d0932bbdf16ed483",
               "file": "receipt.spec.ts",
-              "line": 38,
+              "line": 54,
               "column": 9
             },
             {
@@ -3031,19 +4469,19 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 0,
+                      "workerIndex": 10,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 9159,
+                      "duration": 8785,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-9ByiS3/cd937eea-0b90-4359-a904-e26e7b3b3540\n"
+                          "text": "Downloaded receipt to /var/folders/4v/_6_n2qmn68b7q79zc2_9v_7h0000gn/T/playwright-artifacts-GhMoac/8c7f72c6-cf0e-4d8a-ad54-abb8bd7780ac\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:32.190Z",
+                      "startTime": "2026-03-08T15:53:40.592Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3064,7 +4502,7 @@
               ],
               "id": "933d2e14f4f45dacd57c-763d250fb389fb5b094a",
               "file": "receipt.spec.ts",
-              "line": 38,
+              "line": 54,
               "column": 9
             }
           ]
@@ -3097,15 +4535,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 1401,
+                      "duration": 1877,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:53.489Z",
+                      "startTime": "2026-03-08T15:52:04.136Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3145,12 +4583,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1217,
+                      "duration": 1442,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:55.175Z",
+                      "startTime": "2026-03-08T15:52:06.274Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3187,15 +4625,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3777,
+                      "duration": 3664,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:06:56.446Z",
+                      "startTime": "2026-03-08T15:52:06.283Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3233,14 +4671,14 @@
                   "results": [
                     {
                       "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 3401,
+                      "duration": 1831,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:51.256Z",
+                      "startTime": "2026-03-08T15:52:59.069Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3277,15 +4715,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 0,
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 2556,
+                      "duration": 2613,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:54.634Z",
+                      "startTime": "2026-03-08T15:53:01.109Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3322,15 +4760,15 @@
                   "projectName": "firefox",
                   "results": [
                     {
-                      "workerIndex": 6,
-                      "parallelIndex": 3,
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4894,
+                      "duration": 4479,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:07:54.858Z",
+                      "startTime": "2026-03-08T15:53:01.352Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3370,12 +4808,12 @@
                       "workerIndex": 10,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3270,
+                      "duration": 2583,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:32.623Z",
+                      "startTime": "2026-03-08T15:53:49.861Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3412,15 +4850,15 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 8,
-                      "parallelIndex": 1,
+                      "workerIndex": 10,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 3511,
+                      "duration": 2459,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:35.503Z",
+                      "startTime": "2026-03-08T15:53:52.845Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3457,15 +4895,15 @@
                   "projectName": "webkit",
                   "results": [
                     {
-                      "workerIndex": 10,
-                      "parallelIndex": 3,
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 5604,
+                      "duration": 3784,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-03-03T20:08:36.243Z",
+                      "startTime": "2026-03-08T15:53:55.591Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -3496,9 +4934,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-03-03T20:06:29.453Z",
-    "duration": 144868.45799999998,
-    "expected": 72,
+    "startTime": "2026-03-08T15:51:27.892Z",
+    "duration": 157444.42700000003,
+    "expected": 102,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
