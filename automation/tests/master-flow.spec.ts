@@ -12,10 +12,17 @@ test('End-to-End Master Flow', async ({ page, request }) => {
     const loginRes = await request.post('/api/auth/login', {
         data: { email: adminEmail, password: adminPass }
     });
+    if (!loginRes.ok()) {
+        const text = await loginRes.text();
+        throw new Error(`Login failed with status ${loginRes.status()}: ${text}`);
+    }
     const loginData = await loginRes.json();
     const token = loginData.data.token;
 
     const catRes = await request.get('/api/categories', { headers: { 'Authorization': `Bearer ${token}` } });
+    if (!catRes.ok()) {
+        throw new Error(`Categories failed with status ${catRes.status()}`);
+    }
     const catData = await catRes.json();
     const firstCat = catData.data[0];
     const testCategorySlug = firstCat.slug;
@@ -40,7 +47,10 @@ test('End-to-End Master Flow', async ({ page, request }) => {
         phone: '1234567890'
     };
     await request.post('/api/auth/send-otp', { data: payload });
-    await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: '123456' } });
+    await page.waitForTimeout(1000);
+    const realOtp = '123456';
+
+    await request.post('/api/auth/verify-otp', { data: { email: customerEmail, otp: realOtp } });
 
     // --- START VISUAL FLOW ---
 
@@ -83,8 +93,9 @@ test('End-to-End Master Flow', async ({ page, request }) => {
 
     // 8. Order Confirmation and Details
     await expect(page).toHaveURL(/.*orders\/\d+/);
-    await expect(page.getByText('Order placed successfully')).toBeVisible();
-    await expect(page.getByText('Order Items')).toBeVisible();
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByText('Order Items')).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText('Order placed successfully')).toBeVisible({ timeout: 10000 });
 
     // Wait for the success toast to disappear before clicking the menu
     await expect(page.getByText('Order placed successfully')).toBeHidden({ timeout: 15000 });

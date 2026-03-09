@@ -155,7 +155,33 @@ public class UserService {
         }
 
         public java.util.List<com.pharma.model.Address> getUserAddresses(String email) {
-                User user = getUserByEmail(email);
-                return addressRepository.findByUserId(user.getId());
+        User user = getUserByEmail(email);
+        return addressRepository.findByUserId(user.getId());
+    }
+
+    public com.pharma.dto.response.AuthResponse updateProfile(String email, com.pharma.dto.request.ProfileRequest request) {
+        User user = getUserByEmail(email);
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPhone(request.getPhone());
+        userRepository.save(user);
+
+        return new com.pharma.dto.response.AuthResponse(
+                null,
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole().name()
+        );
+    }
+
+    public void updatePassword(String email, com.pharma.dto.request.PasswordUpdateRequest request) {
+        User user = getUserByEmail(email);
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Incorrect current password.");
         }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
 }

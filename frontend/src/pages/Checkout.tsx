@@ -8,6 +8,8 @@ import { useToast } from '../hooks/useToast';
 import { calculateItemTotal } from '../utils/pricing';
 import { API_BASE_URL } from '../config/env';
 import { z } from 'zod';
+import { useCheckoutStore } from '../stores/checkoutStore';
+import { useCartStore } from '../stores/cartStore';
 
 const addressSchema = z.object({
     street: z.string().min(5, "Street address must be at least 5 characters"),
@@ -27,6 +29,7 @@ const addressResponseSchema = z.union([
 
 const Checkout: React.FC = () => {
     const navigate = useNavigate();
+    const { cartTotal, cartSubtotal, fetchCartCount } = useCartStore();
     const { error: errorToast } = useToast();
     const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
     const [selectedAddressId, setSelectedAddressId] = useState<number | 'new'>('new');
@@ -64,6 +67,7 @@ const Checkout: React.FC = () => {
                 // cartService.getCart returns ApiResponse<Cart> directly
                 if (cartResponse && cartResponse.data) {
                     setCart(cartResponse.data);
+                    fetchCartCount(); // ensure store is in sync
                 }
             } catch (err) {
                 console.error('Checkout load error:', err);
@@ -122,7 +126,7 @@ const Checkout: React.FC = () => {
             }
         }
 
-        sessionStorage.setItem('checkoutState', JSON.stringify({ shippingAddress: finalAddressString, addressId }));
+        useCheckoutStore.getState().setCheckoutData(finalAddressString, addressId);
         navigate('/payment');
     };
 
@@ -138,12 +142,7 @@ const Checkout: React.FC = () => {
         return `${addr.street}, ${addr.city}, ${addr.state} ${addr.zipCode}, ${addr.country}`;
     };
 
-    const calculateTotal = () => {
-        if (!cart || !cart.items) return 0;
-        return cart.items.reduce((total, item) => {
-            return total + calculateItemTotal(item.product, item.quantity);
-        }, 0);
-    };
+
 
     if (loading) return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -154,8 +153,6 @@ const Checkout: React.FC = () => {
         </div>
     );
 
-    const subtotal = calculateTotal();
-    const total = subtotal;
 
     return (
         <div className="min-h-screen bg-gray-50 py-12">
@@ -471,11 +468,11 @@ const Checkout: React.FC = () => {
                                 <div className="border-t border-gray-200 pt-4 space-y-4">
                                     <div className="flex items-center justify-between text-sm text-gray-600">
                                         <p>Subtotal</p>
-                                        <p>${subtotal.toFixed(2)}</p>
+                                        <p>${cartSubtotal.toFixed(2)}</p>
                                     </div>
                                     <div className="border-t border-gray-200 pt-4 flex items-center justify-between text-base font-medium text-gray-900">
                                         <p>Total</p>
-                                        <p>${total.toFixed(2)}</p>
+                                        <p>${cartTotal.toFixed(2)}</p>
                                     </div>
                                 </div>
                             </div>

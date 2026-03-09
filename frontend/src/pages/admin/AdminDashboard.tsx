@@ -8,6 +8,7 @@ import ManageProducts from './ManageProducts';
 import ManageOrders from './ManageOrders';
 import ManageUsers from './ManageUsers';
 import ManageCategories from './ManageCategories';
+import api from '../../services/api';
 
 const AdminDashboard: React.FC = () => {
   const location = useLocation();
@@ -86,22 +87,20 @@ const DashboardOverview: React.FC = () => {
   const [orderStatusFilter, setOrderStatusFilter] = React.useState<string | null>(null);
 
   const fetchDashboardData = React.useCallback(async (days: number) => {
-    const token = localStorage.getItem('token');
-    const headers = { 'Authorization': `Bearer ${token}` };
     setLoading(true);
 
     try {
       const [statsRes, revenueRes, expiringRes, topRes] = await Promise.all([
-        fetch('/api/admin/dashboard/stats', { headers }),
-        fetch(`/api/admin/dashboard/daily-revenue?days=${days}`, { headers }),
-        fetch('/api/admin/dashboard/expiring-products?days=30', { headers }),
-        fetch('/api/admin/dashboard/top-products?limit=5', { headers })
+        api.get('/admin/dashboard/stats'),
+        api.get(`/admin/dashboard/daily-revenue?days=${days}`),
+        api.get('/admin/dashboard/expiring-products?days=30'),
+        api.get('/admin/dashboard/top-products?limit=5')
       ]);
 
-      const statsData = await statsRes.json();
-      const revenueData = await revenueRes.json();
-      const expiringData = await expiringRes.json();
-      const topData = await topRes.json();
+      const statsData = statsRes.data;
+      const revenueData = revenueRes.data;
+      const expiringData = expiringRes.data;
+      const topData = topRes.data;
 
       setStats(statsData.data);
 

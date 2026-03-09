@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { cartService } from '../services/cartService';
-import { Cart, PaymentMethod } from '../types';
+import { PaymentMethod } from '../types';
 import { useToast } from '../hooks/useToast';
 import { CreditCard, Truck, Check } from 'lucide-react';
-import { calculateItemTotal } from '../utils/pricing';
 import { useCartStore } from '../stores/cartStore';
+import { useCheckoutStore } from '../stores/checkoutStore';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
     const { success, error: errorToast } = useToast();
-    const fetchCartCount = useCartStore(state => state.fetchCartCount);
+    const { fetchCartCount, cartTotal } = useCartStore();
 
-    const savedState = sessionStorage.getItem('checkoutState');
-    const state = savedState ? JSON.parse(savedState) as { shippingAddress?: string; addressId?: number } : undefined;
+    const { shippingAddress, addressId, clearCheckoutData } = useCheckoutStore();
+    const state = { shippingAddress, addressId };
 
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | ''>('COD');
     const [loading, setLoading] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
-    const [cart, setCart] = useState<Cart | null>(null);
 
     // Redirect to checkout if no shipping address
     if (!state?.shippingAddress) {
@@ -31,7 +30,7 @@ const Payment: React.FC = () => {
             try {
                 const response = await cartService.getCart();
                 if (response.success && response.data) {
-                    setCart(response.data);
+                    fetchCartCount(); // ensure store is in sync
                 }
             } catch (err) {
                 console.error('Failed to fetch cart', err);
@@ -46,6 +45,11 @@ const Payment: React.FC = () => {
     const handlePlaceOrder = async () => {
         if (!selectedPayment) {
             errorToast('Please select a payment method');
+            return;
+        }
+
+        if (selectedPayment === 'ONLINE') {
+            errorToast('Online payment is not yet integrated. Please select Cash on Delivery.');
             return;
         }
 
@@ -64,10 +68,10 @@ const Payment: React.FC = () => {
 
             if (data && data.success && data.data) {
                 success('Order placed successfully!');
-                sessionStorage.removeItem('checkoutState');
-                // Dispatch event to clear cart in UI
-                await fetchCartCount();
                 navigate(`/orders/${data.data.id}`);
+                // Clear checkout data AFTER navigating away from Payment page
+                clearCheckoutData();
+                await fetchCartCount();
             }
         } catch (err: any) {
             console.error(err);
@@ -77,10 +81,6 @@ const Payment: React.FC = () => {
         }
     };
 
-    const calculateTotal = () => {
-        if (!cart) return 0;
-        return cart.items.reduce((total, item) => total + calculateItemTotal(item.product, item.quantity), 0);
-    };
 
     if (pageLoading) {
         return (
@@ -165,23 +165,23 @@ const Payment: React.FC = () => {
                             <div
                                 onClick={() => setSelectedPayment('ONLINE')}
                                 className={`relative rounded-lg border p-4 cursor-pointer flex flex-col focus:outline-none transition-all ${selectedPayment === 'ONLINE'
-                                    ? 'border-primary-500 ring-2 ring-primary-500 bg-primary-50'
-                                    : 'border-gray-300 hover:border-gray-400'
+                                    ? 'border-gray-500 ring-2 ring-gray-500 bg-gray-50 opacity-75'
+                                    : 'border-gray-300 hover:border-gray-400 opacity-75'
                                     }`}
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                        <CreditCard className={`h-6 w-6 ${selectedPayment === 'ONLINE' ? 'text-primary-600' : 'text-gray-400'}`} />
+                                        <CreditCard className={`h-6 w-6 ${selectedPayment === 'ONLINE' ? 'text-gray-600' : 'text-gray-400'}`} />
                                         <div className="ml-3">
                                             <span className="block text-sm font-medium text-gray-900">
-                                                Online Payment
+                                                Online Payment <span className="text-xs text-orange-600 font-bold ml-2 border border-orange-200 bg-orange-50 px-2 py-0.5 rounded-full">Coming Soon</span>
                                             </span>
                                             <span className="block text-sm text-gray-500">
                                                 Credit/Debit Card, UPI, Net Banking
                                             </span>
                                         </div>
                                     </div>
-                                    <div className={`h-5 w-5 rounded-full border flex items-center justify-center ${selectedPayment === 'ONLINE' ? 'border-primary-600 bg-primary-600' : 'border-gray-300'
+                                    <div className={`h-5 w-5 rounded-full border flex items-center justify-center ${selectedPayment === 'ONLINE' ? 'border-gray-600 bg-gray-600' : 'border-gray-300'
                                         }`}>
                                         {selectedPayment === 'ONLINE' && <div className="h-2 w-2 rounded-full bg-white" />}
                                     </div>
@@ -201,13 +201,13 @@ const Payment: React.FC = () => {
 
                             <div className="flex items-center justify-between mb-6">
                                 <span className="text-base font-medium text-gray-900">Total Amount</span>
-                                <span className="text-xl font-bold text-gray-900">${calculateTotal().toFixed(2)}</span>
+                                <span className="text-xl font-bold text-gray-900">${cartTotal.toFixed(2)}</span>
                             </div>
 
                             <button
                                 type="button"
                                 onClick={handlePlaceOrder}
-                                disabled={loading}
+                                disabled={loading || selectedPayment === 'ONLINE'}
                                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                             >
                                 {loading ? (

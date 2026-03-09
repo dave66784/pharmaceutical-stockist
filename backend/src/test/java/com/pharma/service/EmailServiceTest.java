@@ -1,23 +1,28 @@
 package com.pharma.service;
 
-import com.pharma.model.Order;
-import com.pharma.model.OrderItem;
-import com.pharma.model.Product;
-import com.pharma.model.User;
-import jakarta.mail.internet.MimeMessage;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import com.pharma.model.Order;
+import com.pharma.model.OrderItem;
+import com.pharma.model.Product;
+import com.pharma.model.User;
 
-import static org.mockito.Mockito.*;
+import jakarta.mail.internet.MimeMessage;
 
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
@@ -37,7 +42,7 @@ class EmailServiceTest {
     void setUp() {
         ReflectionTestUtils.setField(emailService, "senderEmail", "test@example.com");
         ReflectionTestUtils.setField(emailService, "adminEmail", "admin@example.com");
-        ReflectionTestUtils.setField(emailService, "orderPlacedEnabled", true);
+        ReflectionTestUtils.setField(emailService, "adminOrderPlacedEnabled", true);
 
         User user = new User();
         // user.setName("John Doe"); // getName() computes this
@@ -72,7 +77,7 @@ class EmailServiceTest {
 
     @Test
     void sendOrderPlacedNotification_Disabled() {
-        ReflectionTestUtils.setField(emailService, "orderPlacedEnabled", false);
+        ReflectionTestUtils.setField(emailService, "adminOrderPlacedEnabled", false);
 
         emailService.sendOrderPlacedNotification(order);
 

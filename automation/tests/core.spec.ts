@@ -217,6 +217,9 @@ test.describe('Customer Core Workflows', () => {
         const loginRes = await request.post('/api/auth/login', {
             data: { email: adminEmail, password: adminPass }
         });
+        if (!loginRes.ok()) {
+            throw new Error(`Login failed with status ${loginRes.status()}`);
+        }
         const loginData = await loginRes.json();
         const token = loginData.data.token;
 

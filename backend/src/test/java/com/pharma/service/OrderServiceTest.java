@@ -25,6 +25,7 @@ import com.pharma.exception.InsufficientStockException;
 import com.pharma.model.Cart;
 import com.pharma.model.CartItem;
 import com.pharma.model.Order;
+import com.pharma.model.OrderItem;
 import com.pharma.model.Product;
 import com.pharma.model.User;
 import com.pharma.model.enums.OrderStatus;
@@ -84,6 +85,7 @@ class OrderServiceTest {
         order.setId(1L);
         order.setUser(user);
         order.setStatus(OrderStatus.PENDING);
+        order.setOrderItems(new java.util.ArrayList<>());
     }
 
     @Test
@@ -137,6 +139,42 @@ class OrderServiceTest {
         Order updated = orderService.updateOrderStatus(1L, OrderStatus.SHIPPED);
 
         assertEquals(OrderStatus.SHIPPED, updated.getStatus());
+    }
+
+    @Test
+    void cancelOrder_Success() {
+        order.setStatus(OrderStatus.PENDING);
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        orderItem.setQuantity(2);
+        order.getOrderItems().add(orderItem);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        Order cancelledOrder = orderService.cancelOrder(1L, "test@example.com");
+
+        assertEquals(OrderStatus.CANCELLED, cancelledOrder.getStatus());
+        assertEquals(102, product.getStockQuantity()); // Original 100 + 2 restored
+    }
+
+    @Test
+    void cancelOrder_Fails_When_Not_Pending() {
+        order.setStatus(OrderStatus.SHIPPED);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderService.cancelOrder(1L, "test@example.com"));
+        assertEquals("Only pending orders can be cancelled.", exception.getMessage());
+        verify(orderRepository, never()).save(any(Order.class));
+    }
+    
+    @Test
+    void cancelOrder_Fails_WrongEmail() {
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderService.cancelOrder(1L, "wrong@example.com"));
+        assertEquals("Access denied: You can only cancel your own orders.", exception.getMessage());
+        verify(orderRepository, never()).save(any(Order.class));
     }
 
     @Test

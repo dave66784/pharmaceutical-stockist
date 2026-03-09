@@ -70,8 +70,11 @@ test.describe('Product Management - Image Upload', () => {
         const formImage = page.locator('img[alt^="Product 1"]');
         await expect(formImage).toBeVisible();
 
-        // Verify image natural width (not broken)
-        const isBroken = await formImage.evaluate((img: HTMLImageElement) => img.naturalWidth === 0);
-        expect(isBroken).toBeFalsy();
+        // Verify image natural width (not broken) by waiting for it to load
+        await expect(formImage).toHaveJSProperty('complete', true);
+        await expect(async () => {
+            const width = await formImage.evaluate((img: HTMLImageElement) => img.naturalWidth);
+            expect(width).toBeGreaterThan(0);
+        }).toPass({ timeout: 5000 });
     });
 });

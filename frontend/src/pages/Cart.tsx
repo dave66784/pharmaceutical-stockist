@@ -11,24 +11,25 @@ const Cart: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const fetchCartCount = useCartStore(state => state.fetchCartCount);
+  const { fetchCartCount, cartTotal } = useCartStore();
 
   useEffect(() => {
     fetchCart();
   }, []);
 
-  const fetchCart = async () => {
+  const fetchCart = async (showLoading = true) => {
     try {
-      setLoading(true);
+      if (showLoading) setLoading(true);
       const data = await cartService.getCart();
       if (data && data.data) {
         setCart(data.data);
+        fetchCartCount();
       }
     } catch (err) {
       console.error(err);
       setError('Failed to load cart');
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   };
 
@@ -36,11 +37,10 @@ const Cart: React.FC = () => {
     if (newQuantity < 1) return;
     try {
       await cartService.updateCartItem(itemId, newQuantity);
-      fetchCart(); // Refresh cart to get updated state
+      fetchCart(false); // Don't show full page loader on update
       await fetchCartCount();
     } catch (err) {
       console.error('Failed to update quantity', err);
-      // specific error handling could be added here
     }
   };
 
@@ -66,12 +66,6 @@ const Cart: React.FC = () => {
     }
   }
 
-  const calculateTotal = () => {
-    if (!cart || !cart.items) return 0;
-    return cart.items.reduce((total, item) => {
-      return total + calculateItemTotal(item.product, item.quantity);
-    }, 0);
-  };
 
   if (loading) {
     return (
@@ -85,7 +79,7 @@ const Cart: React.FC = () => {
     return (
       <div className="bg-red-50 p-4 rounded-md">
         <div className="text-red-700">{error}</div>
-        <button onClick={fetchCart} className="mt-2 text-blue-600 hover:text-blue-500">Retry</button>
+        <button onClick={() => fetchCart()} className="mt-2 text-blue-600 hover:text-blue-500">Retry</button>
       </div>
     );
   }
@@ -134,18 +128,23 @@ const Cart: React.FC = () => {
                 <p className="text-sm font-medium text-gray-900 mt-1">${item.product.price.toFixed(2)}</p>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="flex items-center border border-gray-300 rounded-md">
-                  <button
-                    onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                    className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-l-md"
-                    disabled={item.quantity <= 1}
-                  >-</button>
-                  <span className="px-3 py-1 text-gray-700 min-w-[2.5rem] text-center">{item.quantity}</span>
-                  <button
-                    onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                    className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-r-md"
-                    disabled={item.quantity >= item.product.stockQuantity}
-                  >+</button>
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center border border-gray-300 rounded-md">
+                    <button
+                      onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                      className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-l-md"
+                      disabled={item.quantity <= 1}
+                    >-</button>
+                    <span className="px-3 py-1 text-gray-700 min-w-[2.5rem] text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                      className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-r-md disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={item.quantity >= item.product.stockQuantity}
+                    >+</button>
+                  </div>
+                  {item.quantity >= item.product.stockQuantity && (
+                    <span className="text-xs text-amber-600 mt-1 font-medium">Max stock limit</span>
+                  )}
                 </div>
                 <div className="text-lg font-bold text-gray-900 w-24 text-right flex flex-col items-end">
                   {calculateItemTotal(item.product, item.quantity) < item.product.price * item.quantity ? (
@@ -179,7 +178,7 @@ const Cart: React.FC = () => {
       <div className="px-4 py-5 sm:px-6 bg-gray-50 border-t border-gray-200">
         <div className="flex justify-between items-center text-xl font-bold text-gray-900 mb-6">
           <span>Total</span>
-          <span>${calculateTotal().toFixed(2)}</span>
+          <span>${cartTotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-end">
           <Link to="/products" className="mr-4 text-blue-600 hover:text-blue-500 font-medium py-2 px-4">

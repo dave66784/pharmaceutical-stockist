@@ -42,6 +42,6 @@ case "$1" in
         show_help
         ;;
     *)
-        cd "$TEST_DIR" && npx playwright test
+        cd "$TEST_DIR" && npx playwright test "$@"
         ;;
 esac

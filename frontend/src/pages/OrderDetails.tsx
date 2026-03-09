@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { Order } from '../types';
-import { Truck, Package, CreditCard, MapPin } from 'lucide-react';
+import { Truck, Package, CreditCard, MapPin, CheckCircle, XCircle } from 'lucide-react';
 import { API_BASE_URL } from '../config/env';
+import { useToast } from '../hooks/useToast';
 
 const OrderDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [order, setOrder] = useState<Order | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { success: successToast, error: errorToast } = useToast();
 
     useEffect(() => {
         console.log('OrderDetails mounted, id:', id);
@@ -74,6 +76,26 @@ const OrderDetails: React.FC = () => {
                         </p>
                     </div>
                     <div className="flex space-x-4">
+                        {order.status === 'PENDING' && (
+                            <button
+                                onClick={async () => {
+                                    if (window.confirm('Are you sure you want to cancel this order?')) {
+                                        try {
+                                            await orderService.cancelOrder(order.id);
+                                            successToast('Order cancelled successfully');
+                                            fetchOrder(order.id);
+                                        } catch (err) {
+                                            console.error('Failed to cancel order', err);
+                                            errorToast('Failed to cancel order');
+                                        }
+                                    }
+                                }}
+                                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            >
+                                <XCircle className="w-4 h-4 mr-2" />
+                                Cancel Order
+                            </button>
+                        )}
                         <button
                             onClick={async () => {
                                 try {
@@ -99,6 +121,64 @@ const OrderDetails: React.FC = () => {
                         </Link>
                     </div>
                 </div>
+
+                {/* Order Tracking Timeline */}
+                {order.status !== 'CANCELLED' && (
+                    <div className="bg-white shadow sm:rounded-lg mb-8 overflow-hidden">
+                        <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
+                            <h3 className="text-lg leading-6 font-medium text-gray-900">Order Tracking</h3>
+                        </div>
+                        <div className="p-6">
+                            <div className="relative">
+                                {/* Base line */}
+                                <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 rounded"></div>
+
+                                {/* Active line */}
+                                <div
+                                    className="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-primary-600 rounded transition-all duration-500 ease-in-out"
+                                    style={{
+                                        width: order.status === 'PENDING' ? '0%' :
+                                            order.status === 'CONFIRMED' ? '33%' :
+                                                order.status === 'SHIPPED' ? '66%' :
+                                                    order.status === 'DELIVERED' ? '100%' : '0%'
+                                    }}
+                                ></div>
+
+                                <div className="relative flex justify-between">
+                                    {['PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED'].map((stepStatus, index) => {
+                                        const statuses = ['PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED'];
+                                        const currentIndex = statuses.indexOf(order.status);
+                                        const isCompleted = index <= currentIndex;
+                                        const isCurrent = index === currentIndex;
+
+                                        return (
+                                            <div key={stepStatus} className="flex flex-col items-center relative z-10 w-1/4">
+                                                <div
+                                                    className={`w-8 h-8 flex items-center justify-center rounded-full border-2 bg-white transition-colors duration-300
+                                                        ${isCompleted
+                                                            ? 'border-primary-600 bg-primary-50'
+                                                            : 'border-gray-300'
+                                                        }`}
+                                                >
+                                                    {isCompleted ? (
+                                                        <CheckCircle className="w-5 h-5 text-primary-600" />
+                                                    ) : (
+                                                        <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                                                    )}
+                                                </div>
+                                                <div className="mt-3 text-center">
+                                                    <p className={`text-sm font-medium ${isCurrent ? 'text-primary-600' : isCompleted ? 'text-gray-900' : 'text-gray-500'}`}>
+                                                        {stepStatus}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Main Content - Order Items */}

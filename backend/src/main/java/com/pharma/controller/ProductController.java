@@ -45,12 +45,17 @@ public class ProductController {
     private final ProductService productService;
     private final ProductUploadService productUploadService;
 
+    private static final java.util.Set<String> ALLOWED_SORT_FIELDS = 
+            java.util.Set.of("id", "name", "price", "createdAt", "stockQuantity");
+
     @GetMapping
     public ResponseEntity<ApiResponse<Page<Product>>> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
             @RequestParam(defaultValue = "id") String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+        
+        String sanitizedSortBy = ALLOWED_SORT_FIELDS.contains(sortBy) ? sortBy : "id";
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sanitizedSortBy));
         Page<Product> products = productService.getAllProducts(pageable);
         return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
     }
@@ -195,12 +200,22 @@ public class ProductController {
                 Files.createDirectories(uploadDir);
             }
 
+            java.util.Set<String> ALLOWED_EXTENSIONS = java.util.Set.of(".jpg", ".jpeg", ".png", ".webp", ".gif");
+            java.util.Set<String> ALLOWED_MIME_TYPES = java.util.Set.of("image/jpeg", "image/png", "image/webp", "image/gif");
+
             for (MultipartFile file : files) {
                 String originalFilename = file.getOriginalFilename();
                 String extension = "";
                 if (originalFilename != null && originalFilename.contains(".")) {
                     extension = originalFilename.substring(originalFilename.lastIndexOf("."));
                 }
+                
+                String contentType = file.getContentType();
+                if (contentType == null || !ALLOWED_MIME_TYPES.contains(contentType) || !ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
+                    return ResponseEntity.badRequest()
+                            .body(new ApiResponse<>(false, "Invalid image type. Allowed types: " + String.join(", ", ALLOWED_EXTENSIONS)));
+                }
+
                 String filename = UUID.randomUUID().toString() + extension;
                 Path filePath = uploadDir.resolve(filename);
                 Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);

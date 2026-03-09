@@ -8,8 +8,8 @@ const userSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   role: z.string(),
-  phone: z.string().optional().nullable(),
-  token: z.string().optional(),
+  phone: z.string().nullish(),
+  token: z.string().nullish(),
   type: z.string().optional()
 });
 
@@ -17,7 +17,6 @@ export const authService = {
   login: async (data: LoginRequest) => {
     const response = await api.post<ApiResponse<AuthResponse>>('/auth/login', data);
     if (response.data.data) {
-      localStorage.setItem('token', response.data.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.data));
     }
     return response.data;
@@ -41,16 +40,18 @@ export const authService = {
   verifyOtp: async (email: string, otp: string) => {
     const response = await api.post<ApiResponse<AuthResponse>>('/auth/verify-otp', { email, otp });
     if (response.data.data) {
-      localStorage.setItem('token', response.data.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.data));
     }
     return response.data;
   },
 
 
-  logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  logout: async () => {
+    try {
+      await api.post('/auth/logout');
+    } finally {
+      localStorage.removeItem('user');
+    }
   },
 
   getCurrentUser: () => {
@@ -71,7 +72,30 @@ export const authService = {
     }
   },
 
-  getToken: () => {
-    return localStorage.getItem('token');
+  getMe: async () => {
+    try {
+      const response = await api.get<ApiResponse<AuthResponse>>('/auth/me');
+      if (response.data.data) {
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+        return response.data;
+      }
+      return null;
+    } catch (err) {
+      localStorage.removeItem('user');
+      throw err;
+    }
   },
+
+  updateProfile: async (data: { firstName: string; lastName: string; phone?: string }) => {
+    const response = await api.put<ApiResponse<AuthResponse>>('/profile', data);
+    if (response.data.data) {
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+    }
+    return response.data;
+  },
+
+  updatePassword: async (data: { currentPassword: string; newPassword: string }) => {
+    const response = await api.put('/profile/password', data);
+    return response.data;
+  }
 };
