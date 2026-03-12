@@ -93,3 +93,10 @@ automation/run_debug_test*.js
 # Automation Reports
 automation/dashboard.html
 automation/results.json
+
+# Debug / temp files
+fetch_by_id.json
+products_list_before.json
+products_list_after.json
+unified-test-report.html
+test-results/
