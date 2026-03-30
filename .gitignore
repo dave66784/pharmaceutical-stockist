@@ -80,7 +80,6 @@ uploads/
 test_images/
 
 # Monitoring
-monitoring/alertmanager.yml
 
 # Playwright
 automation/playwright-report/

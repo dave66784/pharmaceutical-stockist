@@ -3,6 +3,7 @@
 # Script to create admin user after docker restart
 # Usage: ./create_admin.sh
 
+BACKEND_CONTAINER="pharma-backend"
 BASE_URL="http://localhost:8080/api"
 ADMIN_EMAIL="admin@pharma.com"
 ADMIN_PASSWORD="Admin@123"
@@ -12,14 +13,13 @@ echo "Admin User Creation Script"
 echo "=========================================="
 echo ""
 
-# Wait for backend to be ready
+# Wait for backend to be ready (curl runs inside the container)
 echo "⏳ Waiting for backend to be ready..."
 max_attempts=60
 attempt=0
 
 while [ $attempt -lt $max_attempts ]; do
-  # Check if backend responds (even 403 is fine, means it's up)
-  http_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/actuator/health)
+  http_code=$(docker exec "$BACKEND_CONTAINER" curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/actuator/health 2>/dev/null)
   if [ "$http_code" == "200" ] || [ "$http_code" == "403" ] || [ "$http_code" == "503" ]; then
     echo "✅ Backend is ready!"
     break
@@ -37,8 +37,8 @@ fi
 echo ""
 echo "📝 Initiating registration (sending OTP)..."
 
-# Step 1: Send OTP
-SEND_OTP_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/send-otp" \
+# Step 1: Send OTP (run inside container)
+SEND_OTP_RESPONSE=$(docker exec "$BACKEND_CONTAINER" curl -s -X POST "$BASE_URL/auth/send-otp" \
   -H "Content-Type: application/json" \
   -d "{
     \"email\": \"$ADMIN_EMAIL\",
@@ -60,10 +60,10 @@ if [ $? -ne 0 ]; then
   fi
 else
   echo "✅ OTP initiation successful"
-  
+
   echo "📝 Verifying OTP and creating account..."
   # Step 2: Verify OTP (using test override 123456)
-  VERIFY_OTP_RESPONSE=$(curl -s -X POST "$BASE_URL/auth/verify-otp" \
+  VERIFY_OTP_RESPONSE=$(docker exec "$BACKEND_CONTAINER" curl -s -X POST "$BASE_URL/auth/verify-otp" \
     -H "Content-Type: application/json" \
     -d "{
       \"email\": \"$ADMIN_EMAIL\",
@@ -83,9 +83,8 @@ fi
 echo ""
 echo "🔐 Updating user role to ADMIN..."
 
-
 # Wait for user to be persisted
-sleep 5
+sleep 2
 
 # Update the role to ADMIN directly in the database
 docker exec -i pharma-db psql -U postgres -d pharma_db -c \
@@ -109,3 +108,10 @@ echo "=========================================="
 echo ""
 echo "You can now login at http://localhost:3000/login"
 echo "and access the admin dashboard at http://localhost:3000/admin"
+echo ""
+echo "Service URLs:"
+echo "  - Frontend: http://localhost:3000"
+echo "  - Backend API: http://localhost:8080"
+echo "  - Prometheus: http://localhost:9090"
+echo "  - Grafana: http://localhost:3001 (Default: admin/admin)"
+echo "  - Alertmanager: http://localhost:9093"

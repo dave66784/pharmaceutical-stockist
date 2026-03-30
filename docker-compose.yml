@@ -123,16 +123,11 @@ services:
       - pharma-network
 
 volumes:
-  postgres-data:
-    external: true
-  frontend-build:
-    external: false
-  prometheus-data:
-    external: true
-  grafana-data:
-    external: true
-  loki-data:
-    external: true
+  postgres-data: {}
+  frontend-build: {}
+  prometheus-data: {}
+  grafana-data: {}
+  loki-data: {}
   uploads-data: {}
 
 networks:
