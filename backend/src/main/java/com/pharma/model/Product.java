@@ -68,6 +68,9 @@ public class Product {
     @Column(nullable = false)
     private Boolean isDeleted = false;
 
+    @Column(nullable = false)
+    private Boolean isAvailableForSale = true;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

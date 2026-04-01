@@ -2,6 +2,13 @@ import api from './api';
 import { Product, ApiResponse, PageResponse } from '../types';
 
 export const productService = {
+  getAllProductsAdmin: async (page = 0, size = 100) => {
+    const response = await api.get<ApiResponse<PageResponse<Product>>>('/admin/products', {
+      params: { page, size },
+    });
+    return response.data;
+  },
+
   getAllProducts: async (page = 0, size = 12) => {
     const response = await api.get<ApiResponse<PageResponse<Product>>>('/products', {
       params: { page, size },

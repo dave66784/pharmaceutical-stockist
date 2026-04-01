@@ -76,13 +76,13 @@ class ProductServiceTest {
     @Test
     void getAllProducts_Success() {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
-        when(productRepository.findByIsDeletedFalse(any(Pageable.class))).thenReturn(productPage);
+        when(productRepository.findByIsDeletedFalseAndIsAvailableForSaleTrue(any(Pageable.class))).thenReturn(productPage);
 
         Page<Product> result = productService.getAllProducts(PageRequest.of(0, 10));
 
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        verify(productRepository, times(1)).findByIsDeletedFalse(any(Pageable.class));
+        verify(productRepository, times(1)).findByIsDeletedFalseAndIsAvailableForSaleTrue(any(Pageable.class));
     }
 
     @Test
@@ -163,7 +163,7 @@ class ProductServiceTest {
     void getProductsByCategory_Success() {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
         when(categoryRepository.findBySlug("pain-relief")).thenReturn(Optional.of(category));
-        when(productRepository.findByCategoryAndIsDeletedFalse(any(Category.class),
+        when(productRepository.findByCategoryAndIsDeletedFalseAndIsAvailableForSaleTrue(any(Category.class),
                 any(Pageable.class))).thenReturn(productPage);
 
         Page<Product> result = productService.getProductsByCategory("pain-relief",
@@ -178,7 +178,7 @@ class ProductServiceTest {
         Page<Product> productPage = new PageImpl<>(Collections.singletonList(product));
         when(categoryRepository.findBySlug("pain-relief")).thenReturn(Optional.of(category));
         when(subCategoryRepository.findBySlugAndCategory("paracetamol", category)).thenReturn(Optional.of(subCategory));
-        when(productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(
+        when(productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalseAndIsAvailableForSaleTrue(
                 any(Category.class),
                 anyList(),
                 any(Pageable.class))).thenReturn(productPage);

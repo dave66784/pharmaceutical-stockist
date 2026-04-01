@@ -4,6 +4,7 @@ import com.pharma.dto.response.ApiResponse;
 import com.pharma.dto.response.DashboardStatsResponse;
 import com.pharma.dto.response.DailyRevenueDto;
 import com.pharma.dto.response.ExpiringProductDto;
+import com.pharma.dto.response.LowStockProductDto;
 import com.pharma.dto.response.ProductSalesDto;
 import com.pharma.service.DashboardService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,13 @@ public class DashboardController {
             @RequestParam(defaultValue = "30") int days) {
         java.util.List<ExpiringProductDto> products = dashboardService.getExpiringProducts(days);
         return ResponseEntity.ok(new ApiResponse<>(true, "Expiring products retrieved successfully", products));
+    }
+
+    @GetMapping("/low-stock-products")
+    public ResponseEntity<ApiResponse<java.util.List<LowStockProductDto>>> getLowStockProducts(
+            @RequestParam(defaultValue = "10") int threshold) {
+        java.util.List<LowStockProductDto> products = dashboardService.getLowStockProducts(threshold);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Low stock products retrieved successfully", products));
     }
 
     @GetMapping("/top-products")

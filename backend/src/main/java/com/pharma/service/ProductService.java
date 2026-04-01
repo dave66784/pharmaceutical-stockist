@@ -27,7 +27,13 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
+    // Public: excludes products hidden from sale
     public Page<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findByIsDeletedFalseAndIsAvailableForSaleTrue(pageable);
+    }
+
+    // Admin: includes all non-deleted products regardless of availability
+    public Page<Product> getAllProductsForAdmin(Pageable pageable) {
         return productRepository.findByIsDeletedFalse(pageable);
     }
 
@@ -43,7 +49,7 @@ public class ProductService {
     public Page<Product> getProductsByCategory(String categorySlug, Pageable pageable) {
         Category category = categoryRepository.findBySlug(categorySlug)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found: " + categorySlug));
-        return productRepository.findByCategoryAndIsDeletedFalse(category, pageable);
+        return productRepository.findByCategoryAndIsDeletedFalseAndIsAvailableForSaleTrue(category, pageable);
     }
 
     public Page<Product> getProductsByCategoryAndSubCategory(String categorySlug, List<String> subCategorySlugs, Pageable pageable) {
@@ -55,7 +61,7 @@ public class ProductService {
                         .orElseThrow(() -> new ResourceNotFoundException("SubCategory not found: " + slug)))
                 .collect(Collectors.toList());
 
-        return productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalse(category, subCategoryEntities, pageable);
+        return productRepository.findByCategoryAndSubCategoryInAndIsDeletedFalseAndIsAvailableForSaleTrue(category, subCategoryEntities, pageable);
     }
 
     @Transactional
@@ -80,6 +86,7 @@ public class ProductService {
         product.setImageUrls(request.getImageUrls() != null ? request.getImageUrls() : new java.util.ArrayList<>());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(Boolean.TRUE.equals(request.getIsPrescriptionRequired()));
+        product.setIsAvailableForSale(request.getIsAvailableForSale() == null || Boolean.TRUE.equals(request.getIsAvailableForSale()));
         product.setIsBundleOffer(Boolean.TRUE.equals(request.getIsBundleOffer()));
         product.setBundleBuyQuantity(request.getBundleBuyQuantity());
         product.setBundleFreeQuantity(request.getBundleFreeQuantity());
@@ -114,6 +121,7 @@ public class ProductService {
         product.setImageUrls(request.getImageUrls() != null ? request.getImageUrls() : new java.util.ArrayList<>());
         product.setExpiryDate(request.getExpiryDate());
         product.setIsPrescriptionRequired(Boolean.TRUE.equals(request.getIsPrescriptionRequired()));
+        product.setIsAvailableForSale(request.getIsAvailableForSale() == null || Boolean.TRUE.equals(request.getIsAvailableForSale()));
         product.setIsBundleOffer(Boolean.TRUE.equals(request.getIsBundleOffer()));
         product.setBundleBuyQuantity(request.getBundleBuyQuantity());
         product.setBundleFreeQuantity(request.getBundleFreeQuantity());
