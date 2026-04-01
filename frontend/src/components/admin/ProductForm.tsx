@@ -22,6 +22,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         subCategoryId: 0 as number | undefined,
         imageUrls: [] as string[],
         isPrescriptionRequired: false,
+        isAvailableForSale: true,
         expiryDate: '',
         isBundleOffer: false,
         bundleBuyQuantity: 0,
@@ -86,6 +87,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                 subCategoryId: product.subCategory?.id,
                 imageUrls: product.imageUrls || (('imageUrl' in product && typeof product.imageUrl === 'string') ? [product.imageUrl] : []),
                 isPrescriptionRequired: product.isPrescriptionRequired,
+                isAvailableForSale: product.isAvailableForSale ?? true,
                 expiryDate: product.expiryDate || '',
                 isBundleOffer: product.isBundleOffer || false,
                 bundleBuyQuantity: product.bundleBuyQuantity || 0,
@@ -334,6 +336,21 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                         />
                         <label htmlFor="isPrescriptionRequired" className="ml-2 block text-sm text-gray-900">
                             Prescription Required
+                        </label>
+                    </div>
+
+                    <div className="flex items-center">
+                        <input
+                            id="isAvailableForSale"
+                            name="isAvailableForSale"
+                            type="checkbox"
+                            checked={formData.isAvailableForSale}
+                            onChange={handleCheckboxChange}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor="isAvailableForSale" className="ml-2 block text-sm text-gray-900">
+                            Available for Sale
+                            <span className="ml-1 text-xs text-gray-500">(uncheck to hide from customers)</span>
                         </label>
                     </div>
 

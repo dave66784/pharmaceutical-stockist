@@ -3,6 +3,7 @@ package com.pharma.service;
 import com.pharma.dto.response.DashboardStatsResponse;
 import com.pharma.dto.response.DailyRevenueDto;
 import com.pharma.dto.response.ExpiringProductDto;
+import com.pharma.dto.response.LowStockProductDto;
 import com.pharma.dto.response.ProductSalesDto;
 import com.pharma.model.Product;
 import com.pharma.model.enums.OrderStatus;
@@ -140,6 +141,20 @@ public class DashboardService {
                             (int) daysUntil);
                 })
                 .sorted(Comparator.comparing(ExpiringProductDto::getDaysUntilExpiry))
+                .collect(Collectors.toList());
+    }
+
+    public List<LowStockProductDto> getLowStockProducts(int threshold) {
+        List<Product> products = productRepository.findAll();
+
+        return products.stream()
+                .filter(p -> p.getStockQuantity() != null && p.getStockQuantity() > 0 && p.getStockQuantity() <= threshold)
+                .map(p -> new LowStockProductDto(
+                        p.getId(),
+                        p.getName(),
+                        p.getCategory() != null ? p.getCategory().getName() : "N/A",
+                        p.getStockQuantity()))
+                .sorted(Comparator.comparing(LowStockProductDto::getStockQuantity))
                 .collect(Collectors.toList());
     }
 

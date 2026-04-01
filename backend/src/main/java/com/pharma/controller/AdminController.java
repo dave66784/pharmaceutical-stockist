@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Order;
 import com.pharma.model.enums.OrderStatus;
+import com.pharma.model.Product;
 import com.pharma.service.OrderService;
+import com.pharma.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,16 @@ public class AdminController {
 
     private final OrderService orderService;
     private final com.pharma.service.OrderExportService orderExportService;
+    private final ProductService productService;
+
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse<Page<Product>>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        Page<Product> products = productService.getAllProductsForAdmin(pageable);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Products retrieved successfully", products));
+    }
 
     @GetMapping("/orders")
     public ResponseEntity<ApiResponse<Page<Order>>> getAllOrders(

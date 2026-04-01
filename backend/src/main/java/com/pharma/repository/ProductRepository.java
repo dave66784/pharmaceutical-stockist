@@ -17,17 +17,24 @@ import com.pharma.model.SubCategory;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByNameIgnoreCase(String name);
 
+    // Public-facing queries (exclude hidden products)
+    Page<Product> findByIsDeletedFalseAndIsAvailableForSaleTrue(Pageable pageable);
+
+    Page<Product> findByCategoryAndIsDeletedFalseAndIsAvailableForSaleTrue(Category category, Pageable pageable);
+
+    Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalseAndIsAvailableForSaleTrue(Category category, List<SubCategory> subCategories, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.isDeleted = false AND p.isAvailableForSale = true AND (LOWER(p.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) "
+            + "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')) "
+            + "OR LOWER(p.manufacturer) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
+    Page<Product> searchProducts(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    // Admin-facing queries (include hidden products)
     Page<Product> findByCategoryAndIsDeletedFalse(Category category, Pageable pageable);
-    
+
     Page<Product> findByCategoryAndSubCategoryInAndIsDeletedFalse(Category category, List<SubCategory> subCategories, Pageable pageable);
 
     Page<Product> findByIsDeletedFalse(Pageable pageable);
-
-    @Query("SELECT p FROM Product p WHERE p.isDeleted = false AND (LOWER(p.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) "
-            +
-            "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')) " +
-            "OR LOWER(p.manufacturer) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
-    Page<Product> searchProducts(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     List<Product> findByStockQuantityLessThanAndIsDeletedFalse(Integer threshold);
 

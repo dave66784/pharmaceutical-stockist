@@ -42,6 +42,7 @@ export interface Product {
   imageUrls?: string[];
   expiryDate?: string;
   isPrescriptionRequired: boolean;
+  isAvailableForSale: boolean;
   createdAt: string;
   updatedAt: string;
   isBundleOffer: boolean;

@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
     testDir: './tests',
+    globalTeardown: './globalTeardown.ts',
     fullyParallel: false,
     timeout: 120000, // 2 minutes (increased for ultra-slow 2s delay run)
     forbidOnly: !!process.env.CI,

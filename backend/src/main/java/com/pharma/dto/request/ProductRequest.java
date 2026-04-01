@@ -41,6 +41,8 @@ public class ProductRequest {
     private LocalDate expiryDate;
 
     private Boolean isPrescriptionRequired = false;
+
+    private Boolean isAvailableForSale = true;
     
     private Boolean isBundleOffer = false;
     

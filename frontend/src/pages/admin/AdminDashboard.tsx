@@ -69,11 +69,19 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
+interface LowStockProduct {
+  id: number;
+  name: string;
+  category: string;
+  stockQuantity: number;
+}
+
 const DashboardOverview: React.FC = () => {
   const navigate = useNavigate();
   const [stats, setStats] = React.useState<any>(null);
   const [dailyRevenue, setDailyRevenue] = React.useState<any[]>([]);
   const [expiringProducts, setExpiringProducts] = React.useState<any[]>([]);
+  const [lowStockProducts, setLowStockProducts] = React.useState<LowStockProduct[]>([]);
   const [topProducts, setTopProducts] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -90,16 +98,18 @@ const DashboardOverview: React.FC = () => {
     setLoading(true);
 
     try {
-      const [statsRes, revenueRes, expiringRes, topRes] = await Promise.all([
+      const [statsRes, revenueRes, expiringRes, lowStockRes, topRes] = await Promise.all([
         api.get('/admin/dashboard/stats'),
         api.get(`/admin/dashboard/daily-revenue?days=${days}`),
         api.get('/admin/dashboard/expiring-products?days=30'),
+        api.get('/admin/dashboard/low-stock-products?threshold=10'),
         api.get('/admin/dashboard/top-products?limit=5')
       ]);
 
       const statsData = statsRes.data;
       const revenueData = revenueRes.data;
       const expiringData = expiringRes.data;
+      const lowStockData = lowStockRes.data;
       const topData = topRes.data;
 
       setStats(statsData.data);
@@ -113,6 +123,7 @@ const DashboardOverview: React.FC = () => {
 
       setDailyRevenue(formattedRevenue);
       setExpiringProducts(expiringData.data);
+      setLowStockProducts(lowStockData.data);
       setTopProducts(topData.data);
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
@@ -411,6 +422,50 @@ const DashboardOverview: React.FC = () => {
             {expiringProducts.length > 5 && (
               <div className="mt-3 text-sm text-orange-700">
                 +{expiringProducts.length - 5} more products expiring soon
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Low Stock Alert Widget */}
+      {lowStockProducts.length > 0 && (
+        <div className="bg-orange-50 p-6 rounded-lg shadow border-l-4 border-orange-400 mt-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-orange-900">⚠️ Low Stock Products (≤ 10 Units)</h2>
+            <button
+              onClick={() => exportToCSV(lowStockProducts, 'low_stock_products')}
+              className="px-3 py-1 text-sm bg-orange-600 text-white rounded hover:bg-orange-700"
+            >
+              📊 Export
+            </button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead>
+                <tr className="text-left text-sm text-orange-800">
+                  <th className="pb-2">Product</th>
+                  <th className="pb-2">Category</th>
+                  <th className="pb-2">Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lowStockProducts.slice(0, 5).map((product) => (
+                  <tr key={product.id} className="border-t border-orange-200">
+                    <td className="py-2 text-sm text-gray-900">{product.name}</td>
+                    <td className="py-2 text-sm text-gray-900">{product.category}</td>
+                    <td className="py-2">
+                      <span className={`px-2 py-1 text-xs font-semibold rounded ${product.stockQuantity <= 5 ? 'bg-red-100 text-red-800' : 'bg-orange-100 text-orange-800'}`}>
+                        {product.stockQuantity} units
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {lowStockProducts.length > 5 && (
+              <div className="mt-3 text-sm text-orange-700">
+                +{lowStockProducts.length - 5} more products with low stock
               </div>
             )}
           </div>

@@ -25,7 +25,7 @@ const ManageProducts: React.FC = () => {
         const fetchProducts = async () => {
             try {
                 setLoading(true);
-                const data = await productService.getAllProducts(0, 100);
+                const data = await productService.getAllProductsAdmin(0, 100);
                 if (data && data.data) {
                     setProducts(data.data.content);
                 }
@@ -53,7 +53,7 @@ const ManageProducts: React.FC = () => {
             console.log('Delete API success for ID:', id);
             setUploadMessage('Product deleted successfully.');
             // Refresh products after delete
-            const data = await productService.getAllProducts(0, 100);
+            const data = await productService.getAllProductsAdmin(0, 100);
             if (data && data.data) {
                 setProducts(data.data.content);
             }
@@ -91,7 +91,7 @@ const ManageProducts: React.FC = () => {
                 setUploadMessage(message);
 
                 // Refresh products
-                const data = await productService.getAllProducts(0, 100);
+                const data = await productService.getAllProductsAdmin(0, 100);
                 if (data && data.data) {
                     setProducts(data.data.content);
                 }
@@ -142,7 +142,7 @@ const ManageProducts: React.FC = () => {
         setIsEditing(false);
         setUploadMessage('Product saved successfully.');
         try {
-            const data = await productService.getAllProducts(0, 100);
+            const data = await productService.getAllProductsAdmin(0, 100);
             if (data && data.data) {
                 setProducts(data.data.content);
             }
@@ -179,7 +179,7 @@ const ManageProducts: React.FC = () => {
                     message += ` ${errorCount} errors: ${errors.join(', ')}`;
                 }
                 setUploadMessage(message);
-                const data = await productService.getAllProducts(0, 100);
+                const data = await productService.getAllProductsAdmin(0, 100);
                 if (data && data.data) {
                     setProducts(data.data.content);
                 }
@@ -310,6 +310,7 @@ const ManageProducts: React.FC = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry Date</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -362,6 +363,13 @@ const ManageProducts: React.FC = () => {
                                             </span>
                                         );
                                     })() : <span className="text-gray-400 italic">N/A</span>}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    {product.isAvailableForSale === false ? (
+                                        <span className="px-2 py-1 text-xs font-semibold rounded bg-gray-100 text-gray-600">Hidden</span>
+                                    ) : (
+                                        <span className="px-2 py-1 text-xs font-semibold rounded bg-green-100 text-green-700">For Sale</span>
+                                    )}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <button onClick={() => handleEdit(product)} className="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
