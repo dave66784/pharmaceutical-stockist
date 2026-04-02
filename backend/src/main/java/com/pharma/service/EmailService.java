@@ -54,6 +54,9 @@ public class EmailService {
     @Value("${app.email.customer.notifications.otp-verification.enabled:true}")
     private boolean otpVerificationEnabled;
 
+    @Value("${app.email.customer.notifications.password-reset.enabled:false}")
+    private boolean passwordResetEnabled;
+
     // ═══════════════════════════════════════════════════════════════════════════
     // ADMIN — 1. New Order Alert
     // ═══════════════════════════════════════════════════════════════════════════
@@ -109,6 +112,25 @@ public class EmailService {
             log.info("[CUSTOMER EMAIL SENT] OTP email to {}", email);
         } catch (Exception e) {
             log.error("[CUSTOMER EMAIL FAILED] OTP email to {}", email, e);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // CUSTOMER — 0b. Password Reset Email
+    // ═══════════════════════════════════════════════════════════════════════════
+    @Async
+    public void sendPasswordResetEmail(String email, String firstName, String resetLink) {
+        if (!passwordResetEnabled) {
+            log.info("[CUSTOMER NOTIF OFF] password-reset email skipped for {}", email);
+            return;
+        }
+        try {
+            sendHtmlEmail(email,
+                    "🔑 Reset Your PharmaStockist Password",
+                    buildPasswordResetBody(firstName, resetLink));
+            log.info("[CUSTOMER EMAIL SENT] Password reset email to {}", email);
+        } catch (Exception e) {
+            log.error("[CUSTOMER EMAIL FAILED] Password reset email to {}", email, e);
         }
     }
 
@@ -238,6 +260,17 @@ public class EmailService {
                 + "<p style='margin:8px 0 0;font-size:12px;color:#ef4444'>⏱ Expires in " + expiryMinutes + " minutes</p>"
                 + "</div></div>"
                 + "<p style='font-size:13px;color:#6b7280'>If you did not request this code, please ignore this email. Do not share this code with anyone.</p>"
+                + emailFooter();
+    }
+
+    private String buildPasswordResetBody(String firstName, String resetLink) {
+        return emailHeader("🔑 Reset Your Password")
+                + "<p>Hi <strong>" + firstName + "</strong>,</p>"
+                + "<p>We received a request to reset your PharmaStockist password. Click the button below to set a new password:</p>"
+                + "<p style='margin:24px 0;text-align:center'><a href='" + resetLink + "' "
+                + "style='background:#2563eb;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:bold'>Reset Password</a></p>"
+                + "<p style='font-size:13px;color:#6b7280'>This link expires in 15 minutes. If you did not request a password reset, you can safely ignore this email.</p>"
+                + "<p style='font-size:12px;color:#9ca3af;word-break:break-all'>Or copy this link: " + resetLink + "</p>"
                 + emailFooter();
     }
 

@@ -1,20 +1,27 @@
 package com.pharma.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pharma.dto.request.LoginRequest;
 import com.pharma.dto.request.RegisterRequest;
 import com.pharma.dto.response.AuthResponse;
 import com.pharma.exception.ResourceNotFoundException;
+import com.pharma.model.RefreshToken;
 import com.pharma.model.User;
 import com.pharma.model.enums.Role;
+import com.pharma.repository.RefreshTokenRepository;
 import com.pharma.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +34,10 @@ public class UserService {
         private final com.pharma.repository.AddressRepository addressRepository;
         private final EmailService emailService;
         private final OtpService otpService;
+        private final RefreshTokenRepository refreshTokenRepository;
+
+        @Value("${app.frontend.url:http://localhost:3000}")
+        private String frontendUrl;
 
         /** Validates email availability without creating an account. */
         public void assertEmailAvailable(String email) {
@@ -182,6 +193,80 @@ public class UserService {
             throw new IllegalArgumentException("Incorrect current password.");
         }
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
+
+    // ─── Refresh Token ────────────────────────────────────────────────────────
+
+    @Transactional
+    public RefreshToken createRefreshToken(User user) {
+        // Invalidate any existing token for this user (one active session per user)
+        refreshTokenRepository.deleteByUser(user);
+        RefreshToken token = new RefreshToken(
+                UUID.randomUUID().toString(),
+                user,
+                LocalDateTime.now().plusDays(7));
+        return refreshTokenRepository.save(token);
+    }
+
+    /**
+     * Validates the refresh token and returns a new JWT access token.
+     * Throws IllegalArgumentException if the token is missing, expired, or unknown.
+     */
+    @Transactional
+    public String refreshAccessToken(String rawToken) {
+        if (rawToken == null || rawToken.isBlank()) {
+            throw new IllegalArgumentException("Refresh token missing");
+        }
+        RefreshToken stored = refreshTokenRepository.findByToken(rawToken)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid refresh token"));
+        if (stored.getExpiresAt().isBefore(LocalDateTime.now())) {
+            refreshTokenRepository.delete(stored);
+            throw new IllegalArgumentException("Refresh token expired");
+        }
+        User user = stored.getUser();
+        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole().name())
+                .build();
+        return jwtService.generateToken(userDetails);
+    }
+
+    @Transactional
+    public void revokeRefreshToken(String rawToken) {
+        if (rawToken != null && !rawToken.isBlank()) {
+            refreshTokenRepository.deleteByToken(rawToken);
+        }
+    }
+
+    // ─── Password Reset ────────────────────────────────────────────────────────
+
+    public void initiateForgotPassword(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            // Don't reveal whether the email exists
+            return;
+        }
+        String token = UUID.randomUUID().toString();
+        user.setPasswordResetToken(token);
+        user.setPasswordResetTokenExpiry(LocalDateTime.now().plusMinutes(15));
+        userRepository.save(user);
+
+        String resetLink = frontendUrl + "/reset-password?token=" + token;
+        emailService.sendPasswordResetEmail(user.getEmail(), user.getFirstName(), resetLink);
+    }
+
+    public void resetPassword(String token, String newPassword) {
+        User user = userRepository.findByPasswordResetToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid or expired reset token"));
+        if (user.getPasswordResetTokenExpiry() == null ||
+                user.getPasswordResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Reset token has expired");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPasswordResetToken(null);
+        user.setPasswordResetTokenExpiry(null);
         userRepository.save(user);
     }
 }

@@ -21,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Long countByRoleAndCreatedAtAfter(Role role, LocalDateTime date);
 
+    Optional<User> findByPasswordResetToken(String token);
+
     // Admin user management
     Page<User> findAll(Pageable pageable);
 

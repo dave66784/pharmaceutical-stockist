@@ -21,8 +21,8 @@ const Navbar: React.FC = () => {
         }
     }, [isAuthenticated, fetchCartCount]);
 
-    const handleLogout = () => {
-        authService.logout();
+    const handleLogout = async () => {
+        await authService.logout();
         navigate('/login');
     };
 
