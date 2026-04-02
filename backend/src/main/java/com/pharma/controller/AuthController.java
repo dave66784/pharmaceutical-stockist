@@ -18,6 +18,8 @@ import com.pharma.dto.request.RegisterRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.dto.response.AuthResponse;
 import com.pharma.model.RefreshToken;
+import com.pharma.model.enums.AuditAction;
+import com.pharma.service.AuditService;
 import com.pharma.service.OtpService;
 import com.pharma.service.UserService;
 
@@ -34,6 +36,7 @@ public class AuthController {
 
     private final UserService userService;
     private final OtpService otpService;
+    private final AuditService auditService;
     private final Environment env;
 
     /** Step 1: Validate details, send OTP — no account created yet. */
@@ -56,6 +59,7 @@ public class AuthController {
     @PostMapping("/verify-otp")
     public ResponseEntity<ApiResponse<AuthResponse>> verifyOtp(
             @RequestBody Map<String, String> body,
+            HttpServletRequest request,
             HttpServletResponse response) {
         String email = body.get("email");
         String otp = body.get("otp");
@@ -67,6 +71,9 @@ public class AuthController {
         setAccessTokenCookie(response, authResponse.getToken());
         setRefreshTokenCookie(response, refreshToken.getToken());
 
+        auditService.logByEmail(AuditAction.USER_REGISTERED, "AUTH", null,
+                "New account registered", email, request);
+
         if (!Arrays.asList(env.getActiveProfiles()).contains("dev")) {
             authResponse.setToken(null);
         }
@@ -76,21 +83,31 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(
-            @Valid @RequestBody LoginRequest request,
+            @Valid @RequestBody LoginRequest loginRequest,
+            HttpServletRequest httpRequest,
             HttpServletResponse response) {
-        AuthResponse authResponse = userService.login(request);
+        try {
+            AuthResponse authResponse = userService.login(loginRequest);
 
-        com.pharma.model.User user = userService.getUserByEmail(request.getEmail());
-        RefreshToken refreshToken = userService.createRefreshToken(user);
+            com.pharma.model.User user = userService.getUserByEmail(loginRequest.getEmail());
+            RefreshToken refreshToken = userService.createRefreshToken(user);
 
-        setAccessTokenCookie(response, authResponse.getToken());
-        setRefreshTokenCookie(response, refreshToken.getToken());
+            setAccessTokenCookie(response, authResponse.getToken());
+            setRefreshTokenCookie(response, refreshToken.getToken());
 
-        if (!Arrays.asList(env.getActiveProfiles()).contains("dev")) {
-            authResponse.setToken(null);
+            auditService.logByEmail(AuditAction.USER_LOGIN, "AUTH", null,
+                    "Successful login", loginRequest.getEmail(), httpRequest);
+
+            if (!Arrays.asList(env.getActiveProfiles()).contains("dev")) {
+                authResponse.setToken(null);
+            }
+
+            return ResponseEntity.ok(new ApiResponse<>(true, "Login successful", authResponse));
+        } catch (Exception e) {
+            auditService.logByEmail(AuditAction.USER_LOGIN_FAILED, "AUTH", null,
+                    "Failed login attempt", loginRequest.getEmail(), httpRequest);
+            throw e;
         }
-
-        return ResponseEntity.ok(new ApiResponse<>(true, "Login successful", authResponse));
     }
 
     @PostMapping("/logout")
@@ -99,6 +116,12 @@ public class AuthController {
         userService.revokeRefreshToken(refreshToken);
         clearAccessTokenCookie(response);
         clearRefreshTokenCookie(response);
+
+        org.springframework.security.core.Authentication auth =
+                org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        auditService.logByEmail(AuditAction.USER_LOGOUT, "AUTH", null,
+                "User logged out", (auth != null) ? auth.getName() : null, request);
+
         return ResponseEntity.ok(new ApiResponse<>(true, "Logged out successfully"));
     }
 
@@ -118,10 +141,15 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<ApiResponse<Void>> forgotPassword(@RequestBody Map<String, String> body) {
+    public ResponseEntity<ApiResponse<Void>> forgotPassword(
+            @RequestBody Map<String, String> body,
+            HttpServletRequest request) {
         String email = body.get("email");
         if (email != null && !email.isBlank()) {
-            userService.initiateForgotPassword(email.trim().toLowerCase());
+            String normalised = email.trim().toLowerCase();
+            userService.initiateForgotPassword(normalised);
+            auditService.logByEmail(AuditAction.PASSWORD_RESET_REQUESTED, "AUTH", null,
+                    "Password reset requested", normalised, request);
         }
         // Always return success to avoid email enumeration
         return ResponseEntity.ok(new ApiResponse<>(true,
@@ -129,7 +157,9 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<ApiResponse<Void>> resetPassword(@RequestBody Map<String, String> body) {
+    public ResponseEntity<ApiResponse<Void>> resetPassword(
+            @RequestBody Map<String, String> body,
+            HttpServletRequest request) {
         String token = body.get("token");
         String newPassword = body.get("newPassword");
         if (token == null || token.isBlank() || newPassword == null || newPassword.isBlank()) {
@@ -140,7 +170,9 @@ public class AuthController {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(false, "Password must be at least 8 characters."));
         }
-        userService.resetPassword(token, newPassword);
+        String email = userService.resetPassword(token, newPassword);
+        auditService.logByEmail(AuditAction.PASSWORD_RESET_COMPLETED, "AUTH", null,
+                "Password reset completed", email, request);
         return ResponseEntity.ok(new ApiResponse<>(true, "Password reset successfully. You can now log in."));
     }
 

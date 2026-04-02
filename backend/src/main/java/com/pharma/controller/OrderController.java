@@ -3,7 +3,10 @@ package com.pharma.controller;
 import com.pharma.dto.request.OrderRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Order;
+import com.pharma.model.enums.AuditAction;
+import com.pharma.service.AuditService;
 import com.pharma.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +24,17 @@ public class OrderController {
     private final OrderService orderService;
     private final com.pharma.service.OrderReceiptService orderReceiptService;
     private final com.pharma.service.OrderExportService orderExportService;
+    private final AuditService auditService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<Order>> createOrder(
             @Valid @RequestBody OrderRequest request,
-            Authentication authentication) {
+            Authentication authentication,
+            HttpServletRequest httpRequest) {
         Order order = orderService.createOrder(authentication.getName(), request);
+        auditService.log(AuditAction.ORDER_PLACED, "ORDER", String.valueOf(order.getId()),
+                "Order #" + order.getId() + " placed, total: " + order.getTotalAmount(),
+                authentication, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Order created successfully", order));
     }
 
@@ -62,8 +70,12 @@ public class OrderController {
     @PutMapping("/{id}/cancel")
     public ResponseEntity<ApiResponse<Order>> cancelOrder(
             @PathVariable Long id,
-            Authentication authentication) {
+            Authentication authentication,
+            HttpServletRequest httpRequest) {
         Order order = orderService.cancelOrder(id, authentication.getName());
+        auditService.log(AuditAction.ORDER_CANCELLED, "ORDER", String.valueOf(id),
+                "Order #" + id + " cancelled by " + authentication.getName(),
+                authentication, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Order cancelled successfully", order));
     }
 

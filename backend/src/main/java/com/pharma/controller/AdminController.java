@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Order;
+import com.pharma.model.enums.AuditAction;
 import com.pharma.model.enums.OrderStatus;
 import com.pharma.model.Product;
+import com.pharma.service.AuditService;
 import com.pharma.service.OrderService;
 import com.pharma.service.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -31,6 +35,7 @@ public class AdminController {
     private final OrderService orderService;
     private final com.pharma.service.OrderExportService orderExportService;
     private final ProductService productService;
+    private final AuditService auditService;
 
     @GetMapping("/products")
     public ResponseEntity<ApiResponse<Page<Product>>> getAllProducts(
@@ -64,13 +69,17 @@ public class AdminController {
     @PutMapping("/orders/{orderId}/status")
     public ResponseEntity<ApiResponse<Order>> updateOrderStatus(
             @PathVariable Long orderId,
-            @RequestParam OrderStatus status) {
+            @RequestParam OrderStatus status,
+            Authentication auth, HttpServletRequest request) {
         Order order = orderService.updateOrderStatus(orderId, status);
+        auditService.log(AuditAction.ORDER_STATUS_UPDATED, "ORDER", String.valueOf(orderId),
+                "Order #" + orderId + " status changed to " + status, auth, request);
         return ResponseEntity.ok(new ApiResponse<>(true, "Order status updated successfully", order));
     }
 
     @GetMapping("/orders/export")
     public ResponseEntity<byte[]> exportOrders(
+            Authentication auth, HttpServletRequest httpRequest,
             @RequestParam(required = false) String customerEmail,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate) throws java.io.IOException {
@@ -87,6 +96,8 @@ public class AdminController {
         }
 
         byte[] excelContent = orderExportService.exportAllOrders(customerEmail, start, end);
+        auditService.log(AuditAction.ORDERS_EXPORTED, "ORDER", null,
+                "Exported orders" + (customerEmail != null ? " for " + customerEmail : ""), auth, httpRequest);
 
         return ResponseEntity.ok()
                 .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,

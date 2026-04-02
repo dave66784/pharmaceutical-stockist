@@ -29,12 +29,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pharma.dto.request.ProductRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Product;
+import com.pharma.model.enums.AuditAction;
+import com.pharma.service.AuditService;
 import com.pharma.service.ProductService;
 import com.pharma.service.ProductUploadService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/products")
@@ -44,6 +48,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductUploadService productUploadService;
+    private final AuditService auditService;
 
     private static final java.util.Set<String> ALLOWED_SORT_FIELDS = 
             java.util.Set.of("id", "name", "price", "createdAt", "stockQuantity");
@@ -94,8 +99,12 @@ public class ProductController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Product>> createProduct(@Valid @RequestBody ProductRequest request) {
+    public ResponseEntity<ApiResponse<Product>> createProduct(
+            @Valid @RequestBody ProductRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         Product product = productService.createProduct(request);
+        auditService.log(AuditAction.PRODUCT_CREATED, "PRODUCT", String.valueOf(product.getId()),
+                "Created product: " + product.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Product created successfully", product));
     }
 
@@ -103,8 +112,11 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Product>> updateProduct(
             @PathVariable Long id,
-            @Valid @RequestBody ProductRequest request) {
+            @Valid @RequestBody ProductRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         Product product = productService.updateProduct(id, request);
+        auditService.log(AuditAction.PRODUCT_UPDATED, "PRODUCT", String.valueOf(id),
+                "Updated product: " + product.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Product updated successfully", product));
     }
 
@@ -150,15 +162,20 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteProduct(
+            @PathVariable Long id,
+            Authentication auth, HttpServletRequest httpRequest) {
         productService.deleteProduct(id);
+        auditService.log(AuditAction.PRODUCT_DELETED, "PRODUCT", String.valueOf(id),
+                "Deleted product ID: " + id, auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Product deleted successfully"));
     }
 
     @DeleteMapping("/delete-bulk")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> bulkDeleteProducts(
-            @RequestBody java.util.List<Long> productIds) {
+            @RequestBody java.util.List<Long> productIds,
+            Authentication auth, HttpServletRequest httpRequest) {
         log.info("Received bulk delete request for IDs: {}", productIds);
         try {
             int deletedCount = 0;
@@ -179,6 +196,9 @@ public class ProductController {
             result.put("deletedCount", deletedCount);
             result.put("errorCount", errors.size());
             result.put("errors", errors);
+
+            auditService.log(AuditAction.PRODUCT_BULK_DELETED, "PRODUCT", null,
+                    "Bulk deleted " + deletedCount + " products. IDs: " + productIds, auth, httpRequest);
 
             log.info("Bulk delete completed. Deleted: {}, Errors: {}", deletedCount, errors.size());
             return ResponseEntity.ok(new ApiResponse<>(true, "Bulk delete completed", result));

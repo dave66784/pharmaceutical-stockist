@@ -23,6 +23,7 @@ import com.pharma.dto.request.SubCategoryRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Category;
 import com.pharma.model.SubCategory;
+import com.pharma.service.AuditService;
 import com.pharma.service.CategoryService;
 import com.pharma.service.SubCategoryService;
 
@@ -34,6 +35,9 @@ class CategoryControllerTest {
 
     @Mock
     private SubCategoryService subCategoryService;
+
+    @Mock
+    private AuditService auditService;
 
     @InjectMocks
     private CategoryController categoryController;
@@ -96,7 +100,7 @@ class CategoryControllerTest {
     void createCategory_ShouldReturnCreatedCategory() {
         when(categoryService.createCategory(any(CategoryRequest.class))).thenReturn(testCategory);
 
-        ResponseEntity<ApiResponse<Category>> response = categoryController.createCategory(testCategoryRequest);
+        ResponseEntity<ApiResponse<Category>> response = categoryController.createCategory(testCategoryRequest, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -110,7 +114,7 @@ class CategoryControllerTest {
         testCategory.setName("Updated");
         when(categoryService.updateCategory(eq(1L), any(CategoryRequest.class))).thenReturn(testCategory);
 
-        ResponseEntity<ApiResponse<Category>> response = categoryController.updateCategory(1L, testCategoryRequest);
+        ResponseEntity<ApiResponse<Category>> response = categoryController.updateCategory(1L, testCategoryRequest, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -123,7 +127,7 @@ class CategoryControllerTest {
     void deleteCategory_ShouldReturnSuccess() {
         doNothing().when(categoryService).deleteCategory(1L);
 
-        ResponseEntity<ApiResponse<Void>> response = categoryController.deleteCategory(1L);
+        ResponseEntity<ApiResponse<Void>> response = categoryController.deleteCategory(1L, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -136,14 +140,14 @@ class CategoryControllerTest {
     void createSubCategory_ShouldReturnCreatedSubCategory() {
         when(subCategoryService.createSubCategory(any(SubCategoryRequest.class))).thenReturn(testSubCategory);
 
-        ResponseEntity<ApiResponse<SubCategory>> response = categoryController.createSubCategory(1L, testSubCategoryRequest);
+        ResponseEntity<ApiResponse<SubCategory>> response = categoryController.createSubCategory(1L, testSubCategoryRequest, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertTrue(response.getBody().isSuccess());
         assertEquals("SubCategory created successfully", response.getBody().getMessage());
         assertEquals("SubCategory", response.getBody().getData().getName());
-        assertEquals(1L, testSubCategoryRequest.getCategoryId()); // Verify categoryId was set
+        assertEquals(1L, testSubCategoryRequest.getCategoryId());
     }
 
     @Test
@@ -151,7 +155,7 @@ class CategoryControllerTest {
         testSubCategory.setName("Updated Sub");
         when(subCategoryService.updateSubCategory(eq(1L), any(SubCategoryRequest.class))).thenReturn(testSubCategory);
 
-        ResponseEntity<ApiResponse<SubCategory>> response = categoryController.updateSubCategory(1L, testSubCategoryRequest);
+        ResponseEntity<ApiResponse<SubCategory>> response = categoryController.updateSubCategory(1L, testSubCategoryRequest, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -164,7 +168,7 @@ class CategoryControllerTest {
     void deleteSubCategory_ShouldReturnSuccess() {
         doNothing().when(subCategoryService).deleteSubCategory(1L);
 
-        ResponseEntity<ApiResponse<Void>> response = categoryController.deleteSubCategory(1L);
+        ResponseEntity<ApiResponse<Void>> response = categoryController.deleteSubCategory(1L, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());

@@ -257,7 +257,8 @@ public class UserService {
         emailService.sendPasswordResetEmail(user.getEmail(), user.getFirstName(), resetLink);
     }
 
-    public void resetPassword(String token, String newPassword) {
+    /** Resets the password and returns the user's email for audit logging. */
+    public String resetPassword(String token, String newPassword) {
         User user = userRepository.findByPasswordResetToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid or expired reset token"));
         if (user.getPasswordResetTokenExpiry() == null ||
@@ -268,5 +269,6 @@ public class UserService {
         user.setPasswordResetToken(null);
         user.setPasswordResetTokenExpiry(null);
         userRepository.save(user);
+        return user.getEmail();
     }
 }

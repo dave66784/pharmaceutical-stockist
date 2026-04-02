@@ -22,8 +22,10 @@ import org.springframework.http.ResponseEntity;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Order;
 import com.pharma.model.enums.OrderStatus;
+import com.pharma.service.AuditService;
 import com.pharma.service.OrderExportService;
 import com.pharma.service.OrderService;
+import com.pharma.service.ProductService;
 
 @ExtendWith(MockitoExtension.class)
 class AdminControllerTest {
@@ -33,6 +35,12 @@ class AdminControllerTest {
 
     @Mock
     private OrderExportService orderExportService;
+
+    @Mock
+    private ProductService productService;
+
+    @Mock
+    private AuditService auditService;
 
     @InjectMocks
     private AdminController adminController;
@@ -45,7 +53,7 @@ class AdminControllerTest {
         testOrder = new Order();
         testOrder.setId(1L);
         testOrder.setStatus(OrderStatus.PENDING);
-        
+
         orderPage = new PageImpl<>(List.of(testOrder));
     }
 
@@ -81,7 +89,7 @@ class AdminControllerTest {
         testOrder.setStatus(OrderStatus.SHIPPED);
         when(orderService.updateOrderStatus(1L, OrderStatus.SHIPPED)).thenReturn(testOrder);
 
-        ResponseEntity<ApiResponse<Order>> response = adminController.updateOrderStatus(1L, OrderStatus.SHIPPED);
+        ResponseEntity<ApiResponse<Order>> response = adminController.updateOrderStatus(1L, OrderStatus.SHIPPED, null, null);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
@@ -95,7 +103,7 @@ class AdminControllerTest {
         byte[] mockExcelContent = "mock excel content".getBytes();
         when(orderExportService.exportAllOrders(any(), any(), any())).thenReturn(mockExcelContent);
 
-        ResponseEntity<byte[]> response = adminController.exportOrders("user@test.com", "2023-01-01", "2023-12-31");
+        ResponseEntity<byte[]> response = adminController.exportOrders(null, null, "user@test.com", "2023-01-01", "2023-12-31");
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
