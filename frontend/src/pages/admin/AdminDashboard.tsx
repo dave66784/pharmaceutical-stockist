@@ -8,6 +8,7 @@ import ManageProducts from './ManageProducts';
 import ManageOrders from './ManageOrders';
 import ManageUsers from './ManageUsers';
 import ManageCategories from './ManageCategories';
+import ManageAuditLogs from './ManageAuditLogs';
 import api from '../../services/api';
 
 const AdminDashboard: React.FC = () => {
@@ -41,6 +42,9 @@ const AdminDashboard: React.FC = () => {
             <Link to="/admin/categories" className={`block px-6 py-3 ${isActive('/admin/categories')}`}>
               Manage Categories
             </Link>
+            <Link to="/admin/audit-logs" className={`block px-6 py-3 ${isActive('/admin/audit-logs')}`}>
+              Audit Log
+            </Link>
           </nav>
         </div>
 
@@ -53,6 +57,7 @@ const AdminDashboard: React.FC = () => {
               <Link to="/admin/orders" className="text-blue-600">Orders</Link>
               <Link to="/admin/users" className="text-blue-600">Users</Link>
               <Link to="/admin/categories" className="text-blue-600">Categories</Link>
+              <Link to="/admin/audit-logs" className="text-blue-600">Audit Log</Link>
             </div>
           </div>
 
@@ -62,6 +67,7 @@ const AdminDashboard: React.FC = () => {
             <Route path="orders" element={<ManageOrders />} />
             <Route path="users" element={<ManageUsers />} />
             <Route path="categories" element={<ManageCategories />} />
+            <Route path="audit-logs" element={<ManageAuditLogs />} />
           </Routes>
         </div>
       </div>

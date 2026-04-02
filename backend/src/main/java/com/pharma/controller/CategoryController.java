@@ -18,11 +18,15 @@ import com.pharma.dto.request.SubCategoryRequest;
 import com.pharma.dto.response.ApiResponse;
 import com.pharma.model.Category;
 import com.pharma.model.SubCategory;
+import com.pharma.model.enums.AuditAction;
+import com.pharma.service.AuditService;
 import com.pharma.service.CategoryService;
 import com.pharma.service.SubCategoryService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -31,6 +35,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
+    private final AuditService auditService;
 
     // --- Public Read Endpoints ---
 
@@ -50,47 +55,68 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Category>> createCategory(@Valid @RequestBody CategoryRequest request) {
+    public ResponseEntity<ApiResponse<Category>> createCategory(
+            @Valid @RequestBody CategoryRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         Category category = categoryService.createCategory(request);
+        auditService.log(AuditAction.CATEGORY_CREATED, "CATEGORY", String.valueOf(category.getId()),
+                "Created category: " + category.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Category created successfully", category));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Category>> updateCategory(
-            @PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
+            @PathVariable Long id, @Valid @RequestBody CategoryRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         Category category = categoryService.updateCategory(id, request);
+        auditService.log(AuditAction.CATEGORY_UPDATED, "CATEGORY", String.valueOf(id),
+                "Updated category: " + category.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Category updated successfully", category));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteCategory(
+            @PathVariable Long id,
+            Authentication auth, HttpServletRequest httpRequest) {
         categoryService.deleteCategory(id);
+        auditService.log(AuditAction.CATEGORY_DELETED, "CATEGORY", String.valueOf(id),
+                "Deleted category ID: " + id, auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "Category deleted successfully"));
     }
 
     @PostMapping("/{categoryId}/subcategories")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<SubCategory>> createSubCategory(
-            @PathVariable Long categoryId, @Valid @RequestBody SubCategoryRequest request) {
+            @PathVariable Long categoryId, @Valid @RequestBody SubCategoryRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         request.setCategoryId(categoryId);
         SubCategory subCategory = subCategoryService.createSubCategory(request);
+        auditService.log(AuditAction.SUBCATEGORY_CREATED, "SUBCATEGORY", String.valueOf(subCategory.getId()),
+                "Created subcategory: " + subCategory.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "SubCategory created successfully", subCategory));
     }
 
     @PutMapping("/subcategories/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<SubCategory>> updateSubCategory(
-            @PathVariable Long id, @Valid @RequestBody SubCategoryRequest request) {
+            @PathVariable Long id, @Valid @RequestBody SubCategoryRequest request,
+            Authentication auth, HttpServletRequest httpRequest) {
         SubCategory subCategory = subCategoryService.updateSubCategory(id, request);
+        auditService.log(AuditAction.SUBCATEGORY_UPDATED, "SUBCATEGORY", String.valueOf(id),
+                "Updated subcategory: " + subCategory.getName(), auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "SubCategory updated successfully", subCategory));
     }
 
     @DeleteMapping("/subcategories/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> deleteSubCategory(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteSubCategory(
+            @PathVariable Long id,
+            Authentication auth, HttpServletRequest httpRequest) {
         subCategoryService.deleteSubCategory(id);
+        auditService.log(AuditAction.SUBCATEGORY_DELETED, "SUBCATEGORY", String.valueOf(id),
+                "Deleted subcategory ID: " + id, auth, httpRequest);
         return ResponseEntity.ok(new ApiResponse<>(true, "SubCategory deleted successfully"));
     }
 }
