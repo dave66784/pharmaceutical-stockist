@@ -349,7 +349,7 @@ public class EmailService {
             t.append("<tr><td style='padding:8px;border:1px solid #e5e7eb'>").append(item.getProduct().getName()).append("</td>")
              .append("<td style='padding:8px;text-align:center;border:1px solid #e5e7eb'>").append(item.getQuantity()).append("</td>")
              .append("<td style='padding:8px;text-align:right;border:1px solid #e5e7eb'>$")
-             .append(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))).append("</td></tr>");
+             .append(item.getSubtotal()).append("</td></tr>");
         }
         t.append("</table>");
         return t.toString();

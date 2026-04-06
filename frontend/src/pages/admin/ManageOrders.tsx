@@ -12,6 +12,7 @@ const ManageOrders: React.FC = () => {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
     // Filter states
+    const [searchOrderId, setSearchOrderId] = useState('');
     const [searchEmail, setSearchEmail] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -24,6 +25,12 @@ const ManageOrders: React.FC = () => {
     useEffect(() => {
         // Apply filters
         let filtered = orders;
+
+        if (searchOrderId) {
+            filtered = filtered.filter(order =>
+                String(order.id).includes(searchOrderId.trim())
+            );
+        }
 
         if (searchEmail) {
             filtered = filtered.filter(order =>
@@ -44,7 +51,7 @@ const ManageOrders: React.FC = () => {
         }
 
         setFilteredOrders(filtered);
-    }, [orders, searchEmail, startDate, endDate]);
+    }, [orders, searchOrderId, searchEmail, startDate, endDate]);
 
     const fetchOrders = async () => {
         try {
@@ -108,6 +115,7 @@ const ManageOrders: React.FC = () => {
     };
 
     const clearFilters = () => {
+        setSearchOrderId('');
         setSearchEmail('');
         setStartDate('');
         setEndDate('');
@@ -135,7 +143,17 @@ const ManageOrders: React.FC = () => {
 
                 {/* Filters */}
                 <div className="bg-white p-4 rounded-lg shadow mb-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Order #</label>
+                            <input
+                                type="text"
+                                value={searchOrderId}
+                                onChange={(e) => setSearchOrderId(e.target.value)}
+                                placeholder="e.g. 1042"
+                                className="w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
+                            />
+                        </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Search by Address/Email</label>
                             <input

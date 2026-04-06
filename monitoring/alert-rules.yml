@@ -35,5 +35,62 @@ groups:
         labels:
           severity: warning
         annotations:
-          summary: "High memory usage"
-          description: "JVM heap usage is above 90%"
+          summary: "High JVM heap usage"
+          description: "JVM heap usage is above 90% (current: {{ $value | humanizePercentage }})"
+
+      - alert: High4xxRate
+        expr: rate(http_server_requests_seconds_count{status=~"4.."}[5m]) > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP 4xx rate"
+          description: "4xx error rate is {{ $value }} req/sec — possible bad clients or attack"
+
+      - alert: DBConnectionPoolExhausted
+        expr: hikaricp_connections_pending > 5
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DB connection pool exhausted"
+          description: "{{ $value }} threads waiting for a DB connection — pool may be saturated"
+
+      - alert: DBConnectionPoolLow
+        expr: hikaricp_connections_active / hikaricp_connections_max > 0.85
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "DB connection pool nearly full"
+          description: "{{ $value | humanizePercentage }} of connections in use"
+
+  - name: infrastructure_alerts
+    interval: 30s
+    rules:
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus is down"
+          description: "Prometheus is unreachable — alerting pipeline may be broken"
+
+      - alert: AlertmanagerDown
+        expr: up{job="alertmanager"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Alertmanager is down"
+          description: "Alertmanager is unreachable — no alerts will be delivered"
+
+      - alert: LokiDown
+        expr: up{job="loki"} == 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Loki is down"
+          description: "Log aggregation is unavailable"
