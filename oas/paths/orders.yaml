@@ -57,15 +57,54 @@ orders:
       '401':
         description: Unauthorized
 
+cancelOrder:
+  put:
+    tags:
+      - Orders
+    summary: Cancel an order
+    operationId: cancelOrder
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: Order cancelled successfully
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/order.yaml#/components/schemas/Order'
+      '400':
+        description: Order cannot be cancelled (already delivered or cancelled)
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '401':
+        description: Unauthorized
+      '403':
+        description: Order does not belong to the authenticated user
+      '404':
+        description: Order not found
+
 orderDetail:
   get:
     tags:
       - Orders
     summary: Get order by ID
     description: |
-      ⚠️ **Note:** The current implementation does not verify that the order belongs to the
-      authenticated user. Any authenticated user can retrieve any order by ID.
-      An authorisation check should be added (see security review).
+      Returns full order details. Ownership-enforced: the caller must either own the
+      order or hold the ADMIN role. Any other caller receives a 403 Forbidden.
     operationId: getOrderById
     security:
       - bearerAuth: []

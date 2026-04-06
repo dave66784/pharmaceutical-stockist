@@ -11,7 +11,7 @@ info:
     ## Registration Flow (Two-Step OTP)
     1. `POST /api/auth/send-otp` — submit registration details, receive OTP by email.
     2. `POST /api/auth/verify-otp` — confirm OTP to create account and receive JWT.
-  version: 1.1.0
+  version: 1.2.0
 
 servers:
   - url: http://localhost:8080
@@ -38,6 +38,12 @@ tags:
     description: Admin-only user management
   - name: Dashboard
     description: Admin analytics dashboard
+  - name: Profile
+    description: Authenticated user profile and password management
+  - name: Admin Products
+    description: Admin-only product listing
+  - name: Audit Logs
+    description: Compliance audit trail (Admin only)
 
 components:
   securitySchemes:
@@ -60,6 +66,16 @@ paths:
     $ref: './paths/auth.yaml#/verifyOtp'
   /api/auth/login:
     $ref: './paths/auth.yaml#/login'
+  /api/auth/logout:
+    $ref: './paths/auth.yaml#/logout'
+  /api/auth/refresh:
+    $ref: './paths/auth.yaml#/refresh'
+  /api/auth/forgot-password:
+    $ref: './paths/auth.yaml#/forgotPassword'
+  /api/auth/reset-password:
+    $ref: './paths/auth.yaml#/resetPassword'
+  /api/auth/me:
+    $ref: './paths/auth.yaml#/getMe'
 
   # Products
   /api/products:
@@ -104,6 +120,8 @@ paths:
     $ref: './paths/orders.yaml#/orders'
   /api/orders/{id}:
     $ref: './paths/orders.yaml#/orderDetail'
+  /api/orders/{id}/cancel:
+    $ref: './paths/orders.yaml#/cancelOrder'
   /api/orders/{id}/receipt:
     $ref: './paths/orders.yaml#/orderReceipt'
   /api/orders/export:
@@ -114,6 +132,16 @@ paths:
     $ref: './paths/address.yaml#/paths/~1api~1addresses'
   /api/addresses/{id}:
     $ref: './paths/address.yaml#/paths/~1api~1addresses~1{id}'
+
+  # Profile
+  /api/profile:
+    $ref: './paths/profile.yaml#/paths/~1api~1profile'
+  /api/profile/password:
+    $ref: './paths/profile.yaml#/paths/~1api~1profile~1password'
+
+  # Admin - Products
+  /api/admin/products:
+    $ref: './paths/admin.yaml#/paths/~1api~1admin~1products'
 
   # Admin - Orders
   /api/admin/orders:
@@ -132,8 +160,14 @@ paths:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1daily-revenue'
   /api/admin/dashboard/expiring-products:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1expiring-products'
+  /api/admin/dashboard/low-stock-products:
+    $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1low-stock-products'
   /api/admin/dashboard/top-products:
     $ref: './paths/dashboard.yaml#/paths/~1api~1admin~1dashboard~1top-products'
+
+  # Admin - Audit Logs
+  /api/admin/audit-logs:
+    $ref: './paths/audit.yaml#/paths/~1api~1admin~1audit-logs'
 
   # Admin - Users
   /api/admin/users:

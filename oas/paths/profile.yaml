@@ -1,0 +1,80 @@
+paths:
+  /api/profile:
+    put:
+      summary: Update authenticated user's profile (name)
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+
+  /api/profile/password:
+    put:
+      summary: Change password for the authenticated user
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currentPassword
+                - newPassword
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                  minLength: 8
+      responses:
+        '200':
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+        '400':
+          description: Current password incorrect or new password too short
+          content:
+            application/json:
+              schema:
+                $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized

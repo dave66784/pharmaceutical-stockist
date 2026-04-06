@@ -135,7 +135,7 @@ login:
             $ref: '../components/schemas/auth.yaml#/components/schemas/LoginRequest'
     responses:
       '200':
-        description: Login successful
+        description: Login successful — JWT set in HttpOnly cookie
         content:
           application/json:
             schema:
@@ -147,6 +147,136 @@ login:
                       $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
       '401':
         description: Invalid credentials
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+logout:
+  post:
+    tags:
+      - Auth
+    summary: Logout — revoke refresh token and clear cookies
+    operationId: logout
+    responses:
+      '200':
+        description: Logged out successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+refresh:
+  post:
+    tags:
+      - Auth
+    summary: Refresh access token using HttpOnly refresh_token cookie
+    description: |
+      Reads the `refresh_token` cookie, validates it, and issues a new `access_token`
+      cookie. The refresh token is rotated on every use.
+    operationId: refreshToken
+    security: []
+    responses:
+      '200':
+        description: Token refreshed — new access_token cookie set
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '401':
+        description: Refresh token missing, invalid, or expired
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+forgotPassword:
+  post:
+    tags:
+      - Auth
+    summary: Request a password-reset email
+    description: |
+      Always returns 200 to avoid email enumeration. If the address is registered
+      an email with a reset link is sent.
+    operationId: forgotPassword
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+                format: email
+    responses:
+      '200':
+        description: Reset email sent (if account exists)
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+resetPassword:
+  post:
+    tags:
+      - Auth
+    summary: Reset password using a token from the reset email
+    operationId: resetPassword
+    security: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - token
+              - newPassword
+            properties:
+              token:
+                type: string
+                description: Reset token received by email
+              newPassword:
+                type: string
+                minLength: 8
+    responses:
+      '200':
+        description: Password reset successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+      '400':
+        description: Missing fields, password too short, or token invalid/expired
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+
+getMe:
+  get:
+    tags:
+      - Auth
+    summary: Get currently authenticated user's profile
+    operationId: getMe
+    responses:
+      '200':
+        description: Authenticated user details
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '../components/schemas/auth.yaml#/components/schemas/AuthResponse'
+      '401':
+        description: Not authenticated
         content:
           application/json:
             schema:
