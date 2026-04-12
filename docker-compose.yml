@@ -98,7 +98,7 @@ services:
     entrypoint:
       - sh
       - -c
-      - 'sed "s|\${ALERTMANAGER_MAIL_PASSWORD}|${ALERTMANAGER_MAIL_PASSWORD}|g" /etc/alertmanager/alertmanager.yml.tmpl > /tmp/alertmanager.yml && /bin/alertmanager --config.file=/tmp/alertmanager.yml'
+      - 'sed "s|ALERTMANAGER_MAIL_PASSWORD_PLACEHOLDER|$$ALERTMANAGER_MAIL_PASSWORD|g" /etc/alertmanager/alertmanager.yml.tmpl > /tmp/alertmanager.yml && /bin/alertmanager --config.file=/tmp/alertmanager.yml'
     ports:
       - "9093:9093"
     networks:

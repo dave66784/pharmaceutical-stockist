@@ -3,7 +3,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'sdave.dev@gmail.com'
   smtp_auth_username: 'sdave.dev@gmail.com'
-  smtp_auth_password: '${ALERTMANAGER_MAIL_PASSWORD}'
+  smtp_auth_password: 'ALERTMANAGER_MAIL_PASSWORD_PLACEHOLDER'
   smtp_require_tls: true
 
 route:

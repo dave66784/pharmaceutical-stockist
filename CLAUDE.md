@@ -59,9 +59,10 @@ Monitoring: Prometheus (9090) → Grafana (3001), Alertmanager (9093), Loki (310
 
 ### Backend (`backend/src/main/java/com/pharma/`)
 
-- `controller/` — 10 REST controllers delegating to services
-- `service/` — 15 business logic services (all core logic lives here)
-- `model/` — 9 JPA entities + enums (`Role`: CUSTOMER/ADMIN, `OrderStatus`)
+- `controller/` — 11 REST controllers delegating to services
+- `service/` — 16 business logic services (all core logic lives here)
+- `repository/` — Spring Data JPA repositories (one per entity, no custom SQL unless needed)
+- `model/` — 11 JPA entities + enums (`Role`: CUSTOMER/ADMIN, `OrderStatus`, `PaymentMethod`, `PaymentStatus`, `AuditAction`)
 - `dto/` — Request/Response DTOs; all API responses wrapped in `ApiResponse<T>`
 - `security/` — `JwtAuthenticationFilter`, RSA RS256 JWT (30-min expiry, HttpOnly cookies)
 - `exception/` — `GlobalExceptionHandler`, `ResourceNotFoundException`, `InsufficientStockException`
@@ -78,7 +79,7 @@ Key patterns:
 
 ### Frontend (`frontend/src/`)
 
-- `pages/` — 14 customer pages + 5 admin pages (route-level components)
+- `pages/` — 16 customer pages + 6 admin pages (route-level components)
 - `components/` — Reusable UI; includes `ProtectedRoute` and `AdminRoute` guards
 - `services/` — 9 Axios-based API client modules
 - `stores/` — Zustand stores for cart and auth state
@@ -94,7 +95,7 @@ Key patterns:
 
 ### Database
 
-9 entities: `User`, `Address`, `Cart`, `CartItem`, `Order`, `OrderItem`, `Product`, `Category`, `SubCategory`. Schema is auto-managed by Hibernate DDL (`spring.jpa.hibernate.ddl-auto`).
+11 entities: `User`, `Address`, `Cart`, `CartItem`, `Order`, `OrderItem`, `Product`, `Category`, `SubCategory`, `RefreshToken`, `AuditLog`. Schema is auto-managed by Hibernate DDL (`spring.jpa.hibernate.ddl-auto`).
 
 Admin role is set directly in the DB: `UPDATE users SET role = 'ADMIN' WHERE email = '...'` — there is no admin promotion API endpoint.
 
