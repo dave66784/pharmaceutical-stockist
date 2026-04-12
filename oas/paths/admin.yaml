@@ -1,4 +1,39 @@
 paths:
+  /api/admin/products:
+    get:
+      summary: Get all products (Admin — includes unavailable)
+      tags:
+        - Admin Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: Paginated product list (all products regardless of availability)
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '../components/schemas/product.yaml#/components/schemas/PageProduct'
+        '403':
+          description: Admin access required
+
   /api/admin/orders:
     get:
       summary: Get all orders

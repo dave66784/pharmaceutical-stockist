@@ -74,6 +74,36 @@ paths:
                         type: array
                         items:
                           $ref: '../components/schemas/dashboard.yaml#/components/schemas/ExpiringProductDto'
+  /api/admin/dashboard/low-stock-products:
+    get:
+      summary: Get low-stock products
+      tags:
+        - Dashboard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: threshold
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+          description: Products with stock at or below this value are returned
+      responses:
+        '200':
+          description: Low stock products retrieved successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '../components/schemas/auth.yaml#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '../components/schemas/dashboard.yaml#/components/schemas/LowStockProductDto'
+
   /api/admin/dashboard/top-products:
     get:
       summary: Get top selling products
